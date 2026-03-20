@@ -124,6 +124,14 @@ const ARTICLES = [
     readTime: "7 мин",
     tag: "Рынок",
   },
+  {
+    slug: "stavki-marketologov-frilanserov-2026",
+    title: "Ставки маркетологов-фрилансеров в России 2026: SMM, SEO, таргет, копирайтинг",
+    description:
+      "Сколько берёт маркетолог-фрилансер в 2026 году? Медианные ставки для SMM-менеджеров, SEO-специалистов, таргетологов, копирайтеров и контент-менеджеров.",
+    readTime: "7 мин",
+    tag: "Рынок",
+  },
 ];
 
 const TAG_COLORS: Record<string, string> = {
