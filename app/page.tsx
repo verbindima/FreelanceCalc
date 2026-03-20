@@ -61,6 +61,66 @@ const appJsonLd = {
   },
 };
 
+// HowTo schema — пошаговая инструкция: может показывать шаги прямо в поисковой выдаче
+const howToJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "Как рассчитать ставку фрилансера онлайн",
+  description:
+    "Пошаговое руководство по расчёту справедливой часовой и дневной ставки фрилансера с учётом налогов, отпуска и реальной загрузки.",
+  totalTime: "PT2M",
+  tool: [
+    {
+      "@type": "HowToTool",
+      name: "Калькулятор ставки FreelanceCalc",
+    },
+  ],
+  step: [
+    {
+      "@type": "HowToStep",
+      position: 1,
+      name: "Укажите желаемый доход на руки",
+      text: "Введите сумму, которую хотите получать чистыми в месяц после уплаты налогов. Например: 150 000 ₽.",
+      url: "https://freelancecalc-one.vercel.app/#income",
+    },
+    {
+      "@type": "HowToStep",
+      position: 2,
+      name: "Выберите налоговый режим",
+      text: "Выберите свою систему налогообложения: самозанятый (НПД 4% с физлиц или 6% с юрлиц), ИП на УСН 6% или ИП на УСН 15%.",
+      url: "https://freelancecalc-one.vercel.app/#tax",
+    },
+    {
+      "@type": "HowToStep",
+      position: 3,
+      name: "Укажите рабочее время",
+      text: "Задайте количество рабочих часов в день (обычно 6–8) и рабочих дней в неделю (чаще всего 5).",
+      url: "https://freelancecalc-one.vercel.app/#hours",
+    },
+    {
+      "@type": "HowToStep",
+      position: 4,
+      name: "Задайте количество дней отпуска",
+      text: "Укажите, сколько дней в году вы планируете отдыхать. Стандарт — 28 дней. Это уменьшит количество рабочих дней в году.",
+      url: "https://freelancecalc-one.vercel.app/#vacation",
+    },
+    {
+      "@type": "HowToStep",
+      position: 5,
+      name: "Укажите коэффициент загрузки",
+      text: "Загрузка — процент времени на оплачиваемых заказах. У опытных фрилансеров 65–75%, у начинающих — 40–50%.",
+      url: "https://freelancecalc-one.vercel.app/#load",
+    },
+    {
+      "@type": "HowToStep",
+      position: 6,
+      name: "Получите вашу ставку",
+      text: "Калькулятор мгновенно покажет вашу минимальную часовую и дневную ставку с учётом всех факторов, а также сравнение с рыночным уровнем.",
+      url: "https://freelancecalc-one.vercel.app/#result",
+    },
+  ],
+};
+
 // FAQPage schema — вызывает аккордеон с вопросами прямо в выдаче Яндекса/Google
 const faqJsonLd = {
   "@context": "https://schema.org",
@@ -123,6 +183,10 @@ export default function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(appJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
       />
       <script
         type="application/ld+json"
