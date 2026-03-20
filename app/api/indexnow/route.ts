@@ -24,10 +24,13 @@ function getAllUrls(): string[] {
     `${BASE_URL}/stati/kak-povysit-stavku-frilansera`,
     `${BASE_URL}/stati/samozanyatyj-vs-ip-frilancer`,
     `${BASE_URL}/stati/skolko-stoit-nanyat-frilansera`,
+    `${BASE_URL}/stati/skrytye-rashody-frilansera`,
+    `${BASE_URL}/stati/stavki-frilanserov-po-gorodam-2026`,
     // Instrumenty
     `${BASE_URL}/instrumenty/kalkulator-naloga-samozanyatogo`,
     `${BASE_URL}/instrumenty/kalkulator-stoimosti-proekta`,
     // Alternativa
+    `${BASE_URL}/alternativa/moj-nalog-kalkulator`,
     `${BASE_URL}/alternativa/digital-broccoli`,
     `${BASE_URL}/alternativa/tinkoff-kalkulator`,
     `${BASE_URL}/alternativa/fl-ru-kalkulator`,
