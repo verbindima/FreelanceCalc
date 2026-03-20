@@ -68,54 +68,80 @@ export default async function CityPage({ params }: Props) {
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    name: `Ставка фрилансера ${city.nameIn}`,
-    description: city.description,
-    url: `${BASE_URL}/goroda/${citySlug}`,
-    breadcrumb: {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "FreelanceCalc",
-          item: BASE_URL,
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${BASE_URL}/goroda/${citySlug}`,
+        name: `Ставка фрилансера ${city.nameIn}`,
+        description: city.description,
+        url: `${BASE_URL}/goroda/${citySlug}`,
+        breadcrumb: {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "FreelanceCalc",
+              item: BASE_URL,
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "Ставки по городам",
+              item: `${BASE_URL}/goroda`,
+            },
+            {
+              "@type": "ListItem",
+              position: 3,
+              name: city.name,
+              item: `${BASE_URL}/goroda/${citySlug}`,
+            },
+          ],
         },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Ставки по городам",
-          item: `${BASE_URL}/goroda`,
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: city.name,
-          item: `${BASE_URL}/goroda/${citySlug}`,
-        },
-      ],
-    },
-    mainEntity: {
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: `Сколько берёт фрилансер ${city.nameIn}?`,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: `Медианная ставка фрилансера ${city.nameIn} зависит от специальности. IT-разработчики берут от ${adjustRate("2 000–4 000 ₽/час", city.multiplier)}, дизайнеры — от ${adjustRate("800–2 000 ₽/час", city.multiplier)}, маркетологи — от ${adjustRate("700–1 500 ₽/час", city.multiplier)}.`,
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: `Сколько берёт фрилансер ${city.nameIn}?`,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: `Медианная ставка фрилансера ${city.nameIn} зависит от специальности. IT-разработчики берут от ${adjustRate("2 000–4 000 ₽/час", city.multiplier)}, дизайнеры — от ${adjustRate("800–2 000 ₽/час", city.multiplier)}, маркетологи — от ${adjustRate("700–1 500 ₽/час", city.multiplier)}.`,
+            },
           },
-        },
-        {
-          "@type": "Question",
-          name: `Как рассчитать часовую ставку фрилансера ${city.nameIn}?`,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: `Введите желаемый чистый доход в месяц (рекомендуемая точка входа для ${city.name} — ${city.defaultIncome.toLocaleString("ru-RU")} ₽), выберите налоговый режим, укажите количество рабочих часов и загрузку. Калькулятор учтёт налоги, отпуск и нерабочее время.`,
+          {
+            "@type": "Question",
+            name: `Как рассчитать часовую ставку фрилансера ${city.nameIn}?`,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: `Введите желаемый чистый доход в месяц (рекомендуемая точка входа для ${city.name} — ${city.defaultIncome.toLocaleString("ru-RU")} ₽), выберите налоговый режим, укажите количество рабочих часов и загрузку. Калькулятор учтёт налоги, отпуск и нерабочее время.`,
+            },
           },
-        },
-      ],
-    },
+          {
+            "@type": "Question",
+            name: `Чем ставки ${city.nameOf} отличаются от московских?`,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                city.multiplier >= 1.3
+                  ? `${city.name} — один из двух городов России с ставками, близкими к московским. Разрыв минимален.`
+                  : city.multiplier >= 1.0
+                  ? `Ставки ${city.nameOf} на ${Math.round((1.4 / city.multiplier - 1) * 100)}% ниже московских, но стоимость жизни тоже ниже — реальный доход сопоставим.`
+                  : `Ставки ${city.nameOf} в среднем на ${Math.round((1.4 / city.multiplier - 1) * 100)}% ниже московских. Однако стоимость жизни значительно ниже, что делает фриланс в ${city.name} привлекательным.`,
+            },
+          },
+          {
+            "@type": "Question",
+            name: `Какой налоговый режим выбрать фрилансеру ${city.nameIn}?`,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: `Большинство фрилансеров ${city.nameIn} работают как самозанятые (НПД 4% с физлицами, 6% с юрлицами) — это самый простой вариант. При доходе выше 2,4 млн ₽/год нужно переходить на ИП УСН. Калькулятор поддерживает все режимы.`,
+            },
+          },
+        ],
+      },
+    ],
   };
 
   return (
