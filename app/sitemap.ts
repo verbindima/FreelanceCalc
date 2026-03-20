@@ -3,6 +3,17 @@ import { MetadataRoute } from "next";
 // TODO: switch to custom domain once purchased & configured in Vercel
 const BASE_URL = "https://freelancecalc-one.vercel.app";
 
+const CITIES = [
+  "moskva",
+  "sankt-peterburg",
+  "ekaterinburg",
+  "novosibirsk",
+  "kazan",
+  "krasnodar",
+  "samara",
+  "nizhnij-novgorod",
+];
+
 const SPECIALTIES = [
   "frontend-razrabotchik",
   "backend-razrabotchik",
@@ -31,6 +42,13 @@ const SPECIALTIES = [
 export default function sitemap(): MetadataRoute.Sitemap {
   const specialtyPages = SPECIALTIES.map((slug) => ({
     url: `${BASE_URL}/stavka/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
+  const cityPages = CITIES.map((slug) => ({
+    url: `${BASE_URL}/goroda/${slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.8,
@@ -85,6 +103,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.9,
     },
+    {
+      url: `${BASE_URL}/goroda`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    },
     ...specialtyPages,
+    ...cityPages,
   ];
 }

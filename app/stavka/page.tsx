@@ -148,6 +148,25 @@ export default function StavkaIndexPage() {
           </div>
         </section>
 
+        {/* Cities promo */}
+        <section className="mt-6 bg-slate-50 border border-slate-200 rounded-2xl p-5 flex items-start gap-3">
+          <span className="text-2xl">📍</span>
+          <div>
+            <h2 className="font-bold text-slate-800 text-sm mb-1">
+              Ставки по городам России
+            </h2>
+            <p className="text-xs text-slate-600 mb-2">
+              Москва, СПб, Екатеринбург и ещё 5 городов — региональные поправки к ставкам.
+            </p>
+            <Link
+              href="/goroda"
+              className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 underline underline-offset-2"
+            >
+              Ставки по городам →
+            </Link>
+          </div>
+        </section>
+
         {/* CTA back to main calculator */}
         <section className="mt-6 bg-indigo-50 border border-indigo-100 rounded-2xl p-6 text-center">
           <h2 className="font-bold text-slate-800 text-base mb-1">
