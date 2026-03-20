@@ -129,8 +129,27 @@ export default function StavkaIndexPage() {
           })}
         </div>
 
+        {/* Article promo */}
+        <section className="mt-10 bg-amber-50 border border-amber-100 rounded-2xl p-5 flex items-start gap-3">
+          <span className="text-2xl">📊</span>
+          <div>
+            <h2 className="font-bold text-slate-800 text-sm mb-1">
+              Сравнение ставок по всем 22 специальностям
+            </h2>
+            <p className="text-xs text-slate-600 mb-2">
+              Сводная таблица медианных ставок: от 400 ₽/ч у переводчиков до 7 000 ₽/ч у ML-инженеров.
+            </p>
+            <Link
+              href="/stati/srednyaya-stavka-frilansera-2026"
+              className="text-xs font-semibold text-amber-700 hover:text-amber-800 underline underline-offset-2"
+            >
+              Читать статью →
+            </Link>
+          </div>
+        </section>
+
         {/* CTA back to main calculator */}
-        <section className="mt-10 bg-indigo-50 border border-indigo-100 rounded-2xl p-6 text-center">
+        <section className="mt-6 bg-indigo-50 border border-indigo-100 rounded-2xl p-6 text-center">
           <h2 className="font-bold text-slate-800 text-base mb-1">
             Нет вашей специальности?
           </h2>
