@@ -29,6 +29,14 @@ export const metadata: Metadata = {
 
 const ARTICLES = [
   {
+    slug: "izmeneniya-samozanyatyh-2026",
+    title: "Изменения для самозанятых в 2026 году: ставки, лимиты, новые правила",
+    description:
+      "Что реально изменилось в НПД в 2026 году: ставки сохранились (4%/6%), режим продлён до 2028. Новинка — добровольные взносы в СФР для больничных.",
+    readTime: "6 мин",
+    tag: "Налоги",
+  },
+  {
     slug: "skolko-stoit-nanyat-frilansera",
     title: "Сколько стоит нанять фрилансера в 2026 году — ставки по специальностям",
     description:
