@@ -153,13 +153,16 @@ export default function FreelanceCalc() {
 
   const topAdBlockId = process.env.NEXT_PUBLIC_AD_BLOCK_ID_TOP || "R-A-XXXXXX-1";
   const bottomAdBlockId = process.env.NEXT_PUBLIC_AD_BLOCK_ID_BOTTOM || "R-A-XXXXXX-2";
+  const adsEnabled = process.env.NEXT_PUBLIC_YANDEX_AD_ENABLED === "true";
 
   return (
     <>
-      {/* РСЯ Banner — top */}
-      <div className="w-full flex justify-center py-2 bg-slate-100 border-b border-slate-200">
-        <YandexAd blockId={topAdBlockId} width={728} height={90} />
-      </div>
+      {/* РСЯ Banner — top (only when ads are actually enabled; no placeholder above the fold) */}
+      {adsEnabled && (
+        <div className="w-full flex justify-center py-2 bg-slate-100 border-b border-slate-200">
+          <YandexAd blockId={topAdBlockId} width={728} height={90} />
+        </div>
+      )}
 
       <main className="max-w-2xl mx-auto px-4 py-10">
         <header className="mb-8 text-center">
@@ -420,10 +423,12 @@ export default function FreelanceCalc() {
           </Link>
         </section>
 
-        {/* РСЯ Banner — bottom */}
-        <div className="mt-8 flex justify-center">
-          <YandexAd blockId={bottomAdBlockId} width={336} height={280} />
-        </div>
+        {/* РСЯ Banner — bottom (only when ads enabled, no placeholder) */}
+        {adsEnabled && (
+          <div className="mt-8 flex justify-center">
+            <YandexAd blockId={bottomAdBlockId} width={336} height={280} />
+          </div>
+        )}
 
         {/* Guide CTA — links to long-form article for SEO */}
         <section className="mt-6 bg-slate-800 rounded-2xl p-6 text-white">
