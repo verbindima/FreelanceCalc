@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback, useEffect, useRef } from "react";
+import Link from "next/link";
 import { ymGoal } from "./YandexMetrica";
 import YandexAd from "./YandexAd";
 
@@ -344,6 +345,32 @@ export default function FreelanceCalc() {
           </ul>
         </section>
 
+        {/* Specialty calculators — internal linking for SEO + user discovery */}
+        <section className="mt-6 bg-white border border-slate-200 rounded-2xl p-6">
+          <h2 className="font-semibold text-slate-700 text-sm mb-3">
+            🎯 Калькуляторы по специальностям
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {FEATURED_SPECIALTIES.map((s) => (
+              <Link
+                key={s.slug}
+                href={`/stavka/${s.slug}`}
+                className="text-xs bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-600 px-3 py-1.5 rounded-full transition-colors"
+                onClick={() => ymGoal("specialty_link_click", { slug: s.slug })}
+              >
+                {s.title}
+              </Link>
+            ))}
+          </div>
+          <Link
+            href="/stavka"
+            className="mt-3 inline-block text-xs text-indigo-600 hover:underline"
+            onClick={() => ymGoal("specialty_all_click")}
+          >
+            Все специальности →
+          </Link>
+        </section>
+
         {/* РСЯ Banner — bottom */}
         <div className="mt-8 flex justify-center">
           <YandexAd blockId={bottomAdBlockId} width={336} height={280} />
@@ -440,6 +467,17 @@ function ResultCard({
     </div>
   );
 }
+
+const FEATURED_SPECIALTIES = [
+  { title: "Frontend-разработчик", slug: "frontend-razrabotchik" },
+  { title: "Backend-разработчик", slug: "backend-razrabotchik" },
+  { title: "Fullstack-разработчик", slug: "fullstack-razrabotchik" },
+  { title: "UI/UX-дизайнер", slug: "dizajner-ui-ux" },
+  { title: "Копирайтер", slug: "kopirayter" },
+  { title: "SMM-специалист", slug: "smm-specialist" },
+  { title: "SEO-специалист", slug: "seo-specialist" },
+  { title: "Тестировщик QA", slug: "testirovshchik-qa" },
+];
 
 const FAQ_ITEMS = [
   {
