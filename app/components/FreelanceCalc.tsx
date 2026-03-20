@@ -111,6 +111,22 @@ export default function FreelanceCalc() {
     }
   }, []);
 
+  const handleShareTelegram = useCallback(() => {
+    ymGoal("share_telegram_click");
+    const url = window.location.href;
+    const hourly = Math.round(results.hourlyRate);
+    const daily = Math.round(results.dailyRate);
+    const fmt = (n: number) =>
+      new Intl.NumberFormat("ru-RU").format(n);
+    const text =
+      `Посчитал свою ставку фрилансера:\n` +
+      `💰 ${fmt(hourly)} ₽/час · ${fmt(daily)} ₽/день\n` +
+      `(доход ${fmt(netMonthly)} ₽/мес на руки)\n\n` +
+      `Проверь свою → ${url}`;
+    const tgUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+    window.open(tgUrl, "_blank", "noopener,noreferrer");
+  }, [results, netMonthly]);
+
   const handleOpenUpsell = useCallback(() => {
     setShowUpsellModal(true);
     ymGoal("upsell_click");
@@ -272,15 +288,24 @@ export default function FreelanceCalc() {
 
         {/* Results */}
         <section className="mt-6 bg-indigo-600 text-white rounded-2xl shadow-md p-6">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-4 gap-2">
             <h2 className="text-lg font-bold text-indigo-100">Ваша ставка</h2>
-            <button
-              onClick={handleShare}
-              className="flex items-center gap-1.5 text-xs bg-white/15 hover:bg-white/25 active:bg-white/30 text-white px-3 py-1.5 rounded-lg transition-colors"
-              title="Поделиться расчётом"
-            >
-              {shareCopied ? "✅ Скопировано!" : "🔗 Поделиться"}
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleShare}
+                className="flex items-center gap-1.5 text-xs bg-white/15 hover:bg-white/25 active:bg-white/30 text-white px-3 py-1.5 rounded-lg transition-colors"
+                title="Скопировать ссылку на расчёт"
+              >
+                {shareCopied ? "✅ Скопировано!" : "🔗 Скопировать"}
+              </button>
+              <button
+                onClick={handleShareTelegram}
+                className="flex items-center gap-1.5 text-xs bg-[#2AABEE]/80 hover:bg-[#2AABEE] active:bg-[#229ED9] text-white px-3 py-1.5 rounded-lg transition-colors"
+                title="Поделиться в Telegram"
+              >
+                ✈️ Telegram
+              </button>
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <ResultCard label="В час" value={fmt(results.hourlyRate)} highlight />

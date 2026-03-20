@@ -1,6 +1,35 @@
+import type { Metadata } from "next";
 import FreelanceCalc from "./components/FreelanceCalc";
 
 const BASE_URL = "https://freelancecalc-one.vercel.app";
+
+/** Dynamic OG image: reflects the user's actual calculated rate when they share their URL */
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}): Promise<Metadata> {
+  const sp = await searchParams;
+  const income = sp.income ?? "150000";
+  const tax = sp.tax ?? "self_employed_fl";
+  const hpd = sp.hpd ?? "8";
+  const dpw = sp.dpw ?? "5";
+  const vac = sp.vac ?? "28";
+  const load = sp.load ?? "70";
+
+  const ogParams = new URLSearchParams({ income, tax, hpd, dpw, vac, load });
+  const ogImageUrl = `${BASE_URL}/api/og?${ogParams.toString()}`;
+
+  return {
+    openGraph: {
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: "Моя ставка фрилансера — FreelanceCalc" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      images: [ogImageUrl],
+    },
+  };
+}
 
 // SoftwareApplication schema — даёт приложению карточку в поиске
 const appJsonLd = {
