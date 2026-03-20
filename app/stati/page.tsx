@@ -132,6 +132,14 @@ const ARTICLES = [
     readTime: "7 мин",
     tag: "Рынок",
   },
+  {
+    slug: "stavki-analitikov-frilanserov-2026",
+    title: "Ставки аналитиков-фрилансеров в России 2026: Data Analyst, БА, системный, продуктовый",
+    description:
+      "Сколько берёт аналитик-фрилансер в 2026 году? Медианные ставки для data analyst, бизнес-аналитика, системного и продуктового аналитика. Реальные данные рынка.",
+    readTime: "7 мин",
+    tag: "Рынок",
+  },
 ];
 
 const TAG_COLORS: Record<string, string> = {
