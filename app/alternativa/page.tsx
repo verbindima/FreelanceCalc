@@ -12,7 +12,7 @@ const jsonLd = {
       url: `${BASE_URL}/alternativa`,
       name: "FreelanceCalc vs другие калькуляторы ставки фрилансера — сравнение",
       description:
-        "Сравниваем FreelanceCalc с FL.ru, Kwork, Digital Broccoli, Тинькофф, NPD-Calculator, Profi.ru, YouDo и «Мой налог». Честный анализ инструментов для фрилансеров в России.",
+        "Сравниваем FreelanceCalc с FL.ru, Kwork, Digital Broccoli, Тинькофф, NPD-Calculator, Profi.ru, YouDo, «Мой налог» и Klerk.ru. Честный анализ инструментов для фрилансеров в России.",
       inLanguage: "ru",
       isPartOf: { "@id": BASE_URL },
       hasPart: [
@@ -69,6 +69,12 @@ const jsonLd = {
           "@id": `${BASE_URL}/alternativa/cossa-kalkulator`,
           url: `${BASE_URL}/alternativa/cossa-kalkulator`,
           name: "Альтернатива калькулятору Cossa.ru — FreelanceCalc",
+        },
+        {
+          "@type": "WebPage",
+          "@id": `${BASE_URL}/alternativa/klerk-ru-kalkulator`,
+          url: `${BASE_URL}/alternativa/klerk-ru-kalkulator`,
+          name: "Альтернатива Klerk.ru для расчёта ставки фрилансера — FreelanceCalc",
         },
       ],
     },
@@ -142,6 +148,9 @@ export const metadata: Metadata = {
     "альтернатива мой налог фрилансер",
     "cossa калькулятор фрилансера альтернатива",
     "альтернатива cossa кalkulator",
+    "klerk.ru ставка фрилансера",
+    "klerk ставка разработчика альтернатива",
+    "альтернатива klerk.ru калькулятор",
   ],
   metadataBase: new URL(BASE_URL),
   alternates: { canonical: "/alternativa" },
@@ -228,6 +237,15 @@ const competitors = [
     tags: ["авторитетное медиа", "базовый расчёт", "нет налогов", "нет рыночных данных"],
     pros: "Доверенный источник для диджитал-маркетологов",
     cons: "Нет налогов НПД/ИП, специализаций и рыночного контекста",
+  },
+  {
+    slug: "klerk-ru-kalkulator",
+    name: "Klerk.ru",
+    url: "klerk.ru",
+    description: "Авторитетный ресурс для бухгалтеров и предпринимателей. Публикует обзоры ставок фрилансеров и налоговые гайды, но нет персонального калькулятора.",
+    tags: ["авторитетный ресурс", "статьи о ставках", "нет калькулятора", "нет персональных данных"],
+    pros: "Подробные налоговые гайды и аналитика рынка",
+    cons: "Нет персонального расчёта ставки с налогами и загрузкой",
   },
 ];
 
