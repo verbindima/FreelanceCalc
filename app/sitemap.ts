@@ -1,53 +1,19 @@
 import { MetadataRoute } from "next";
+import { CITIES as CITY_DATA } from "./goroda/cities";
+import { SPECIALTIES as SPECIALTY_DATA } from "./stavka/[slug]/specialties";
 
 // TODO: switch to custom domain once purchased & configured in Vercel
 const BASE_URL = "https://freelancecalc-one.vercel.app";
 
-const CITIES = [
-  "moskva",
-  "sankt-peterburg",
-  "ekaterinburg",
-  "novosibirsk",
-  "kazan",
-  "krasnodar",
-  "samara",
-  "nizhnij-novgorod",
-];
-
-const SPECIALTIES = [
-  "frontend-razrabotchik",
-  "backend-razrabotchik",
-  "fullstack-razrabotchik",
-  "mobilnyj-razrabotchik",
-  "dizajner-ui-ux",
-  "graficheskij-dizajner",
-  "kopirayter",
-  "smm-specialist",
-  "seo-specialist",
-  "menedzher-proektov",
-  "testirovshchik-qa",
-  "data-analyst",
-  "python-razrabotchik",
-  "devops-inzhener",
-  "1c-razrabotchik",
-  "kontent-menedzher",
-  "targetolog",
-  "videomontazhyor",
-  "php-razrabotchik",
-  "perevodchik",
-  "biznes-analitik",
-  "ml-inzhener",
-];
-
 export default function sitemap(): MetadataRoute.Sitemap {
-  const specialtyPages = SPECIALTIES.map((slug) => ({
+  const specialtyPages = SPECIALTY_DATA.map(({ slug }) => ({
     url: `${BASE_URL}/stavka/${slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
 
-  const cityPages = CITIES.map((slug) => ({
+  const cityPages = CITY_DATA.map(({ slug }) => ({
     url: `${BASE_URL}/goroda/${slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
