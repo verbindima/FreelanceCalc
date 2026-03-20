@@ -84,6 +84,14 @@ const ARTICLES = [
     readTime: "7 мин",
     tag: "Налоги",
   },
+  {
+    slug: "skrytye-rashody-frilansera",
+    title: "Скрытые расходы фрилансера 2026: полный список",
+    description:
+      "Налоги, простои, больничные, ПО, самообразование — всё, что надо заложить в ставку. Считаем реальную стоимость фриланс-часа.",
+    readTime: "9 мин",
+    tag: "Финансы",
+  },
 ];
 
 const TAG_COLORS: Record<string, string> = {
@@ -93,6 +101,7 @@ const TAG_COLORS: Record<string, string> = {
   Аналитика: "bg-violet-50 text-violet-700",
   Карьера: "bg-emerald-50 text-emerald-700",
   Заказчикам: "bg-rose-50 text-rose-700",
+  Финансы: "bg-red-50 text-red-700",
 };
 
 const jsonLd = {
