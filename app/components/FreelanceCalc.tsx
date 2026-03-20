@@ -45,6 +45,53 @@ function fmt(n: number): string {
   }).format(n);
 }
 
+/** Market position based on real Q1-2026 benchmark data (freelancecalc-one.vercel.app/benchmark) */
+function getMarketContext(hourlyRate: number): {
+  emoji: string;
+  label: string;
+  description: string;
+  color: string;
+} {
+  if (hourlyRate < 700) {
+    return {
+      emoji: "📉",
+      label: "Ниже рынка",
+      description: "Даже начинающий копирайтер берёт 700–800 ₽/час. Ваша ставка занижена.",
+      color: "text-red-600 bg-red-50 border-red-200",
+    };
+  }
+  if (hourlyRate < 1200) {
+    return {
+      emoji: "📊",
+      label: "Нижний квартиль рынка",
+      description: "Медиана по большинству специальностей — 1 200–2 500 ₽/час.",
+      color: "text-orange-600 bg-orange-50 border-orange-200",
+    };
+  }
+  if (hourlyRate < 2000) {
+    return {
+      emoji: "✅",
+      label: "Рыночный уровень",
+      description: "Соответствует медиане для дизайнеров и junior-разработчиков.",
+      color: "text-emerald-600 bg-emerald-50 border-emerald-200",
+    };
+  }
+  if (hourlyRate < 3500) {
+    return {
+      emoji: "🚀",
+      label: "Выше медианы",
+      description: "Сопоставимо с mid/senior разработчиками и ML-специалистами.",
+      color: "text-indigo-600 bg-indigo-50 border-indigo-200",
+    };
+  }
+  return {
+    emoji: "⭐",
+    label: "Топ рынка",
+    description: "Топ-10% фрилансеров. Сопоставимо с ML/AI и Senior DevOps Москвы.",
+    color: "text-violet-600 bg-violet-50 border-violet-200",
+  };
+}
+
 export default function FreelanceCalc() {
   // Initialise from URL params if present (enables sharing)
   const [netMonthly, setNetMonthly] = useState(() => Number(getParam("income")) || 150000);
@@ -76,6 +123,8 @@ export default function FreelanceCalc() {
 
     return { hourlyRate, dailyRate, monthlyGross, taxPerMonth, grossAnnual, billableDays };
   }, [netMonthly, taxRegime, hoursPerDay, daysPerWeek, vacationDays, billableRatio]);
+
+  const marketCtx = useMemo(() => getMarketContext(results.hourlyRate), [results.hourlyRate]);
 
   // Track calculator usage once user changes any value
   useEffect(() => {
@@ -116,16 +165,14 @@ export default function FreelanceCalc() {
     const url = window.location.href;
     const hourly = Math.round(results.hourlyRate);
     const daily = Math.round(results.dailyRate);
-    const fmt = (n: number) =>
-      new Intl.NumberFormat("ru-RU").format(n);
+    const fmtNum = (n: number) => new Intl.NumberFormat("ru-RU").format(n);
     const text =
-      `Посчитал свою ставку фрилансера:\n` +
-      `💰 ${fmt(hourly)} ₽/час · ${fmt(daily)} ₽/день\n` +
-      `(доход ${fmt(netMonthly)} ₽/мес на руки)\n\n` +
-      `Проверь свою → ${url}`;
+      `${marketCtx.emoji} Моя ставка фрилансера: ${fmtNum(hourly)} ₽/час — ${marketCtx.label.toLowerCase()}\n` +
+      `📅 ${fmtNum(daily)} ₽/день · ${fmtNum(netMonthly)} ₽/мес на руки\n\n` +
+      `Посчитай свою → ${url}`;
     const tgUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
     window.open(tgUrl, "_blank", "noopener,noreferrer");
-  }, [results, netMonthly]);
+  }, [results, netMonthly, marketCtx]);
 
   const handleOpenUpsell = useCallback(() => {
     setShowUpsellModal(true);
@@ -337,6 +384,22 @@ export default function FreelanceCalc() {
             Расчёт основан на {Math.round(results.billableDays)} оплачиваемых рабочих днях в год
           </p>
         </section>
+
+        {/* Market context badge — drives curiosity and upsell clicks */}
+        <div className={`mt-3 flex items-start gap-3 border rounded-xl px-4 py-3 ${marketCtx.color}`}>
+          <span className="text-xl leading-none mt-0.5">{marketCtx.emoji}</span>
+          <div>
+            <p className="text-sm font-semibold">{marketCtx.label}</p>
+            <p className="text-xs mt-0.5 opacity-80">{marketCtx.description}{" "}
+              <button
+                onClick={handleOpenUpsell}
+                className="underline font-medium hover:opacity-100 opacity-70"
+              >
+                Посмотреть данные по рынку →
+              </button>
+            </p>
+          </div>
+        </div>
 
         {/* Upsell CTA — personalized: show user's own rate to trigger market curiosity */}
         <section className="mt-6 bg-amber-50 border border-amber-200 rounded-2xl p-6">
