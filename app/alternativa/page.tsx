@@ -3,6 +3,121 @@ import Link from "next/link";
 
 const BASE_URL = "https://freelancecalc-one.vercel.app";
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": `${BASE_URL}/alternativa`,
+      url: `${BASE_URL}/alternativa`,
+      name: "FreelanceCalc vs другие калькуляторы ставки фрилансера — сравнение",
+      description:
+        "Сравниваем FreelanceCalc с FL.ru, Kwork, Digital Broccoli, Тинькофф, NPD-Calculator, Profi.ru, YouDo и «Мой налог». Честный анализ инструментов для фрилансеров в России.",
+      inLanguage: "ru",
+      isPartOf: { "@id": BASE_URL },
+      hasPart: [
+        {
+          "@type": "WebPage",
+          "@id": `${BASE_URL}/alternativa/fl-ru-kalkulator`,
+          url: `${BASE_URL}/alternativa/fl-ru-kalkulator`,
+          name: "Альтернатива калькулятору FL.ru — FreelanceCalc",
+        },
+        {
+          "@type": "WebPage",
+          "@id": `${BASE_URL}/alternativa/kwork-kalkulator`,
+          url: `${BASE_URL}/alternativa/kwork-kalkulator`,
+          name: "Альтернатива калькулятору Kwork — FreelanceCalc",
+        },
+        {
+          "@type": "WebPage",
+          "@id": `${BASE_URL}/alternativa/digital-broccoli`,
+          url: `${BASE_URL}/alternativa/digital-broccoli`,
+          name: "Альтернатива Digital Broccoli — FreelanceCalc",
+        },
+        {
+          "@type": "WebPage",
+          "@id": `${BASE_URL}/alternativa/tinkoff-kalkulator`,
+          url: `${BASE_URL}/alternativa/tinkoff-kalkulator`,
+          name: "Альтернатива калькулятору Тинькофф Журнала — FreelanceCalc",
+        },
+        {
+          "@type": "WebPage",
+          "@id": `${BASE_URL}/alternativa/npd-calculator`,
+          url: `${BASE_URL}/alternativa/npd-calculator`,
+          name: "Альтернатива NPD-Calculator — FreelanceCalc",
+        },
+        {
+          "@type": "WebPage",
+          "@id": `${BASE_URL}/alternativa/profi-ru-kalkulator`,
+          url: `${BASE_URL}/alternativa/profi-ru-kalkulator`,
+          name: "Альтернатива калькулятору Profi.ru — FreelanceCalc",
+        },
+        {
+          "@type": "WebPage",
+          "@id": `${BASE_URL}/alternativa/youdo-kalkulator`,
+          url: `${BASE_URL}/alternativa/youdo-kalkulator`,
+          name: "Альтернатива калькулятору YouDo — FreelanceCalc",
+        },
+        {
+          "@type": "WebPage",
+          "@id": `${BASE_URL}/alternativa/moj-nalog-kalkulator`,
+          url: `${BASE_URL}/alternativa/moj-nalog-kalkulator`,
+          name: "Альтернатива «Мой налог» для фрилансеров — FreelanceCalc",
+        },
+      ],
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Главная",
+          item: BASE_URL,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Альтернативы",
+          item: `${BASE_URL}/alternativa`,
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "Чем FreelanceCalc отличается от FL.ru и Kwork?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text:
+              "FL.ru и Kwork — это биржи фриланса, а не инструменты для расчёта ставки. FreelanceCalc считает вашу минимальную ставку с учётом налогов (НПД 4%/6%, ИП УСН 6%), загрузки, отпуска и сравнивает с рыночными медианами по 20+ специальностям и 10+ городам России.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Чем FreelanceCalc лучше Digital Broccoli?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text:
+              "Digital Broccoli — хороший базовый калькулятор, но без рыночных медиан и специализаций. FreelanceCalc показывает, где вы находитесь относительно рынка: ниже медианы, в рынке или выше — по каждой специальности отдельно.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Зачем фрилансеру калькулятор ставки, если есть «Мой налог»?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text:
+              "«Мой налог» считает налог на уже полученный доход — это разные задачи. FreelanceCalc помогает заранее рассчитать, какую ставку нужно назначить клиенту, чтобы после всех налогов и простоев получить желаемый чистый доход.",
+          },
+        },
+      ],
+    },
+  ],
+};
+
 export const metadata: Metadata = {
   title: "Альтернативы калькуляторам ставки фрилансера — FreelanceCalc",
   description:
@@ -110,6 +225,11 @@ const features = [
 
 export default function AlternativaPage() {
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     <main className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-4 py-4">
@@ -222,5 +342,6 @@ export default function AlternativaPage() {
         </div>
       </div>
     </main>
+    </>
   );
 }
