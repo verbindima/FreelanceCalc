@@ -29,6 +29,45 @@ export const metadata: Metadata = {
   },
 };
 
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Откуда эти данные по ставкам?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Данные агрегированы из открытых источников: Хабр Карьера, FL.ru, Kwork, отчёты Upwork по российскому рынку и Telegram-сообществ специалистов. Медиана — это примерно середина диапазона реальных предложений.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Можно ли брать ниже медианы?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Можно, если вы только начинаете. Но учтите: налоги, отпуск и «пустые» периоды без заказов нужно закладывать в ставку. Калькулятор покажет минимум, ниже которого уходить в минус.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Что значит «коэффициент загрузки»?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Это процент времени, когда вы реально работаете на оплачиваемых заказах. Даже у опытных фрилансеров это обычно 60–75%: остальное — поиск клиентов, переговоры, обучение. Учитывать загрузку при расчёте ставки обязательно.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Как учесть налоги?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Самозанятые платят НПД 4% (физлица) или 6% (юрлица/ИП). ИП на УСН — 6% с дохода или 15% с прибыли. FreelanceCalc автоматически рассчитывает налог для каждого режима.",
+      },
+    },
+  ],
+};
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -122,6 +161,10 @@ export default function AverageRatesPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
       <div className="min-h-screen bg-gray-50">
