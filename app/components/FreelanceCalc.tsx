@@ -380,6 +380,23 @@ export default function FreelanceCalc() {
           <YandexAd blockId={bottomAdBlockId} width={336} height={280} />
         </div>
 
+        {/* Guide CTA — links to long-form article for SEO */}
+        <section className="mt-6 bg-slate-800 rounded-2xl p-6 text-white">
+          <h3 className="font-bold text-base mb-1">
+            📖 Не знаете с чего начать?
+          </h3>
+          <p className="text-slate-300 text-sm mb-4">
+            Подробное руководство: формулы, примеры и типичные ошибки при расчёте ставки
+          </p>
+          <Link
+            href="/rukovodstvo"
+            className="inline-block bg-white text-slate-900 hover:bg-slate-100 font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors"
+            onClick={() => ymGoal("guide_link_click")}
+          >
+            Читать руководство →
+          </Link>
+        </section>
+
         {/* FAQ Section — rich snippets для Яндекса */}
         <section className="mt-8">
           <h2 className="text-lg font-bold text-slate-800 mb-4">Частые вопросы</h2>
