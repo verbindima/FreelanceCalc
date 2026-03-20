@@ -26,6 +26,11 @@ function getAllUrls(): string[] {
     `${BASE_URL}/stati/skolko-stoit-nanyat-frilansera`,
     `${BASE_URL}/stati/skrytye-rashody-frilansera`,
     `${BASE_URL}/stati/stavki-frilanserov-po-gorodam-2026`,
+    `${BASE_URL}/stati/izmeneniya-samozanyatyh-2026`,
+    `${BASE_URL}/stati/stavki-razrabotchikov-frilanserov-2026`,
+    `${BASE_URL}/stati/stavki-dizajnerov-frilanserov-2026`,
+    `${BASE_URL}/stati/stavki-marketologov-frilanserov-2026`,
+    `${BASE_URL}/stati/stavki-analitikov-frilanserov-2026`,
     // Instrumenty
     `${BASE_URL}/instrumenty/kalkulator-naloga-samozanyatogo`,
     `${BASE_URL}/instrumenty/kalkulator-stoimosti-proekta`,
