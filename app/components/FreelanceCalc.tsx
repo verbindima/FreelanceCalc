@@ -388,13 +388,22 @@ export default function FreelanceCalc() {
           <p className="text-slate-300 text-sm mb-4">
             Подробное руководство: формулы, примеры и типичные ошибки при расчёте ставки
           </p>
-          <Link
-            href="/rukovodstvo"
-            className="inline-block bg-white text-slate-900 hover:bg-slate-100 font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors"
-            onClick={() => ymGoal("guide_link_click")}
-          >
-            Читать руководство →
-          </Link>
+          <div className="flex flex-wrap gap-3 justify-center">
+            <Link
+              href="/rukovodstvo"
+              className="inline-block bg-white text-slate-900 hover:bg-slate-100 font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors"
+              onClick={() => ymGoal("guide_link_click")}
+            >
+              Читать руководство →
+            </Link>
+            <Link
+              href="/instrumenty/kalkulator-naloga-samozanyatogo"
+              className="inline-block bg-white/20 text-white hover:bg-white/30 font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors"
+              onClick={() => ymGoal("tax_calc_link_click")}
+            >
+              🧾 Калькулятор налога НПД →
+            </Link>
+          </div>
         </section>
 
         {/* FAQ Section — rich snippets для Яндекса */}
