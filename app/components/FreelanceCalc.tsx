@@ -203,6 +203,23 @@ export default function FreelanceCalc() {
             <p className="text-xs text-slate-400 mt-1">
               «На руки» после налогов: <strong>{fmt(netMonthly)}</strong>
             </p>
+            {/* Quick income presets — reduce friction to first result */}
+            <div className="flex flex-wrap gap-2 mt-2">
+              {[80000, 120000, 150000, 200000, 300000].map((preset) => (
+                <button
+                  key={preset}
+                  type="button"
+                  onClick={() => setNetMonthly(preset)}
+                  className={`text-xs px-3 py-1 rounded-full border transition-colors ${
+                    netMonthly === preset
+                      ? "bg-indigo-600 text-white border-indigo-600"
+                      : "bg-white text-slate-500 border-slate-300 hover:border-indigo-400 hover:text-indigo-600"
+                  }`}
+                >
+                  {new Intl.NumberFormat("ru-RU", { notation: "compact", maximumFractionDigits: 0 }).format(preset)} ₽
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Налоговый режим */}
