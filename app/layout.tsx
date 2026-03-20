@@ -44,6 +44,32 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "Organization",
+      "@id": `${BASE_URL}/#organization`,
+      "name": "FreelanceCalc",
+      "url": BASE_URL,
+      "description": "Бесплатный онлайн-калькулятор ставки фрилансера для России",
+      "inLanguage": "ru",
+      "foundingDate": "2026",
+      "areaServed": "RU",
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${BASE_URL}/#website`,
+      "name": "FreelanceCalc",
+      "url": BASE_URL,
+      "inLanguage": "ru",
+      "publisher": { "@id": `${BASE_URL}/#organization` },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": `${BASE_URL}/stavka/{search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+    {
       "@type": "WebApplication",
       "@id": `${BASE_URL}/#webapp`,
       "name": "FreelanceCalc",
