@@ -281,6 +281,30 @@ export default async function CityPage({ params }: Props) {
           </div>
         </section>
 
+        {/* Related articles */}
+        <section className="mt-8 border-t border-slate-100 pt-6">
+          <h2 className="text-base font-semibold text-slate-700 mb-3">
+            Читайте по теме
+          </h2>
+          <ul className="space-y-2">
+            <li>
+              <Link href="/rukovodstvo" className="text-sm text-indigo-600 hover:underline">
+                Как рассчитать ставку фрилансера: полное руководство 2026
+              </Link>
+            </li>
+            <li>
+              <Link href="/stati/srednyaya-stavka-frilansera-2026" className="text-sm text-indigo-600 hover:underline">
+                Средняя ставка фрилансера в России 2026: таблица по 22 специальностям
+              </Link>
+            </li>
+            <li>
+              <Link href="/stati/kak-povysit-stavku-frilansera" className="text-sm text-indigo-600 hover:underline">
+                Как повысить ставку фрилансера: 7 проверенных способов
+              </Link>
+            </li>
+          </ul>
+        </section>
+
         <footer className="mt-10 text-center text-xs text-slate-400">
           © {new Date().getFullYear()} FreelanceCalc &nbsp;·&nbsp;{" "}
           <Link href="/" className="hover:text-indigo-600">
