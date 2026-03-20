@@ -77,6 +77,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: `${BASE_URL}/stati/kak-povysit-stavku-frilansera`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    },
+    {
       url: `${BASE_URL}/instrumenty`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
