@@ -16,6 +16,16 @@ const SPECIALTIES = [
   "menedzher-proektov",
   "testirovshchik-qa",
   "data-analyst",
+  "python-razrabotchik",
+  "devops-inzhener",
+  "1c-razrabotchik",
+  "kontent-menedzher",
+  "targetolog",
+  "videomontazhyor",
+  "php-razrabotchik",
+  "perevodchik",
+  "biznes-analitik",
+  "ml-inzhener",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
