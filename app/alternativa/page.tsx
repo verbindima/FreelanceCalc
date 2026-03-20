@@ -64,6 +64,12 @@ const jsonLd = {
           url: `${BASE_URL}/alternativa/moj-nalog-kalkulator`,
           name: "Альтернатива «Мой налог» для фрилансеров — FreelanceCalc",
         },
+        {
+          "@type": "WebPage",
+          "@id": `${BASE_URL}/alternativa/cossa-kalkulator`,
+          url: `${BASE_URL}/alternativa/cossa-kalkulator`,
+          name: "Альтернатива калькулятору Cossa.ru — FreelanceCalc",
+        },
       ],
     },
     {
@@ -134,6 +140,8 @@ export const metadata: Metadata = {
     "альтернатива profi.ru калькулятор",
     "мой налог калькулятор ставки",
     "альтернатива мой налог фрилансер",
+    "cossa калькулятор фрилансера альтернатива",
+    "альтернатива cossa кalkulator",
   ],
   metadataBase: new URL(BASE_URL),
   alternates: { canonical: "/alternativa" },
@@ -211,6 +219,15 @@ const competitors = [
     tags: ["официальное приложение ФНС", "только НПД", "нет ставки"],
     pros: "Официальный инструмент ФНС, обязателен для самозанятых",
     cons: "Не считает ставку — только налог на уже полученный доход",
+  },
+  {
+    slug: "cossa-kalkulator",
+    name: "Cossa.ru",
+    url: "cossa.ru/news/227447",
+    description: "Авторитетное медиа для диджитал-специалистов. Есть базовый калькулятор часовой ставки, но без налогов, специализаций и рыночных медиан.",
+    tags: ["авторитетное медиа", "базовый расчёт", "нет налогов", "нет рыночных данных"],
+    pros: "Доверенный источник для диджитал-маркетологов",
+    cons: "Нет налогов НПД/ИП, специализаций и рыночного контекста",
   },
 ];
 
