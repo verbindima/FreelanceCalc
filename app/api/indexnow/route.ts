@@ -31,9 +31,13 @@ function getAllUrls(): string[] {
     `${BASE_URL}/stati/stavki-dizajnerov-frilanserov-2026`,
     `${BASE_URL}/stati/stavki-marketologov-frilanserov-2026`,
     `${BASE_URL}/stati/stavki-analitikov-frilanserov-2026`,
+    `${BASE_URL}/stati/stavki-kopirajterov-frilanserov-2026`,
+    `${BASE_URL}/stati/skolko-stoit-chas-raboty-programmista-2026`,
     // Instrumenty
     `${BASE_URL}/instrumenty/kalkulator-naloga-samozanyatogo`,
     `${BASE_URL}/instrumenty/kalkulator-stoimosti-proekta`,
+    // Open data report
+    `${BASE_URL}/otchet-2026`,
     // Alternativa
     `${BASE_URL}/alternativa/moj-nalog-kalkulator`,
     `${BASE_URL}/alternativa/digital-broccoli`,
@@ -43,6 +47,8 @@ function getAllUrls(): string[] {
     `${BASE_URL}/alternativa/profi-ru-kalkulator`,
     `${BASE_URL}/alternativa/youdo-kalkulator`,
     `${BASE_URL}/alternativa/npd-calculator`,
+    `${BASE_URL}/alternativa/cossa-kalkulator`,
+    `${BASE_URL}/alternativa/klerk-ru-kalkulator`,
   ];
 
   // Specialty pages
