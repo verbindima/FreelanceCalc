@@ -312,23 +312,24 @@ export default function AverageRatesPage() {
           </section>
 
           {/* Benchmark PDF upsell */}
-          <section className="mb-10 border border-blue-200 rounded-2xl p-6 bg-blue-50">
+          <section className="mb-10 border border-indigo-200 rounded-2xl p-6 bg-indigo-50">
             <div className="flex items-start gap-4">
               <div className="text-3xl">📊</div>
               <div>
                 <h2 className="text-lg font-bold text-gray-900 mb-1">
-                  Нужны данные по городам и уровням?
+                  Нужны данные по городам и уровням опыта?
                 </h2>
-                <p className="text-sm text-gray-600 mb-3">
-                  PDF-бенчмарк содержит медианные ставки с разбивкой по городам (Москва, СПб,
-                  регионы) и уровням опыта (джун / мид / сеньор). Обновляется ежеквартально.
-                  Единоразовая покупка — 249 ₽.
+                <p className="text-sm text-gray-600 mb-1">
+                  Таблица выше — национальная медиана. В PDF-бенчмарке — разбивка по <strong>10 городам</strong>{" "}
+                  (Москва, СПб, Новосибирск, Екатеринбург, Казань и др.) и <strong>3 уровням опыта</strong>{" "}
+                  (джун / мид / сеньор). Обновляется ежеквартально.
                 </p>
+                <p className="text-xs text-gray-400 mb-3">Единоразовая покупка — 249 ₽</p>
                 <Link
-                  href="/"
-                  className="inline-block text-sm font-semibold text-blue-700 hover:text-blue-800 underline underline-offset-2"
+                  href="/benchmark"
+                  className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-700 hover:text-indigo-800 bg-indigo-100 hover:bg-indigo-200 px-3 py-1.5 rounded-lg transition-colors"
                 >
-                  Узнать подробнее →
+                  Смотреть бенчмарк →
                 </Link>
               </div>
             </div>
