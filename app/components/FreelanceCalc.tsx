@@ -466,9 +466,17 @@ export default function FreelanceCalc() {
           </div>
         </section>
 
-        <footer className="mt-10 text-center text-xs text-slate-400">
-          © {new Date().getFullYear()} FreelanceCalc &nbsp;·&nbsp; Все расчёты носят
-          ориентировочный характер
+        <footer className="mt-10 text-center text-xs text-slate-400 space-y-1">
+          <div>
+            <Link href="/stati" className="hover:text-indigo-600">Статьи</Link>
+            &nbsp;·&nbsp;
+            <Link href="/goroda" className="hover:text-indigo-600">Города</Link>
+            &nbsp;·&nbsp;
+            <Link href="/stavka" className="hover:text-indigo-600">Специальности</Link>
+            &nbsp;·&nbsp;
+            <Link href="/rukovodstvo" className="hover:text-indigo-600">Руководство</Link>
+          </div>
+          <div>© {new Date().getFullYear()} FreelanceCalc &nbsp;·&nbsp; Все расчёты носят ориентировочный характер</div>
         </footer>
       </main>
 
