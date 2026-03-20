@@ -1,8 +1,15 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
+import { ymGoal } from "../../components/YandexMetrica";
 
 export default function PaymentSuccess() {
+  // Fire conversion goal once on mount — tracked in Яндекс.Метрика
+  useEffect(() => {
+    ymGoal("payment_complete", { product: "pdf_market_rates", price: 249 });
+  }, []);
+
   return (
     <main className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-md border border-slate-200 p-8 text-center">
