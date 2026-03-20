@@ -147,11 +147,15 @@ export default function FreelanceCalc() {
 
       <main className="max-w-2xl mx-auto px-4 py-10">
         <header className="mb-8 text-center">
+          <p className="text-sm font-semibold text-indigo-500 mb-1 tracking-wide uppercase">
+            FreelanceCalc
+          </p>
           <h1 className="text-3xl font-bold tracking-tight text-slate-900">
-            💸 FreelanceCalc
+            Калькулятор ставки фрилансера
           </h1>
-          <p className="mt-2 text-slate-500 text-base">
-            Рассчитайте справедливую ставку — с учётом налогов, отпуска и реальной загрузки
+          <p className="mt-2 text-slate-500 text-base max-w-md mx-auto">
+            Введите желаемый доход на руки — получите точную часовую ставку
+            с учётом налогов, отпуска и реальной загрузки
           </p>
         </header>
 
@@ -308,7 +312,7 @@ export default function FreelanceCalc() {
             </button>
           </div>
           <p className="mt-3 text-xs text-amber-700/70">
-            💡 Уже скачали 1 200+ фрилансеров · Данные за Q1 2026
+            📅 Данные собраны в Q1 2026 · 20+ специальностей · 10 городов России
           </p>
         </section>
 
@@ -415,9 +419,9 @@ export default function FreelanceCalc() {
               <li>✅ Тексты, переводы, копирайтинг</li>
             </ul>
 
-            {/* Social proof */}
+            {/* Info block */}
             <div className="bg-slate-50 rounded-lg px-3 py-2 mb-4 text-xs text-slate-500">
-              ⭐ 4.8 из 5 · 1 200+ покупок · Обновлён в марте 2026
+              🔄 Обновлён в Q1 2026 · Данные по медианным ставкам рынка фриланса России
             </div>
 
             <p className="text-2xl font-bold text-indigo-700 mb-6">249 ₽</p>
