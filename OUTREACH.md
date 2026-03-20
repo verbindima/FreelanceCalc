@@ -17,6 +17,44 @@ Goal: drive free tool usage → upsell PDF (249 ₽) → РСЯ impressions
 
 ---
 
+## 0. Персонализированные страницы (embed-виджет аутрич) — СДЕЛАНО
+
+По тактике @dindex (17 марта): вместо холодного спама — персональная страница.
+Каждая страница показывает имя сайта-адресата, живой виджет и embed-код.
+
+| Сайт | Персональная страница |
+|------|----------------------|
+| VC.ru | freelancecalc-one.vercel.app/dlya/vc |
+| Habr | freelancecalc-one.vercel.app/dlya/habr |
+| Kadrof.ru | freelancecalc-one.vercel.app/dlya/kadrof |
+| Tproger | freelancecalc-one.vercel.app/dlya/tproger |
+| Freelancehunt | freelancecalc-one.vercel.app/dlya/freelancehunt |
+| RB.ru | freelancecalc-one.vercel.app/dlya/rb |
+
+**Шаблон письма (универсальный):**
+```
+Тема: [Сайт], вот инструмент для ваших читателей
+
+Привет!
+
+Видел ваши статьи о фрилансе/ставках. Сделал страницу специально для вас:
+freelancecalc-one.vercel.app/dlya/[site]
+
+Там живой калькулятор и код для вставки — один тег, бесплатно.
+Читатели считают ставку прямо в статье, не уходя на другой сайт.
+
+— Дмитрий
+```
+
+**Где найти контакты:**
+- VC.ru: https://vc.ru/about → редактор рубрики HR/Карьера
+- Habr: профиль автора → личные сообщения (если открыт)
+- Kadrof: contact@kadrof.ru
+- Tproger: https://tproger.ru/about → редакция
+- Freelancehunt: https://freelancehunt.com/blog → форма обратной связи
+
+---
+
 ## 1. vc.ru Article (HIGHEST PRIORITY)
 
 **Title:** `Как фрилансеру посчитать свою ставку: формула + бесплатный калькулятор`
