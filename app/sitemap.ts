@@ -149,6 +149,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${BASE_URL}/stati/skolko-stoit-chas-raboty-programmista-2026`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    {
       url: `${BASE_URL}/instrumenty`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
