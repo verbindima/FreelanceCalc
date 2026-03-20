@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import YandexMetrica from "./components/YandexMetrica";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-inter" });
 
@@ -29,6 +30,7 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${inter.variable} h-full`}>
       <body className="min-h-full bg-slate-50 text-slate-900 antialiased">
+        <YandexMetrica />
         {children}
       </body>
     </html>
