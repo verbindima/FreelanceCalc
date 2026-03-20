@@ -47,6 +47,15 @@ const tools = [
     badgeColor: "bg-blue-100 text-blue-700",
   },
   {
+    href: "/instrumenty/kalkulator-stoimosti-proekta",
+    emoji: "🏗",
+    title: "Калькулятор стоимости найма фрилансера",
+    description:
+      "Для работодателей: рассчитайте бюджет проекта по специальности, городу и объёму работы",
+    badge: "Для работодателей",
+    badgeColor: "bg-green-100 text-green-700",
+  },
+  {
     href: "/stavka",
     emoji: "📊",
     title: "Ставки по специальностям",

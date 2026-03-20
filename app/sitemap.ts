@@ -113,6 +113,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${BASE_URL}/instrumenty/kalkulator-stoimosti-proekta`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    {
       url: `${BASE_URL}/goroda`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
