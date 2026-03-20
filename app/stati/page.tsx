@@ -29,6 +29,14 @@ export const metadata: Metadata = {
 
 const ARTICLES = [
   {
+    slug: "skolko-stoit-nanyat-frilansera",
+    title: "Сколько стоит нанять фрилансера в 2026 году — ставки по специальностям",
+    description:
+      "Реальные ставки для разработчиков, дизайнеров, маркетологов. Типичные бюджеты на проекты, красные флаги и советы по переговорам для заказчиков.",
+    readTime: "7 мин",
+    tag: "Заказчикам",
+  },
+  {
     slug: "srednyaya-stavka-frilansera-2026",
     title: "Средняя ставка фрилансера 2026: таблица по 22 специальностям",
     description:
@@ -84,6 +92,7 @@ const TAG_COLORS: Record<string, string> = {
   Налоги: "bg-amber-50 text-amber-700",
   Аналитика: "bg-violet-50 text-violet-700",
   Карьера: "bg-emerald-50 text-emerald-700",
+  Заказчикам: "bg-rose-50 text-rose-700",
 };
 
 const jsonLd = {
