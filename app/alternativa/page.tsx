@@ -6,10 +6,12 @@ const BASE_URL = "https://freelancecalc-one.vercel.app";
 export const metadata: Metadata = {
   title: "Альтернативы калькуляторам ставки фрилансера — FreelanceCalc",
   description:
-    "Сравниваем FreelanceCalc с другими калькуляторами ставки фрилансера в России: Digital Broccoli, Тинькофф Журнал, NPD-Calculator. Узнайте, чем отличается FreelanceCalc и почему рыночные медианы важнее простой формулы.",
+    "Сравниваем FreelanceCalc с другими инструментами для фрилансеров в России: FL.ru, Kwork, Digital Broccoli, Тинькофф Журнал, NPD-Calculator. Узнайте, чем отличается FreelanceCalc и почему рыночные медианы важнее простой формулы.",
   keywords: [
     "альтернатива калькулятору ставки фрилансера",
     "лучший калькулятор фрилансера",
+    "калькулятор ставки fl.ru",
+    "kwork комиссия калькулятор",
     "digital broccoli альтернатива",
     "тинькофф журнал калькулятор альтернатива",
     "npd calculator альтернатива фрилансер",
@@ -19,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Альтернативы калькуляторам ставки фрилансера — FreelanceCalc",
     description:
-      "Сравниваем всех игроков рынка: Digital Broccoli, Тинькофф, NPD-Calculator и FreelanceCalc.",
+      "Сравниваем всех: FL.ru, Kwork, Digital Broccoli, Тинькофф, NPD-Calculator и FreelanceCalc.",
     type: "website",
     locale: "ru_RU",
     url: `${BASE_URL}/alternativa`,
@@ -28,6 +30,24 @@ export const metadata: Metadata = {
 };
 
 const competitors = [
+  {
+    slug: "fl-ru-kalkulator",
+    name: "FL.ru",
+    url: "fl.ru",
+    description: "Крупнейшая биржа фриланса в России. Нет встроенного калькулятора ставки — фрилансеры называют цену «на глаз» и занижают её на 30–45%.",
+    tags: ["крупнейшая биржа", "нет калькулятора", "нет рыночных данных"],
+    pros: "Огромная база заказов",
+    cons: "Нет инструмента для расчёта ставки",
+  },
+  {
+    slug: "kwork-kalkulator",
+    name: "Kwork",
+    url: "kwork.ru",
+    description: "Популярная биржа фиксированных задач. Комиссия 20% + налог НПД — без калькулятора легко поставить цену ниже нужной.",
+    tags: ["комиссия 20%", "фиксированные цены", "нет калькулятора"],
+    pros: "Удобный формат кворков",
+    cons: "Комиссия скрыто «съедает» доход",
+  },
   {
     slug: "digital-broccoli",
     name: "Digital Broccoli",
@@ -90,8 +110,8 @@ export default function AlternativaPage() {
           FreelanceCalc vs другие калькуляторы ставки фрилансера
         </h1>
         <p className="text-lg text-gray-600 mb-10 leading-relaxed">
-          В рунете несколько калькуляторов ставки фрилансера. Каждый решает свою задачу.
-          Здесь — честное сравнение: что умеет каждый и чем FreelanceCalc отличается.
+          Работаете на FL.ru, Kwork или ищете калькулятор с рыночными данными? Здесь — честное
+          сравнение всех инструментов: что умеет каждый и чем FreelanceCalc отличается.
         </p>
 
         {/* CTA */}

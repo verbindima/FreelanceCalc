@@ -114,6 +114,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: `${BASE_URL}/alternativa/fl-ru-kalkulator`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/alternativa/kwork-kalkulator`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    {
       url: `${BASE_URL}/alternativa/digital-broccoli`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
