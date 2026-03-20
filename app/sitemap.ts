@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 
-const BASE_URL = "https://freelancecalc.ru";
+// TODO: switch to custom domain once purchased & configured in Vercel
+const BASE_URL = "https://freelancecalc-one.vercel.app";
 
 const SPECIALTIES = [
   "frontend-razrabotchik",

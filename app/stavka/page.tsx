@@ -2,7 +2,8 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { SPECIALTIES } from "./[slug]/specialties";
 
-const BASE_URL = "https://freelancecalc.ru";
+// TODO: switch to custom domain once purchased & configured in Vercel
+const BASE_URL = "https://freelancecalc-one.vercel.app";
 
 export const metadata: Metadata = {
   title: "Ставки фрилансеров по специальностям 2026 — FreelanceCalc",

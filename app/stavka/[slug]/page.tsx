@@ -4,7 +4,8 @@ import Link from "next/link";
 import { SPECIALTIES, getSpecialty } from "./specialties";
 import SpecialtyCalc from "./SpecialtyCalc";
 
-const BASE_URL = "https://freelancecalc.ru";
+// TODO: switch to custom domain once purchased & configured in Vercel
+const BASE_URL = "https://freelancecalc-one.vercel.app";
 
 type Props = { params: Promise<{ slug: string }> };
 

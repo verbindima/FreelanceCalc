@@ -5,7 +5,8 @@ import YandexMetrica from "./components/YandexMetrica";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-inter" });
 
-const BASE_URL = "https://freelancecalc.ru";
+// TODO: switch to custom domain once purchased & configured in Vercel
+const BASE_URL = "https://freelancecalc-one.vercel.app";
 
 export const metadata: Metadata = {
   title: "FreelanceCalc — калькулятор ставки фрилансера онлайн",
