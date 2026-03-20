@@ -223,6 +223,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${BASE_URL}/alternativa/klerk-ru-kalkulator`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/alternativa/cossa-kalkulator`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    {
       url: `${BASE_URL}/alternativa/digital-broccoli`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
