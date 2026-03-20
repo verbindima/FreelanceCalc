@@ -108,6 +108,22 @@ const ARTICLES = [
     readTime: "6 мин",
     tag: "Рынок",
   },
+  {
+    slug: "stavki-razrabotchikov-frilanserov-2026",
+    title: "Ставки разработчиков-фрилансеров в России 2026: таблица по 10 специализациям",
+    description:
+      "Сколько берёт программист-фрилансер в 2026 году? Медианные ставки для Frontend, Backend, Fullstack, Mobile, Python, DevOps, ML и других специализаций.",
+    readTime: "8 мин",
+    tag: "Рынок",
+  },
+  {
+    slug: "stavki-dizajnerov-frilanserov-2026",
+    title: "Ставки дизайнеров-фрилансеров в России 2026: таблица по специализациям",
+    description:
+      "Сколько берёт дизайнер-фрилансер в 2026 году? Медианные ставки для UI/UX, графических дизайнеров, иллюстраторов, моушн и видеомонтажёров.",
+    readTime: "7 мин",
+    tag: "Рынок",
+  },
 ];
 
 const TAG_COLORS: Record<string, string> = {
