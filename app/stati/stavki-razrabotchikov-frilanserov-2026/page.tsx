@@ -95,6 +95,14 @@ const articleJsonLd = {
             text: "Данные агрегированы из открытых источников: Хабр Карьера, FL.ru, Kwork, Telegram-каналов по фрилансу и отчётов по российскому IT-рынку. Медиана отражает примерную середину реальных предложений.",
           },
         },
+        {
+          "@type": "Question",
+          name: "Сколько берёт Junior, Middle и Senior разработчик-фрилансер?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Junior (0–2 года): Frontend 600–1 200 ₽/ч, Backend 800–1 500 ₽/ч, Mobile 900–1 800 ₽/ч, DevOps 1 000–2 000 ₽/ч. Middle (2–5 лет): Frontend 1 500–2 500 ₽/ч, Backend 2 000–3 200 ₽/ч, Mobile 2 500–3 800 ₽/ч, DevOps 2 500–4 000 ₽/ч. Senior (5+ лет): Frontend 2 800–4 500 ₽/ч, Backend 3 500–6 000 ₽/ч, Mobile 4 000–6 500 ₽/ч, DevOps 4 000–7 500 ₽/ч.",
+          },
+        },
       ],
     },
   ],
@@ -293,6 +301,78 @@ export default function DevRatesArticle() {
               * Медианы агрегированы по данным Хабр Карьера, FL.ru, Kwork и Telegram-каналов специалистов.
               Данные на Q1 2026. Диапазон отражает уровни Junior–Senior.
             </p>
+          </section>
+
+          {/* Junior / Middle / Senior breakdown */}
+          <section className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              Ставки разработчиков по уровню опыта: Junior, Middle, Senior
+            </h2>
+            <p className="text-gray-700 leading-relaxed mb-6">
+              Самый частый вопрос: «сколько берёт разработчик» — зависит не только от специализации,
+              но и от опыта. Junior и Senior в одной области могут отличаться по ставке в 4–6 раз.
+              Ниже — сводная таблица по уровням для ключевых IT-специализаций на фрилансе в 2026 году.
+            </p>
+            <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm mb-4">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-gray-50 border-b border-gray-200">
+                    <th className="text-left px-4 py-3 font-semibold text-gray-700">Специализация</th>
+                    <th className="text-center px-4 py-3 font-semibold text-yellow-700 bg-yellow-50">Junior<br/><span className="text-xs font-normal text-gray-500">0–2 года</span></th>
+                    <th className="text-center px-4 py-3 font-semibold text-blue-700 bg-blue-50">Middle<br/><span className="text-xs font-normal text-gray-500">2–5 лет</span></th>
+                    <th className="text-center px-4 py-3 font-semibold text-green-700 bg-green-50">Senior<br/><span className="text-xs font-normal text-gray-500">5+ лет</span></th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {[
+                    { name: "Frontend", junior: "600–1 200", middle: "1 500–2 500", senior: "2 800–4 500" },
+                    { name: "Backend", junior: "800–1 500", middle: "2 000–3 200", senior: "3 500–6 000" },
+                    { name: "Fullstack", junior: "800–1 500", middle: "2 000–3 500", senior: "3 500–6 000" },
+                    { name: "Mobile (iOS/Android)", junior: "900–1 800", middle: "2 500–3 800", senior: "4 000–6 500" },
+                    { name: "Python", junior: "800–1 500", middle: "2 000–3 500", senior: "3 500–6 000" },
+                    { name: "DevOps", junior: "1 000–2 000", middle: "2 500–4 000", senior: "4 000–7 500" },
+                    { name: "PHP", junior: "500–1 000", middle: "1 200–2 000", senior: "2 000–3 500" },
+                    { name: "1С", junior: "500–1 000", middle: "1 200–2 000", senior: "2 200–3 800" },
+                    { name: "QA / Тестировщик", junior: "400–900", middle: "900–1 600", senior: "1 600–2 800" },
+                    { name: "ML / AI-инженер", junior: "1 200–2 000", middle: "2 800–4 500", senior: "4 500–8 000" },
+                  ].map((row) => (
+                    <tr key={row.name} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-4 py-3 font-medium text-gray-900">{row.name}</td>
+                      <td className="px-4 py-3 text-center text-yellow-700 font-medium">{row.junior} ₽/ч</td>
+                      <td className="px-4 py-3 text-center text-blue-700 font-semibold">{row.middle} ₽/ч</td>
+                      <td className="px-4 py-3 text-center text-green-700 font-bold">{row.senior} ₽/ч</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs text-gray-500 mb-6">
+              * Диапазоны отражают медианные ставки по данным Хабр Карьера, FL.ru, Kwork и Telegram-каналов специалистов на Q1 2026.
+              Junior — до 2 лет опыта на фрилансе, Middle — 2–5 лет, Senior — 5+ лет и/или сильное портфолио.
+            </p>
+            <div className="grid md:grid-cols-3 gap-4 mb-2">
+              <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+                <div className="text-yellow-700 font-bold text-lg mb-1">Junior</div>
+                <p className="text-sm text-gray-700">
+                  Портфолио из учебных/pet-проектов, ограниченный коммерческий опыт.
+                  Ставку занижать не стоит — даже Junior закладывает 30–40% на простои и налоги.
+                </p>
+              </div>
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                <div className="text-blue-700 font-bold text-lg mb-1">Middle</div>
+                <p className="text-sm text-gray-700">
+                  2–3 коммерческих проекта в портфолио, понимание архитектурных решений.
+                  Основной сегмент рынка — именно на Middle приходится большинство фриланс-заказов.
+                </p>
+              </div>
+              <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+                <div className="text-green-700 font-bold text-lg mb-1">Senior</div>
+                <p className="text-sm text-gray-700">
+                  Уверенная экспертиза, способность принимать архитектурные решения, сильное портфолио.
+                  Заказчики платят премию за скорость и предсказуемость результата.
+                </p>
+              </div>
+            </div>
           </section>
 
           {/* Why rates differ */}
