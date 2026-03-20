@@ -67,6 +67,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.8,
     },
+    {
+      url: `${BASE_URL}/stati/kak-raschitat-stavku-frilansera`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    },
     ...specialtyPages,
   ];
 }
