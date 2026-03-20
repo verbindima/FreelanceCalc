@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import CopyButton from "./CopyButton";
 
 const BASE_URL = "https://freelancecalc-one.vercel.app";
 const WIDGET_URL = `${BASE_URL}/widget`;
@@ -75,10 +76,13 @@ export default function EmbedPage() {
         <p className="text-sm text-slate-500 mb-3">
           Скопируйте и вставьте в HTML-код вашей страницы:
         </p>
-        <pre className="bg-slate-900 text-green-400 rounded-xl p-4 text-sm overflow-x-auto whitespace-pre">
-          {EMBED_CODE}
-        </pre>
-        <p className="mt-2 text-xs text-slate-400">
+        <div className="relative">
+          <pre className="bg-slate-900 text-green-400 rounded-xl p-4 text-sm overflow-x-auto whitespace-pre">
+            {EMBED_CODE}
+          </pre>
+          <CopyButton text={EMBED_CODE} />
+        </div>
+        <p className="mt-3 text-xs text-slate-400">
           Высоту <code className="bg-slate-100 px-1 rounded">height=&quot;420&quot;</code> можно
           увеличить до 460–500 для большего комфорта.
         </p>
