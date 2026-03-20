@@ -493,6 +493,17 @@ export default function FreelanceCalc() {
           </div>
         )}
 
+        {/* Embed CTA — encourages other sites to embed, generates backlinks */}
+        <section className="mt-6 bg-white border border-slate-200 rounded-2xl p-6">
+          <h3 className="font-semibold text-slate-700 text-sm mb-1">
+            🔗 Встроить калькулятор на свой сайт
+          </h3>
+          <p className="text-xs text-slate-500 mb-3">
+            Блог, статья или справочная страница? Добавьте интерактивный калькулятор одной строкой кода — бесплатно.
+          </p>
+          <EmbedCode />
+        </section>
+
         {/* Guide CTA — links to long-form article for SEO */}
         <section className="mt-6 bg-slate-800 rounded-2xl p-6 text-white">
           <h3 className="font-bold text-base mb-1">
@@ -597,6 +608,35 @@ export default function FreelanceCalc() {
         </div>
       )}
     </>
+  );
+}
+
+function EmbedCode() {
+  const [copied, setCopied] = useState(false);
+  const code = `<iframe\n  src="https://freelancecalc-one.vercel.app/widget"\n  width="100%"\n  height="420"\n  frameborder="0"\n  style="border-radius:12px;border:1px solid #e2e8f0"\n  title="Калькулятор ставки фрилансера"\n></iframe>`;
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      window.prompt("Скопируйте код:", code);
+    }
+  };
+
+  return (
+    <div>
+      <pre className="bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs text-slate-600 overflow-x-auto whitespace-pre-wrap break-all">
+        {code}
+      </pre>
+      <button
+        onClick={handleCopy}
+        className="mt-2 text-xs bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1.5 rounded-lg transition-colors"
+      >
+        {copied ? "✅ Скопировано!" : "📋 Скопировать код"}
+      </button>
+    </div>
   );
 }
 
