@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { SPECIALTIES, getSpecialty } from "./specialties";
+import { SPECIALTIES, getSpecialty, Specialty } from "./specialties";
 import { CITIES } from "../../goroda/cities";
 import SpecialtyCalc from "./SpecialtyCalc";
 
@@ -32,12 +32,41 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+/** Generate 4 specialty-specific FAQ items from structured data */
+function buildSpecialtyFaq(spec: Specialty) {
+  const name = spec.shortTitle; // e.g. "Ставка Frontend-разработчика"
+  const role = name.replace(/^Ставка\s+/i, ""); // "Frontend-разработчика"
+  const median = spec.medianHourly;
+  const income = new Intl.NumberFormat("ru-RU").format(spec.defaultIncome);
+
+  return [
+    {
+      q: `Сколько берёт ${role} за час работы?`,
+      a: `Медианная ставка ${role} на фрилансе в России — ${median}. Конкретная сумма зависит от опыта, технологического стека и региона. Используйте калькулятор на этой странице, чтобы рассчитать свою ставку, исходя из желаемого дохода ${income} ₽/мес и налогового режима.`,
+    },
+    {
+      q: `Как рассчитать ставку ${role}?`,
+      a: `Формула: (желаемый чистый доход ÷ (1 − ставка налога)) × 12 ÷ (рабочие дни в год × часов в день × коэффициент загрузки). Для самозанятого с клиентами-компаниями ставка НПД — 6%, загрузка — 65–75%. Калькулятор выше автоматизирует весь расчёт.`,
+    },
+    {
+      q: `Почему ставка ${role}-фрилансера выше, чем в найме?`,
+      a: `Фрилансер самостоятельно оплачивает налоги (4–6% НПД или 6% УСН + взносы для ИП), отпуск и больничные — без гарантированной оплаты. Часть времени уходит на поиск заказов и переговоры. Чтобы получать «на руки» столько же, сколько сотрудник в найме, ставка должна быть в 1,5–2 раза выше.`,
+    },
+    {
+      q: `Какой налог платит ${role} на фрилансе?`,
+      a: `Большинство фрилансеров выбирают самозанятость (НПД): 4% при работе с физлицами, 6% с компаниями. Лимит — 2,4 млн ₽/год. При более высоких доходах переходят на ИП УСН 6% + фиксированные страховые взносы (~50 000 ₽/год). Калькулятор учитывает оба режима.`,
+    },
+  ];
+}
+
 export default async function SpecialtyPage({ params }: Props) {
   const { slug } = await params;
   const spec = getSpecialty(slug);
   if (!spec) notFound();
 
-  const jsonLd = {
+  const faqItems = buildSpecialtyFaq(spec);
+
+  const webPageJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": spec.title,
@@ -53,11 +82,25 @@ export default async function SpecialtyPage({ params }: Props) {
     },
   };
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqItems.map((item) => ({
+      "@type": "Question",
+      "name": item.q,
+      "acceptedAnswer": { "@type": "Answer", "text": item.a },
+    })),
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
       <main className="max-w-2xl mx-auto px-4 py-10">
@@ -106,6 +149,27 @@ export default async function SpecialtyPage({ params }: Props) {
               >
                 {c.name}
               </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* FAQ Section — visible content required for FAQPage rich snippets */}
+        <section className="mt-10">
+          <h2 className="text-lg font-bold text-slate-800 mb-4">Частые вопросы</h2>
+          <div className="space-y-3">
+            {faqItems.map((item, i) => (
+              <details
+                key={i}
+                className="bg-white border border-slate-200 rounded-xl overflow-hidden group"
+              >
+                <summary className="w-full text-left px-5 py-4 flex justify-between items-center gap-3 cursor-pointer hover:bg-slate-50 transition-colors list-none">
+                  <span className="text-sm font-semibold text-slate-800">{item.q}</span>
+                  <span className="text-slate-400 text-lg flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
+                </summary>
+                <div className="px-5 pb-4 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                  {item.a}
+                </div>
+              </details>
             ))}
           </div>
         </section>
