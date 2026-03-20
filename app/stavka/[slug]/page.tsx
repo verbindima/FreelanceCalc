@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { SPECIALTIES, getSpecialty } from "./specialties";
+import { CITIES } from "../../goroda/cities";
 import SpecialtyCalc from "./SpecialtyCalc";
 
 // TODO: switch to custom domain once purchased & configured in Vercel
@@ -91,8 +92,26 @@ export default async function SpecialtyPage({ params }: Props) {
           specialty={spec.shortTitle}
         />
 
-        {/* Links to other specialties */}
+        {/* Links to this specialty by city */}
         <section className="mt-10">
+          <h2 className="text-base font-semibold text-slate-700 mb-3">
+            {spec.shortTitle} по городам
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {CITIES.map((c) => (
+              <Link
+                key={c.slug}
+                href={`/stavka/${slug}/${c.slug}`}
+                className="text-xs bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-600 px-3 py-1.5 rounded-full transition-colors"
+              >
+                {c.name}
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* Links to other specialties */}
+        <section className="mt-6">
           <h2 className="text-base font-semibold text-slate-700 mb-3">
             Другие специальности
           </h2>

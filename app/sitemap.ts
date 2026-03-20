@@ -20,6 +20,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
+  // 22 specialties × 16 cities = 352 cross-pages targeting long-tail queries
+  const specialtyCityPages: MetadataRoute.Sitemap = [];
+  for (const spec of SPECIALTY_DATA) {
+    for (const city of CITY_DATA) {
+      specialtyCityPages.push({
+        url: `${BASE_URL}/stavka/${spec.slug}/${city.slug}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+      });
+    }
+  }
+
   return [
     {
       url: BASE_URL,
@@ -83,5 +96,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...specialtyPages,
     ...cityPages,
+    ...specialtyCityPages,
   ];
 }
