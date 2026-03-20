@@ -318,26 +318,29 @@ export default function FreelanceCalc() {
           </p>
         </section>
 
-        {/* Upsell CTA — improved with social proof */}
+        {/* Upsell CTA — personalized: show user's own rate to trigger market curiosity */}
         <section className="mt-6 bg-amber-50 border border-amber-200 rounded-2xl p-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="flex-1">
+              <p className="text-xs font-semibold text-amber-600 uppercase tracking-wide mb-1">
+                Ваша ставка: {fmt(Math.round(results.hourlyRate))} / час
+              </p>
               <h3 className="font-bold text-slate-800 text-base">
-                📊 Сравните со рынком
+                Это выше или ниже рынка?
               </h3>
               <p className="text-sm text-slate-600 mt-1">
-                PDF-отчёт с медианными ставками по 20+ специальностям и городам. Обновляется ежеквартально.
+                PDF с медианами по 20+ специальностям и 10 городам — сравните свою цифру с коллегами.
               </p>
             </div>
             <button
               onClick={handleOpenUpsell}
               className="shrink-0 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors"
             >
-              Купить PDF — 249 ₽
+              Узнать — 249 ₽
             </button>
           </div>
           <p className="mt-3 text-xs text-amber-700/70">
-            📅 Данные собраны в Q1 2026 · 20+ специальностей · 10 городов России
+            📅 Данные Q1 2026 · 20+ специальностей · 10 городов России
           </p>
         </section>
 
@@ -457,11 +460,15 @@ export default function FreelanceCalc() {
             className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8"
             onClick={(e) => e.stopPropagation()}
           >
+            <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-4">
+              <p className="text-xs text-amber-700 font-medium mb-0.5">Ваша рассчитанная ставка</p>
+              <p className="text-2xl font-bold text-amber-800">{fmt(Math.round(results.hourlyRate))} / час</p>
+            </div>
             <h2 className="text-xl font-bold text-slate-900 mb-2">
-              📊 PDF «Рыночные ставки фрилансеров»
+              Это выше или ниже рыночной медианы?
             </h2>
             <p className="text-slate-600 text-sm mb-4">
-              Медианные ставки по 20+ специальностям и 10 городам России. Данные за текущий квартал.
+              PDF-отчёт с медианными ставками по 20+ специальностям и 10 городам России — Q1 2026.
             </p>
             <ul className="text-sm text-slate-700 space-y-1 mb-4">
               <li>✅ Разработка: Frontend, Backend, Fullstack, Mobile</li>
