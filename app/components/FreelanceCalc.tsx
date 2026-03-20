@@ -475,6 +475,8 @@ export default function FreelanceCalc() {
             <Link href="/stavka" className="hover:text-indigo-600">Специальности</Link>
             &nbsp;·&nbsp;
             <Link href="/rukovodstvo" className="hover:text-indigo-600">Руководство</Link>
+            &nbsp;·&nbsp;
+            <Link href="/benchmark" className="hover:text-indigo-600">Бенчмарк ставок PDF</Link>
           </div>
           <div>© {new Date().getFullYear()} FreelanceCalc &nbsp;·&nbsp; Все расчёты носят ориентировочный характер</div>
         </footer>

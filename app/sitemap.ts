@@ -106,6 +106,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.85,
     },
+    // Monetization page — benchmark PDF
+    {
+      url: `${BASE_URL}/benchmark`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
     // Competitor alternatives pages (high-intent SEO traffic)
     {
       url: `${BASE_URL}/alternativa`,
