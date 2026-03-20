@@ -68,6 +68,14 @@ const ARTICLES = [
     readTime: "6 мин",
     tag: "Карьера",
   },
+  {
+    slug: "samozanyatyj-vs-ip-frilancer",
+    title: "Самозанятый или ИП: что выгоднее для фрилансера в 2026",
+    description:
+      "Сравниваем НПД и ИП УСН 6%: налоги, взносы, реальные расчёты. При каком доходе переходить на ИП?",
+    readTime: "7 мин",
+    tag: "Налоги",
+  },
 ];
 
 const TAG_COLORS: Record<string, string> = {

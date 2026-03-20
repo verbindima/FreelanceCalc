@@ -455,10 +455,10 @@ export default function SamozanyatoySstavkaPage() {
                   или сравнить себя с рынком. Обновляется ежеквартально. Цена — 249 ₽.
                 </p>
                 <Link
-                  href="/"
+                  href="/benchmark"
                   className="inline-block text-sm font-semibold text-blue-700 hover:text-blue-800 underline underline-offset-2"
                 >
-                  Узнать подробнее →
+                  Посмотреть бенчмарк →
                 </Link>
               </div>
             </div>
