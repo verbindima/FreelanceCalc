@@ -5,23 +5,103 @@ import YandexMetrica from "./components/YandexMetrica";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-inter" });
 
+const BASE_URL = "https://freelancecalc.ru";
+
 export const metadata: Metadata = {
-  title: "FreelanceCalc — калькулятор ставки фрилансера",
+  title: "FreelanceCalc — калькулятор ставки фрилансера онлайн",
   description:
-    "Рассчитайте оптимальную часовую, дневную и месячную ставку с учётом налогов, отпуска и загрузки. Бесплатно.",
+    "Рассчитайте справедливую часовую и дневную ставку фрилансера с учётом налогов (самозанятый, ИП), отпуска и загрузки. Бесплатный онлайн-калькулятор.",
   keywords: [
     "калькулятор ставки фрилансера",
     "ставка фрилансера",
     "расчёт ставки самозанятого",
     "сколько брать за час работы",
     "фриланс калькулятор",
+    "часовая ставка фрилансер",
+    "калькулятор НПД самозанятый",
+    "как рассчитать ставку фрилансера",
   ],
+  metadataBase: new URL(BASE_URL),
+  alternates: { canonical: "/" },
   openGraph: {
     title: "FreelanceCalc — калькулятор ставки фрилансера",
     description: "Рассчитайте оптимальную ставку с учётом налогов, отпуска и реальной загрузки.",
     type: "website",
     locale: "ru_RU",
+    url: BASE_URL,
+    siteName: "FreelanceCalc",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "FreelanceCalc — калькулятор ставки фрилансера",
+    description: "Рассчитайте оптимальную часовую ставку с учётом налогов, отпуска и загрузки.",
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": `${BASE_URL}/#webapp`,
+      "name": "FreelanceCalc",
+      "url": BASE_URL,
+      "description": "Бесплатный онлайн-калькулятор ставки фрилансера с учётом налогов, отпуска и загрузки",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web",
+      "inLanguage": "ru",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "RUB",
+      },
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Как рассчитать часовую ставку фрилансера?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Чтобы рассчитать часовую ставку: 1) определите желаемый чистый доход в месяц, 2) добавьте налоги (самозанятый — 4% с физлиц или 6% с компаний, ИП УСН — 6%), 3) разделите годовой доход на количество оплачиваемых часов с учётом отпуска и коэффициента загрузки (обычно 60–70%). Наш калькулятор делает всё это автоматически.",
+          },
+        },
+        {
+          "@type": "Question",
+          "name": "Какой налог платит самозанятый фрилансер?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Самозанятые платят НПД (налог на профессиональный доход): 4% при работе с физическими лицами и 6% при работе с юридическими лицами и ИП. Страховые взносы не уплачиваются, отчётность не сдаётся.",
+          },
+        },
+        {
+          "@type": "Question",
+          "name": "Почему ставка фрилансера должна быть выше офисной зарплаты?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Фрилансер несёт дополнительные расходы: налоги, простои между проектами, самостоятельная оплата больничного и отпуска, расходы на оборудование и ПО. Чтобы получать «на руки» столько же, сколько офисный сотрудник, ставка фрилансера должна быть в 1.5–2 раза выше.",
+          },
+        },
+        {
+          "@type": "Question",
+          "name": "Что такое коэффициент загрузки и зачем он нужен?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Коэффициент загрузки (billable ratio) — доля рабочего времени, которое вы фактически продаёте клиентам. Остальное время уходит на поиск заказов, административные задачи и простои. Для большинства фрилансеров реалистичная загрузка составляет 60–75%.",
+          },
+        },
+        {
+          "@type": "Question",
+          "name": "Чем самозанятый отличается от ИП для фрилансера?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Самозанятый: лимит дохода 2.4 млн руб/год, налог 4–6%, без отчётности и взносов. ИП УСН 6%: без лимита дохода, налог 6% + страховые взносы (~50 000 руб/год), простая отчётность. Для небольших доходов выгоднее самозанятость.",
+          },
+        },
+      ],
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -29,6 +109,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ru" className={`${inter.variable} h-full`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="min-h-full bg-slate-50 text-slate-900 antialiased">
         <YandexMetrica />
         {children}

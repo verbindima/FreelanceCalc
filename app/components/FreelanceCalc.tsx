@@ -4,17 +4,33 @@ import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { ymGoal } from "./YandexMetrica";
 import YandexAd from "./YandexAd";
 
-type TaxRegime = "self_employed" | "ip_usn6" | "ip_usn15" | "none";
+/** Read a single query param from the current URL (client-side only) */
+function getParam(key: string): string | null {
+  if (typeof window === "undefined") return null;
+  return new URLSearchParams(window.location.search).get(key);
+}
+
+/** Update URL query params without navigation */
+function setParams(params: Record<string, string>) {
+  if (typeof window === "undefined") return;
+  const sp = new URLSearchParams(window.location.search);
+  Object.entries(params).forEach(([k, v]) => sp.set(k, v));
+  window.history.replaceState(null, "", `?${sp.toString()}`);
+}
+
+type TaxRegime = "self_employed_fl" | "self_employed_ul" | "ip_usn6" | "ip_usn15" | "none";
 
 const TAX_RATES: Record<TaxRegime, number> = {
-  self_employed: 0.06,
+  self_employed_fl: 0.04,  // НПД: 4% с физлиц
+  self_employed_ul: 0.06,  // НПД: 6% с юрлиц/ИП
   ip_usn6: 0.06,
   ip_usn15: 0.15,
   none: 0,
 };
 
 const TAX_LABELS: Record<TaxRegime, string> = {
-  self_employed: "Самозанятый (6%)",
+  self_employed_fl: "Самозанятый — клиенты физлица (НПД 4%)",
+  self_employed_ul: "Самозанятый — клиенты компании (НПД 6%)",
   ip_usn6: "ИП УСН «Доходы» (6%)",
   ip_usn15: "ИП УСН «Доходы минус расходы» (15%)",
   none: "Без налогов / физлицо",
@@ -29,14 +45,18 @@ function fmt(n: number): string {
 }
 
 export default function FreelanceCalc() {
-  const [netMonthly, setNetMonthly] = useState(150000);
-  const [taxRegime, setTaxRegime] = useState<TaxRegime>("self_employed");
-  const [hoursPerDay, setHoursPerDay] = useState(8);
-  const [daysPerWeek, setDaysPerWeek] = useState(5);
-  const [vacationDays, setVacationDays] = useState(28);
-  const [billableRatio, setBillableRatio] = useState(70);
+  // Initialise from URL params if present (enables sharing)
+  const [netMonthly, setNetMonthly] = useState(() => Number(getParam("income")) || 150000);
+  const [taxRegime, setTaxRegime] = useState<TaxRegime>(
+    (getParam("tax") as TaxRegime) || "self_employed_fl"
+  );
+  const [hoursPerDay, setHoursPerDay] = useState(() => Number(getParam("hpd")) || 8);
+  const [daysPerWeek, setDaysPerWeek] = useState(() => Number(getParam("dpw")) || 5);
+  const [vacationDays, setVacationDays] = useState(() => Number(getParam("vac")) || 28);
+  const [billableRatio, setBillableRatio] = useState(() => Number(getParam("load")) || 70);
   const [showUpsellModal, setShowUpsellModal] = useState(false);
   const [paymentLoading, setPaymentLoading] = useState(false);
+  const [shareCopied, setShareCopied] = useState(false);
   const calcUsedTracked = useRef(false);
 
   const results = useMemo(() => {
@@ -64,6 +84,31 @@ export default function FreelanceCalc() {
     }
     ymGoal("calculator_used", { income: netMonthly, tax: taxRegime });
   }, [netMonthly, taxRegime, hoursPerDay, daysPerWeek, vacationDays, billableRatio]);
+
+  // Sync state to URL so the link stays shareable
+  useEffect(() => {
+    setParams({
+      income: String(netMonthly),
+      tax: taxRegime,
+      hpd: String(hoursPerDay),
+      dpw: String(daysPerWeek),
+      vac: String(vacationDays),
+      load: String(billableRatio),
+    });
+  }, [netMonthly, taxRegime, hoursPerDay, daysPerWeek, vacationDays, billableRatio]);
+
+  const handleShare = useCallback(async () => {
+    ymGoal("share_click");
+    const url = window.location.href;
+    try {
+      await navigator.clipboard.writeText(url);
+      setShareCopied(true);
+      setTimeout(() => setShareCopied(false), 2500);
+    } catch {
+      // fallback: prompt
+      window.prompt("Скопируйте ссылку на ваш расчёт:", url);
+    }
+  }, []);
 
   const handleOpenUpsell = useCallback(() => {
     setShowUpsellModal(true);
@@ -222,7 +267,16 @@ export default function FreelanceCalc() {
 
         {/* Results */}
         <section className="mt-6 bg-indigo-600 text-white rounded-2xl shadow-md p-6">
-          <h2 className="text-lg font-bold mb-4 text-indigo-100">Ваша ставка</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-bold text-indigo-100">Ваша ставка</h2>
+            <button
+              onClick={handleShare}
+              className="flex items-center gap-1.5 text-xs bg-white/15 hover:bg-white/25 active:bg-white/30 text-white px-3 py-1.5 rounded-lg transition-colors"
+              title="Поделиться расчётом"
+            >
+              {shareCopied ? "✅ Скопировано!" : "🔗 Поделиться"}
+            </button>
+          </div>
           <div className="grid grid-cols-2 gap-4">
             <ResultCard label="В час" value={fmt(results.hourlyRate)} highlight />
             <ResultCard label="В день" value={fmt(results.dailyRate)} />
@@ -294,6 +348,16 @@ export default function FreelanceCalc() {
         <div className="mt-8 flex justify-center">
           <YandexAd blockId={bottomAdBlockId} width={336} height={280} />
         </div>
+
+        {/* FAQ Section — rich snippets для Яндекса */}
+        <section className="mt-8">
+          <h2 className="text-lg font-bold text-slate-800 mb-4">Частые вопросы</h2>
+          <div className="space-y-3">
+            {FAQ_ITEMS.map((item, i) => (
+              <FaqItem key={i} question={item.q} answer={item.a} />
+            ))}
+          </div>
+        </section>
 
         <footer className="mt-10 text-center text-xs text-slate-400">
           © {new Date().getFullYear()} FreelanceCalc &nbsp;·&nbsp; Все расчёты носят
@@ -373,6 +437,50 @@ function ResultCard({
       <p className={`text-xl font-bold mt-0.5 ${highlight ? "text-indigo-700" : "text-white"}`}>
         {value}
       </p>
+    </div>
+  );
+}
+
+const FAQ_ITEMS = [
+  {
+    q: "Как рассчитать часовую ставку фрилансера?",
+    a: "Определите желаемый чистый доход, добавьте налоги (самозанятый — 4% с физлиц, 6% с компаний), затем разделите годовую сумму на оплачиваемые часы с учётом отпуска и загрузки 60–70%. Калькулятор выше делает это автоматически.",
+  },
+  {
+    q: "Какой налог платит самозанятый фрилансер в 2026 году?",
+    a: "НПД (налог на профессиональный доход): 4% при работе с физлицами, 6% при работе с юрлицами и ИП. Страховые взносы не платятся, отчётность не сдаётся. Лимит дохода — 2.4 млн руб/год.",
+  },
+  {
+    q: "Почему ставка фрилансера выше офисной зарплаты?",
+    a: "Фрилансер сам оплачивает налоги, отпуск, больничные и оборудование. Часть времени уходит на поиск клиентов и переговоры — это неоплачиваемые часы. Для эквивалента офисной зарплаты ставку нужно умножить на 1.5–2.",
+  },
+  {
+    q: "Что такое коэффициент загрузки (billable ratio)?",
+    a: "Доля рабочего времени, которую вы фактически продаёте клиентам. Остальное — поиск заказов, переговоры, простои. Для большинства фрилансеров реалистичный показатель: 60–75%.",
+  },
+  {
+    q: "Чем самозанятый отличается от ИП для фрилансера?",
+    a: "Самозанятый: лимит 2.4 млн/год, налог 4–6%, без отчётности и взносов. ИП УСН 6%: нет лимита, налог 6% + взносы ~50 000 руб/год, минимальная отчётность. При небольших доходах самозанятость выгоднее.",
+  },
+];
+
+function FaqItem({ question, answer }: { question: string; answer: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+      <button
+        className="w-full text-left px-5 py-4 flex justify-between items-center gap-3 hover:bg-slate-50 transition-colors"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+      >
+        <span className="text-sm font-semibold text-slate-800">{question}</span>
+        <span className="text-slate-400 text-lg flex-shrink-0">{open ? "−" : "+"}</span>
+      </button>
+      {open && (
+        <div className="px-5 pb-4 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+          {answer}
+        </div>
+      )}
     </div>
   );
 }
