@@ -3,6 +3,7 @@ import { CITIES as CITY_DATA } from "./goroda/cities";
 import { SPECIALTIES as SPECIALTY_DATA } from "./stavka/[slug]/specialties";
 import { LEVELS } from "./stavka/[slug]/opyt/[level]/levels";
 import { CITY_PAIRS } from "./goroda/sravnenie/page";
+import { NAJEM_DATA } from "./frilanc-vs-najm/najem-data";
 
 // TODO: switch to custom domain once purchased & configured in Vercel
 const BASE_URL = "https://freelancecalc-one.vercel.app";
@@ -62,6 +63,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       }
     }
   }
+
+  // "Фриланс vs найм" hub + 30+ specialty pages
+  const frilancVsNajmPages: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/frilanc-vs-najm`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    },
+    ...SPECIALTY_DATA
+      .filter((s) => NAJEM_DATA[s.slug])
+      .map(({ slug }) => ({
+        url: `${BASE_URL}/frilanc-vs-najm/${slug}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly" as const,
+        priority: 0.8,
+      })),
+  ];
 
   return [
     {
@@ -519,5 +538,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...specialtyCityPages,
     ...experienceLevelPages,
     ...levelCityPages,
+    ...frilancVsNajmPages,
   ];
 }
