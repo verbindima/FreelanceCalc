@@ -2,7 +2,7 @@
 
 import Script from "next/script";
 
-const YM_ID = process.env.NEXT_PUBLIC_YM_ID;
+const YM_ID = process.env.NEXT_PUBLIC_YM_ID || "108183107";
 
 export default function YandexMetrica() {
   if (!YM_ID) return null;

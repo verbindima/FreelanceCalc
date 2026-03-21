@@ -24,12 +24,12 @@ Goal: drive free tool usage → upsell PDF (249 ₽) → РСЯ impressions
 
 | Сайт | Персональная страница |
 |------|----------------------|
-| VC.ru | freelancecalc-one.vercel.app/dlya/vc |
-| Habr | freelancecalc-one.vercel.app/dlya/habr |
-| Kadrof.ru | freelancecalc-one.vercel.app/dlya/kadrof |
-| Tproger | freelancecalc-one.vercel.app/dlya/tproger |
-| Freelancehunt | freelancecalc-one.vercel.app/dlya/freelancehunt |
-| RB.ru | freelancecalc-one.vercel.app/dlya/rb |
+| VC.ru | freelancecalc.ru/dlya/vc |
+| Habr | freelancecalc.ru/dlya/habr |
+| Kadrof.ru | freelancecalc.ru/dlya/kadrof |
+| Tproger | freelancecalc.ru/dlya/tproger |
+| Freelancehunt | freelancecalc.ru/dlya/freelancehunt |
+| RB.ru | freelancecalc.ru/dlya/rb |
 
 **Шаблон письма (универсальный):**
 ```
@@ -38,7 +38,7 @@ Goal: drive free tool usage → upsell PDF (249 ₽) → РСЯ impressions
 Привет!
 
 Видел ваши статьи о фрилансе/ставках. Сделал страницу специально для вас:
-freelancecalc-one.vercel.app/dlya/[site]
+freelancecalc.ru/dlya/[site]
 
 Там живой калькулятор и код для вставки — один тег, бесплатно.
 Читатели считают ставку прямо в статье, не уходя на другой сайт.

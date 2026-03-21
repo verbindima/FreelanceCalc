@@ -53,13 +53,6 @@ const appJsonLd = {
     name: "FreelanceCalc",
     url: BASE_URL,
   },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.8",
-    ratingCount: "47",
-    bestRating: "5",
-    worstRating: "1",
-  },
 };
 
 // HowTo schema — пошаговая инструкция: может показывать шаги прямо в поисковой выдаче

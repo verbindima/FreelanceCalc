@@ -42,11 +42,6 @@ const jsonLd = {
   description:
     "Онлайн-калькулятор налога на профессиональный доход (НПД) для самозанятых. Ставки 4% и 6%, бонус первого года, контроль лимита 2.4 млн ₽.",
   offers: { "@type": "Offer", price: "0", priceCurrency: "RUB" },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "312",
-  },
   breadcrumb: {
     "@type": "BreadcrumbList",
     itemListElement: [

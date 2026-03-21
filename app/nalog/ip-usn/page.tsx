@@ -46,11 +46,6 @@ const jsonLd = {
       url: `${BASE_URL}/nalog/ip-usn`,
       offers: { "@type": "Offer", price: "0", priceCurrency: "RUB" },
       inLanguage: "ru",
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: "4.8",
-        reviewCount: "247",
-      },
     },
     {
       "@type": "BreadcrumbList",
