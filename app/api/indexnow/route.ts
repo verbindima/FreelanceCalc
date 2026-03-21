@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import { CITIES as CITY_DATA } from "../../goroda/cities";
+import { CITY_PAIRS } from "../../goroda/sravnenie/page";
 import { SPECIALTIES as SPECIALTY_DATA } from "../../stavka/[slug]/specialties";
 import { LEVELS } from "../../stavka/[slug]/opyt/[level]/levels";
+import { NAJEM_DATA } from "../../frilanc-vs-najm/najem-data";
 
 const BASE_URL = "https://freelancecalc-one.vercel.app";
 const INDEXNOW_KEY = "65be3d47fc9c440b9c82afe4b001c2ba";
@@ -58,6 +60,43 @@ function getAllUrls(): string[] {
     `${BASE_URL}/alternativa/habr-freelance-kalkulator`,
     `${BASE_URL}/alternativa/konsol-pro`,
     `${BASE_URL}/alternativa/yandex-pay-kalkulator`,
+    `${BASE_URL}/alternativa/freelancehunt-kalkulator`,
+    // Nalog cluster
+    `${BASE_URL}/nalog`,
+    `${BASE_URL}/nalog/ip-usn`,
+    `${BASE_URL}/nalog/sfr`,
+    `${BASE_URL}/nalog/sravnenie`,
+    // Embed
+    `${BASE_URL}/embed`,
+    // Sravnenie specialty hub + all comparison pages
+    `${BASE_URL}/sravnenie`,
+    `${BASE_URL}/sravnenie/frontend-vs-backend`,
+    `${BASE_URL}/sravnenie/python-vs-frontend`,
+    `${BASE_URL}/sravnenie/ui-ux-vs-graficheskij-dizajner`,
+    `${BASE_URL}/sravnenie/smm-vs-targetolog`,
+    `${BASE_URL}/sravnenie/kopirayter-vs-kontent-menedzher`,
+    `${BASE_URL}/sravnenie/qa-vs-frontend`,
+    `${BASE_URL}/sravnenie/data-analyst-vs-ml`,
+    `${BASE_URL}/sravnenie/fullstack-vs-backend`,
+    `${BASE_URL}/sravnenie/java-razrabotchik-vs-python-razrabotchik`,
+    `${BASE_URL}/sravnenie/1c-razrabotchik-vs-php`,
+    `${BASE_URL}/sravnenie/android-vs-ios-razrabotchik`,
+    `${BASE_URL}/sravnenie/bitrix-razrabotchik-vs-wordpress-razrabotchik`,
+    `${BASE_URL}/sravnenie/devops-vs-backend`,
+    `${BASE_URL}/sravnenie/golang-razrabotchik-vs-python-razrabotchik`,
+    `${BASE_URL}/sravnenie/java-razrabotchik-vs-golang-razrabotchik`,
+    `${BASE_URL}/sravnenie/net-razrabotchik-vs-java-razrabotchik`,
+    `${BASE_URL}/sravnenie/php-razrabotchik-vs-python-razrabotchik`,
+    `${BASE_URL}/sravnenie/seo-specialist-vs-smm-specialist`,
+    `${BASE_URL}/sravnenie/menedzher-proektov-vs-biznes-analitik`,
+    `${BASE_URL}/sravnenie/seo-specialist-vs-targetolog`,
+    `${BASE_URL}/sravnenie/devops-vs-ml-inzhener`,
+    `${BASE_URL}/sravnenie/fullstack-vs-mobilnyj-razrabotchik`,
+    `${BASE_URL}/sravnenie/python-razrabotchik-vs-data-analyst`,
+    // Missing stati
+    `${BASE_URL}/stati/kak-stat-frilanserom-2026`,
+    `${BASE_URL}/stati/pochemu-frilansery-zanizhayt-stavki`,
+    `${BASE_URL}/stati/dogovor-gph-nalogi-frilansera-2026`,
   ];
 
   // Specialty pages
@@ -90,6 +129,20 @@ function getAllUrls(): string[] {
       for (const city of CITY_DATA) {
         urls.push(`${BASE_URL}/stavka/${spec.slug}/opyt/${lvl.slug}/${city.slug}`);
       }
+    }
+  }
+
+  // City comparison: hub + 12 pair pages
+  urls.push(`${BASE_URL}/goroda/sravnenie`);
+  for (const { city1, city2 } of CITY_PAIRS) {
+    urls.push(`${BASE_URL}/goroda/sravnenie/${city1}-vs-${city2}`);
+  }
+
+  // Frilanc-vs-najm hub + specialty pages
+  urls.push(`${BASE_URL}/frilanc-vs-najm`);
+  for (const { slug } of SPECIALTY_DATA) {
+    if (NAJEM_DATA[slug]) {
+      urls.push(`${BASE_URL}/frilanc-vs-najm/${slug}`);
     }
   }
 
