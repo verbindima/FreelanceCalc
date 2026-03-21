@@ -1051,6 +1051,58 @@ export default function FreelanceCalc() {
           </div>
         </section>
 
+        {/* Contextual tool recommendations — based on tax regime, drives traffic to calculators */}
+        {(() => {
+          type ToolCard = { href: string; icon: string; title: string; desc: string; goal: string };
+          const toolMap: Record<TaxRegime, ToolCard[]> = {
+            self_employed_fl: [
+              { href: "/nalog/sfr", icon: "🏥", title: "Стоит ли платить в СФР?", desc: "Рассчитайте, окупится ли добровольное страхование — больничный до 1 667 ₽/день.", goal: "tool_sfr_click" },
+              { href: "/instrumenty/kalkulator-pensii-samozanyatogo", icon: "👴", title: "Пенсия самозанятого", desc: "Сколько вы накопите без ПФР-взносов — и что с этим делать.", goal: "tool_pension_click" },
+              { href: "/instrumenty/kalkulator-naloga-samozanyatogo", icon: "🧾", title: "Калькулятор налога НПД", desc: "Точный расчёт НПД с учётом налогового вычета 10 000 ₽.", goal: "tool_npd_click" },
+            ],
+            self_employed_ul: [
+              { href: "/nalog/sfr", icon: "🏥", title: "Стоит ли платить в СФР?", desc: "Рассчитайте, окупится ли добровольное страхование — больничный до 1 667 ₽/день.", goal: "tool_sfr_click" },
+              { href: "/instrumenty/kalkulator-naloga-samozanyatogo", icon: "🧾", title: "Калькулятор налога НПД", desc: "Точный расчёт НПД 6% с учётом налогового вычета 10 000 ₽.", goal: "tool_npd_click" },
+              { href: "/nalog/sravnenie", icon: "⚖️", title: "Самозанятый vs ИП", desc: "Когда стоит переходить на ИП: сравнение налогов и ограничений.", goal: "tool_compare_click" },
+            ],
+            ip_usn6: [
+              { href: "/nalog/ip-usn", icon: "📊", title: "ИП на УСН: полный расчёт", desc: "Налог 6% + взносы в СФР — считайте реальную нагрузку.", goal: "tool_ip_usn_click" },
+              { href: "/nalog/sravnenie", icon: "⚖️", title: "УСН 6% vs УСН 15%", desc: "Сравните режимы с учётом ваших расходов — кому выгоднее.", goal: "tool_compare_click" },
+              { href: "/instrumenty/kalkulator-stoimosti-sotrudnika", icon: "👷", title: "Стоимость сотрудника", desc: "Если нанимаете помощника — посчитайте реальные затраты.", goal: "tool_employee_click" },
+            ],
+            ip_usn15: [
+              { href: "/nalog/ip-usn", icon: "📊", title: "ИП на УСН: полный расчёт", desc: "Налог 15% «Доходы минус расходы» — введите расходы и получите точную сумму.", goal: "tool_ip_usn_click" },
+              { href: "/nalog/sravnenie", icon: "⚖️", title: "УСН 15% vs УСН 6%", desc: "Выгоден при расходах >60% дохода. Проверьте свой случай.", goal: "tool_compare_click" },
+              { href: "/instrumenty/kalkulator-stoimosti-sotrudnika", icon: "👷", title: "Стоимость сотрудника", desc: "Если нанимаете помощников — считайте реальные затраты включая взносы.", goal: "tool_employee_click" },
+            ],
+            none: [
+              { href: "/instrumenty/kalkulator-dogovora-gph", icon: "📋", title: "ГПХ vs Самозанятость", desc: "Работаете без статуса? Посчитайте, сколько теряете на НДФЛ 13% vs НПД 4–6%.", goal: "tool_gph_click" },
+              { href: "/instrumenty/kalkulator-naloga-samozanyatogo", icon: "🧾", title: "Калькулятор налога НПД", desc: "Узнайте, сколько заплатите после регистрации самозанятым.", goal: "tool_npd_click" },
+              { href: "/nalog/sravnenie", icon: "⚖️", title: "Самозанятый vs ИП", desc: "Какой статус выгоднее для вашего уровня дохода.", goal: "tool_compare_click" },
+            ],
+          };
+          const tools = toolMap[taxRegime] ?? toolMap["self_employed_fl"];
+          return (
+            <section className="mt-6">
+              <h3 className="text-sm font-bold text-slate-700 mb-3">🛠️ Полезные инструменты для вашего режима</h3>
+              <div className="grid gap-2.5 sm:grid-cols-3">
+                {tools.map((t) => (
+                  <Link
+                    key={t.href}
+                    href={t.href}
+                    className="flex flex-col gap-1 bg-white border border-slate-200 rounded-xl px-4 py-3 hover:border-indigo-300 hover:bg-indigo-50/40 transition-colors group"
+                    onClick={() => ymGoal(t.goal)}
+                  >
+                    <span className="text-lg leading-none">{t.icon}</span>
+                    <span className="text-sm font-semibold text-slate-800 group-hover:text-indigo-700 transition-colors leading-snug">{t.title}</span>
+                    <span className="text-xs text-slate-500 leading-snug">{t.desc}</span>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          );
+        })()}
+
         {/* Contextual article recommendations — internal SEO links + keeps user on site after calc */}
         <section className="mt-8">
           <h2 className="text-base font-bold text-slate-800 mb-3">📚 Читайте по теме</h2>
