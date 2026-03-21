@@ -152,15 +152,15 @@ export default function BenchmarkPage() {
         <main className="max-w-5xl mx-auto px-4 py-8 md:py-12">
           {/* Hero */}
           <div className="mb-8 md:mb-10">
-            <div className="inline-flex items-center gap-2 bg-indigo-50 text-indigo-700 text-xs font-semibold px-3 py-1 rounded-full mb-4">
-              📊 Данные Q1 2026 · Обновлено март 2026
+            <div className="inline-flex items-center gap-2 bg-red-50 text-red-700 text-xs font-semibold px-3 py-1 rounded-full mb-4">
+              ⚠️ Без этих данных ты, скорее всего, занижаешь ставку
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
               Ставки фрилансеров по городам России — 2026
             </h1>
             <p className="text-lg text-gray-600 leading-relaxed max-w-2xl">
-              Медианные часовые ставки по <strong>22+ специальностям</strong> в <strong>10 городах</strong>:
-              Москва, Санкт-Петербург и 8 региональных центров. Джун / мид / сеньор.
+              Если ты не знаешь медианную ставку в своём городе — ты, скорее всего, <strong>уже работаешь дешевле рынка</strong>.
+              Реальные ставки по <strong>22+ специальностям</strong> в <strong>10 городах</strong> России. Джун / мид / сеньор.
             </p>
           </div>
 
@@ -245,15 +245,15 @@ export default function BenchmarkPage() {
 
               {/* Lock CTA on top of blurred area */}
               <div className="absolute inset-y-0 right-0 w-[calc(100%-340px)] flex items-center justify-center pointer-events-none">
-                <div className="pointer-events-auto bg-white border border-indigo-200 shadow-lg rounded-2xl px-6 py-5 max-w-xs text-center mx-4">
-                  <div className="text-2xl mb-2">🔒</div>
+                <div className="pointer-events-auto bg-white border border-red-200 shadow-lg rounded-2xl px-6 py-5 max-w-xs text-center mx-4">
+                  <div className="text-2xl mb-2">📉</div>
                   <p className="text-sm font-semibold text-gray-800 mb-1">
-                    8 городов заблокированы
+                    Вы работаете дешевле рынка?
                   </p>
                   <p className="text-xs text-gray-500 mb-3">
-                    Новосибирск, Екатеринбург, Казань, Краснодар и ещё 4 города — в полном PDF
+                    Без данных по своему городу — не узнаете. Новосибирск, Казань, Краснодар и ещё 5 городов — в PDF
                   </p>
-                  <BuyButton label="Открыть за 249 ₽" />
+                  <BuyButton label="Проверить за 249 ₽" />
                 </div>
               </div>
             </div>
@@ -302,7 +302,7 @@ export default function BenchmarkPage() {
               <span className="text-2xl">👥</span>
               <div>
                 <div className="font-bold text-gray-800 text-sm">134 фрилансера</div>
-                <div className="text-xs text-gray-500">уже скачали бенчмарк</div>
+                <div className="text-xs text-gray-500">уже проверили — не теряют ли деньги</div>
               </div>
             </div>
             <PriceCountdown />
