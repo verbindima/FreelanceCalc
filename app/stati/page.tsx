@@ -156,6 +156,14 @@ const ARTICLES = [
     readTime: "7 мин",
     tag: "Рынок",
   },
+  {
+    slug: "finansy-frilansera-kak-raspredelyat-dohod",
+    title: "Финансы фрилансера: как распределять доход на налоги, подушку и жизнь",
+    description:
+      "Практическая формула 40-20-20-10-15 для распределения дохода. Сколько откладывать на налоги, финансовую подушку и развитие — с примерами расчёта.",
+    readTime: "7 мин",
+    tag: "Финансы",
+  },
 ];
 
 const TAG_COLORS: Record<string, string> = {
