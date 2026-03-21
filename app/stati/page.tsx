@@ -29,6 +29,14 @@ export const metadata: Metadata = {
 
 const ARTICLES = [
   {
+    slug: "samozanyatyj-i-oficialnaya-rabota-2026",
+    title: "Самозанятый и официальная работа 2026: можно ли совмещать?",
+    description:
+      "Да, самозанятый вправе работать по трудовому договору одновременно. Разбираем ограничения, налоги, лимит 2,4 млн ₽ и как это учесть в ставке фрилансера.",
+    readTime: "8 мин",
+    tag: "Самозанятость",
+  },
+  {
     slug: "kak-vystavit-schet-samozanyatomu",
     title: "Как выставить счёт самозанятому клиенту: чек в Мой налог 2026",
     description: "Самозанятые выставляют не счета, а чеки через приложение Мой налог. Пошаговая инструкция: как оформить чек для физлица и юрлица, сроки, штрафы и аннулирование.",
@@ -313,11 +321,13 @@ const TAG_COLORS: Record<string, string> = {
   Рынок: "bg-blue-50 text-blue-700",
   Руководство: "bg-indigo-50 text-indigo-700",
   Налоги: "bg-amber-50 text-amber-700",
+  Самозанятость: "bg-green-50 text-green-700",
   Аналитика: "bg-violet-50 text-violet-700",
   Карьера: "bg-emerald-50 text-emerald-700",
   Заказчикам: "bg-rose-50 text-rose-700",
   Финансы: "bg-red-50 text-red-700",
   Биржи: "bg-teal-50 text-teal-700",
+  Международное: "bg-sky-50 text-sky-700",
 };
 
 const jsonLd = {
