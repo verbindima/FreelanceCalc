@@ -756,11 +756,30 @@ export default function FreelanceCalc() {
           ) : (
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
               <div className="flex-1">
+                {/* Kahneman loss-framing: personalized by market position.
+                    @dindex: "Цена вырастет на 30%" → +18% vs "скидка 30%".
+                    Loss > Gain. Same information, different frame. */}
                 <p className="text-sm font-bold text-indigo-800">
-                  Бесплатный гид: «Как поднять ставку на 30% за 3 месяца»
+                  {(() => {
+                    const monthlyHours = Math.round((results.billableDays / 12) * hoursPerDay);
+                    if (marketCtx.label === "Ниже рынка") {
+                      const lossPerMonth = fmt(Math.round((1200 - results.hourlyRate) * monthlyHours));
+                      return `Вы теряете ~${lossPerMonth} ₽/мес из-за заниженной ставки — 7 шагов, чтобы остановить`;
+                    }
+                    if (marketCtx.label === "Нижний квартиль рынка") {
+                      const lossPerMonth = fmt(Math.round((2000 - results.hourlyRate) * monthlyHours));
+                      return `75% коллег зарабатывают больше — вы упускаете ~${lossPerMonth} ₽/мес`;
+                    }
+                    if (marketCtx.label === "Рыночный уровень") {
+                      return "Без роста ставки инфляция 12%/год незаметно «съедает» доход";
+                    }
+                    return "Как удержать топ-позицию и расти без потери клиентов";
+                  })()}
                 </p>
                 <p className="text-xs text-indigo-600 mt-0.5">
-                  7 шагов с примерами — пришлём на email
+                  {(marketCtx.label === "Ниже рынка" || marketCtx.label === "Нижний квартиль рынка")
+                    ? "Бесплатно: 7 конкретных шагов с примерами — пришлём на email"
+                    : "Бесплатно: 7 шагов с примерами — пришлём на email"}
                 </p>
               </div>
               <div className="flex gap-2 w-full sm:w-auto">
