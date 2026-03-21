@@ -47,6 +47,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
+  // 26 specialties × 3 levels × 16 cities = 1248 pages targeting "ставка junior frontend в Москве"
+  const levelCityPages: MetadataRoute.Sitemap = [];
+  for (const spec of SPECIALTY_DATA) {
+    for (const lvl of LEVELS) {
+      for (const city of CITY_DATA) {
+        levelCityPages.push({
+          url: `${BASE_URL}/stavka/${spec.slug}/opyt/${lvl.slug}/${city.slug}`,
+          lastModified: new Date(),
+          changeFrequency: "monthly" as const,
+          priority: 0.65,
+        });
+      }
+    }
+  }
+
   return [
     {
       url: BASE_URL,
@@ -289,5 +304,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...cityPages,
     ...specialtyCityPages,
     ...experienceLevelPages,
+    ...levelCityPages,
   ];
 }
