@@ -227,6 +227,27 @@ export default function FreelanceCalc() {
     window.open(vkUrl, "_blank", "noopener,noreferrer");
   }, [results, marketCtx]);
 
+  const handleShareWhatsApp = useCallback(() => {
+    ymGoal("share_whatsapp_click");
+    const url = window.location.href;
+    const hourly = Math.round(results.hourlyRate);
+    const daily = Math.round(results.dailyRate);
+    const fmtNum = (n: number) => new Intl.NumberFormat("ru-RU").format(n);
+    const isBelow = hourly < 1200;
+    const hook = isBelow
+      ? `Посчитал ставку — оказывается, занижаю цену. Вот мои реальные цифры с налогами и загрузкой:`
+      : marketCtx.label === "Выше медианы" || marketCtx.label === "Топ рынка"
+      ? `Посчитал ставку — я в топе рынка 🎉 Проверь свою, интересно сравнить:`
+      : `Посчитал свою ставку фрилансера. В чатах никто не называет реальные цифры — вот мои:`;
+    const text =
+      `${hook}\n\n` +
+      `${marketCtx.emoji} ${fmtNum(hourly)} ₽/час · ${fmtNum(daily)} ₽/день — ${marketCtx.label.toLowerCase()}\n` +
+      `(учёт налогов, отпуска и загрузки)\n\n` +
+      `Рассчитай свою → ${url}`;
+    const waUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(waUrl, "_blank", "noopener,noreferrer");
+  }, [results, marketCtx]);
+
   const handleOpenUpsell = useCallback(() => {
     setShowUpsellModal(true);
     ymGoal("upsell_click");
@@ -502,6 +523,13 @@ export default function FreelanceCalc() {
               >
                 ВК
               </button>
+              <button
+                onClick={handleShareWhatsApp}
+                className="flex items-center gap-1.5 text-xs bg-[#25D366]/80 hover:bg-[#25D366] active:bg-[#1da851] text-white px-3 py-1.5 rounded-lg transition-colors"
+                title="Поделиться в WhatsApp"
+              >
+                WA
+              </button>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
@@ -690,17 +718,25 @@ export default function FreelanceCalc() {
           })()}
         </div>
 
-        {/* Viral share nudge — appears after user sees their rate; drives Telegram sharing */}
-        <div className="mt-3 flex items-center justify-between gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
-          <p className="text-xs text-slate-500">
+        {/* Viral share nudge — appears after user sees their rate; drives sharing via Telegram & WhatsApp */}
+        <div className="mt-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
+          <p className="text-xs text-slate-500 mb-2">
             💬 В большинстве фриланс-чатов никто не называет реальные ставки. Нарушьте традицию — поделитесь своей.
           </p>
-          <button
-            onClick={handleShareTelegram}
-            className="shrink-0 flex items-center gap-1.5 text-xs bg-[#2AABEE] hover:bg-[#229ED9] text-white px-3 py-1.5 rounded-lg transition-colors font-medium"
-          >
-            ✈️ Поделиться
-          </button>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={handleShareTelegram}
+              className="flex items-center gap-1.5 text-xs bg-[#2AABEE] hover:bg-[#229ED9] text-white px-3 py-1.5 rounded-lg transition-colors font-medium"
+            >
+              ✈️ Telegram
+            </button>
+            <button
+              onClick={handleShareWhatsApp}
+              className="flex items-center gap-1.5 text-xs bg-[#25D366] hover:bg-[#1da851] text-white px-3 py-1.5 rounded-lg transition-colors font-medium"
+            >
+              📱 WhatsApp
+            </button>
+          </div>
         </div>
 
         {/* Lead magnet — captures email BEFORE the paywall; works even when ЮKassa is broken */}
