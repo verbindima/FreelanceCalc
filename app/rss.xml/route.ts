@@ -4,6 +4,14 @@ const BASE_URL = "https://freelancecalc-one.vercel.app";
 
 const ARTICLES = [
   {
+    slug: "portfolio-frilansera-2026",
+    title: "Портфолио фрилансера 2026: как создать с нуля и получить первые заказы",
+    description:
+      "Без портфолио вы теряете 7 из 10 заказов. Пошаговый план: что показывать, где размещать, как оформить кейсы без коммерческого опыта. Структура, типичные ошибки и реальные потери.",
+    tag: "Руководство",
+    pubDate: "Fri, 21 Mar 2026 21:00:00 +0300",
+  },
+  {
     slug: "fl-ru-vs-kwork-birzha-frilanserov-2026",
     title: "FL.ru или Kwork: какую биржу выбрать фрилансеру в 2026 году",
     description:
