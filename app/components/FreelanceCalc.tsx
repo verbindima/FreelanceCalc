@@ -609,9 +609,17 @@ export default function FreelanceCalc() {
         {/* Lead magnet — captures email BEFORE the paywall; works even when ЮKassa is broken */}
         <section className="mt-4 bg-indigo-50 border border-indigo-200 rounded-2xl px-5 py-4">
           {promoSubmitted ? (
-            <p className="text-sm font-semibold text-indigo-700 text-center py-1">
-              Отправили! Гид придёт на {promoEmail}
-            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 py-1">
+              <p className="text-sm font-semibold text-indigo-700">
+                ✅ Готово! Гид уже доступен:
+              </p>
+              <a
+                href="/guide"
+                className="shrink-0 text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors"
+              >
+                Читать гид сейчас →
+              </a>
+            </div>
           ) : (
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
               <div className="flex-1">
