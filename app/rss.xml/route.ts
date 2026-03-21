@@ -4,6 +4,30 @@ const BASE_URL = "https://freelancecalc-one.vercel.app";
 
 const ARTICLES = [
   {
+    slug: "stavki-razrabotchikov-po-yazykam-2026",
+    title: "Ставки разработчиков по языкам программирования 2026 — Python, JS, PHP, Go, Java",
+    description:
+      "Сколько берут разработчики-фрилансеры в 2026 году: Python, JavaScript/TypeScript, Java, Go, PHP, C#/.NET, 1C, Swift, Kotlin. Медианные ставки Junior/Middle/Senior с таблицей и калькулятором.",
+    tag: "Рынок",
+    pubDate: "Sat, 21 Mar 2026 17:00:00 +0300",
+  },
+  {
+    slug: "pochemu-frilansery-zanizhayt-stavki",
+    title: "Почему фрилансеры занижают ставки — и теряют 480 000 ₽ в год",
+    description:
+      "Средний фрилансер недооценивает себя на 30–40%. В деньгах это 400–600 тысяч рублей в год. Разбираем 5 причин занижения ставки и как выйти из этой ловушки.",
+    tag: "Карьера",
+    pubDate: "Sat, 21 Mar 2026 16:00:00 +0300",
+  },
+  {
+    slug: "dogovor-gph-nalogi-frilansera-2026",
+    title: "Договор ГПХ для фрилансера: налоги и риски 2026",
+    description:
+      "Кто платит налоги по договору ГПХ, как рассчитать НДФЛ 13%, чем ГПХ отличается от самозанятости и ИП. Калькулятор ставки с учётом налогов договора ГПХ.",
+    tag: "Налоги",
+    pubDate: "Sat, 21 Mar 2026 15:00:00 +0300",
+  },
+  {
     slug: "kak-stat-frilanserom-2026",
     title: "Как стать фрилансером в 2026: пошаговый план для начинающих",
     description:
