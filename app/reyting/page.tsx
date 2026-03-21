@@ -60,6 +60,87 @@ const CATEGORY_COLORS: Record<string, string> = {
   "Креатив":    "bg-rose-50 text-rose-700 border-rose-200",
 };
 
+// ItemList schema — shows top-N items directly as a rich list snippet in Yandex/Google SERP
+const itemListJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Рейтинг ставок фрилансеров 2026 — топ специальностей по часовой ставке",
+  description:
+    "Медианные часовые ставки фрилансеров по 26 специальностям в России за Q1 2026. Данные агрегированы с FL.ru, Kwork, Хабр Карьера и профессиональных сообществ.",
+  url: `${BASE_URL}/reyting`,
+  numberOfItems: RATING.length,
+  itemListOrder: "https://schema.org/ItemListOrderDescending",
+  itemListElement: RATING.map((s) => ({
+    "@type": "ListItem",
+    position: s.rank,
+    name: `#${s.rank} ${s.title} — ${s.median} ₽/час`,
+    url: `${BASE_URL}/stavka/${s.slug}`,
+    item: {
+      "@type": "Occupation",
+      name: s.title,
+      estimatedSalary: {
+        "@type": "MonetaryAmountDistribution",
+        name: "Медианная часовая ставка",
+        currency: "RUB",
+        duration: "PT1H",
+        median: s.mid,
+      },
+      occupationLocation: {
+        "@type": "Country",
+        name: "Россия",
+      },
+    },
+  })),
+};
+
+// FAQPage schema — triggers FAQ accordion in Yandex/Google SERP (significantly boosts CTR)
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Кто зарабатывает больше всех на фрилансе в 2026 году?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Топ-3 специальности по медианной ставке: ML-инженер (3 000–7 000 ₽/час), DevOps-инженер (2 500–6 000 ₽/час) и мобильный разработчик (2 500–5 000 ₽/час). IT-разработчики в целом зарабатывают значительно больше маркетологов и специалистов по контенту.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Какова средняя ставка фрилансера в России в 2026 году?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Средняя ставка по всем специальностям — около 1 500–2 000 ₽/час. Разброс огромный: от 400 ₽/час (переводчики и контент-менеджеры) до 7 000 ₽/час (ML-инженеры). Точная ставка зависит от специальности, опыта, города и налогового режима.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "На сколько ставки фрилансеров отличаются по городам России?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "В Москве ставки фрилансеров в среднем на 20–40% выше, чем в регионах. В Санкт-Петербурге — на 10–25% выше регионального среднего. Для IT-специальностей разница меньше, так как большинство проектов ведётся удалённо и клиент платит по рыночной ставке независимо от города.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Как рассчитать свою ставку фрилансера с учётом налогов?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Часовая ставка зависит от желаемого дохода, налогового режима (самозанятый 4–6%, ИП 6%), количества рабочих дней, дней отпуска и процента загрузки. При самозанятости и 70% загрузке на желаемый доход 150 000 ₽/месяц нужна ставка около 1 300–1 500 ₽/час. Используйте калькулятор FreelanceCalc для точного расчёта под ваши параметры.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Какие специальности самые востребованные среди фрилансеров в 2026?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Наиболее востребованные специальности: ML/AI-инженеры (🔥 тренд роста), DevOps-инженеры, мобильные разработчики, Python- и Fullstack-разработчики. В маркетинге активно растёт спрос на таргетологов и SEO-специалистов. Специальности с символом 🔥 показывают наибольший рост ставок в Q1 2026.",
+      },
+    },
+  ],
+};
+
 export default function ReytingPage() {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -69,7 +150,7 @@ export default function ReytingPage() {
       "Топ специальностей фрилансеров по часовой ставке. Медианные данные по 26 специальностям за Q1 2026.",
     url: `${BASE_URL}/reyting`,
     datePublished: "2026-01-01",
-    dateModified: "2026-03-01",
+    dateModified: "2026-03-21",
     publisher: {
       "@type": "Organization",
       name: "FreelanceCalc",
@@ -86,9 +167,20 @@ export default function ReytingPage() {
 
   return (
     <>
+      {/* Article schema */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {/* ItemList schema — rich list snippet in SERP showing top specialties + rates */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
+      {/* FAQPage schema — FAQ accordion in SERP for common freelance rate questions */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
       <main className="max-w-2xl mx-auto px-4 py-10">
