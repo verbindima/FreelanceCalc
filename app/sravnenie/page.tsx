@@ -6,7 +6,7 @@ const BASE_URL = "https://freelancecalc-one.vercel.app";
 export const metadata: Metadata = {
   title: "Сравнение специальностей фрилансеров: кто больше зарабатывает в 2026",
   description:
-    "Сравниваем ставки фрилансеров по 23 парам специальностей: Frontend vs Backend, Android vs iOS, DevOps vs ML, Python vs Data Analyst, PM vs BA, SEO vs Таргет и другие. Таблицы с Junior, Middle, Senior ставками 2026 года.",
+    "Сравниваем ставки фрилансеров по 26 парам специальностей: Frontend vs Backend, React vs Frontend, Маркетолог vs SMM, Продакт vs Проджект, Android vs iOS, DevOps vs ML и другие. Таблицы с Junior, Middle, Senior ставками 2026 года.",
   keywords: [
     "сравнение специальностей фрилансеров",
     "кто больше зарабатывает фрилансер",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Сравнение специальностей фрилансеров: кто больше зарабатывает в 2026",
     description:
-      "Детальные сравнения ставок по 23 парам специальностей. Junior, Middle, Senior — кто зарабатывает больше и почему.",
+      "Детальные сравнения ставок по 26 парам специальностей. Junior, Middle, Senior — кто зарабатывает больше и почему.",
     type: "website",
     locale: "ru_RU",
     url: `${BASE_URL}/sravnenie`,
@@ -331,6 +331,42 @@ const comparisons = [
     seniorDiff: "6 500 vs 5 500 ₽/час",
     tags: ["IT", "Data Science"],
   },
+  {
+    slug: "product-manager-vs-menedzher-proektov",
+    title: "Продакт-менеджер vs Проджект-менеджер",
+    subtitle: "IT-менеджмент",
+    winner: "Продакт +133%",
+    winnerColor: "violet",
+    description: "Продакт зарабатывает на 133% больше проджекта на Middle. Ответственность за бизнес-результат стоит вдвое дороже координации.",
+    juniorDiff: "2 000 vs 1 000 ₽/час",
+    middleDiff: "3 500 vs 1 500 ₽/час",
+    seniorDiff: "5 500 vs 3 000 ₽/час",
+    tags: ["IT", "Менеджмент", "Продукт"],
+  },
+  {
+    slug: "react-razrabotchik-vs-frontend-razrabotchik",
+    title: "React разработчик vs Frontend (general)",
+    subtitle: "Веб-разработка",
+    winner: "React +17%",
+    winnerColor: "cyan",
+    description: "React-специалист берёт на 17% больше фронтенд-дженералиста. Специализация на React+Next.js поднимает ставку без смены языка.",
+    juniorDiff: "1 800 vs 1 500 ₽/час",
+    middleDiff: "3 500 vs 3 000 ₽/час",
+    seniorDiff: "6 000 vs 5 500 ₽/час",
+    tags: ["IT", "Разработка", "React"],
+  },
+  {
+    slug: "marketolog-frilanser-vs-smm-specialist",
+    title: "Маркетолог vs SMM-специалист",
+    subtitle: "Digital-маркетинг",
+    winner: "Маркетолог +50%",
+    winnerColor: "green",
+    description: "Маркетолог зарабатывает на 50% больше SMM на Middle. Управление всей воронкой ценится выше одного канала.",
+    juniorDiff: "800 vs 500 ₽/час",
+    middleDiff: "1 800 vs 1 200 ₽/час",
+    seniorDiff: "3 000 vs 2 500 ₽/час",
+    tags: ["Маркетинг", "SMM"],
+  },
 ];
 
 const winnerColorMap: Record<string, string> = {
@@ -378,7 +414,7 @@ export default function SravneniePage() {
 
           <p className="text-lg text-gray-600 mb-8 leading-relaxed">
             Выбираете специальность или думаете о смене направления? Здесь — честное сравнение ставок
-            по 23 парам специальностей: от IT-разработки и мобильной разработки до маркетинга, дизайна и аналитики.
+            по 26 парам специальностей: от IT-разработки и мобильной разработки до маркетинга, дизайна и аналитики.
             Данные Junior, Middle, Senior с расчётом месячного дохода. Актуально на Q1 2026.
           </p>
 
@@ -399,7 +435,7 @@ export default function SravneniePage() {
 
           {/* Comparison grid */}
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Все сравнения специальностей (23 пары)</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Все сравнения специальностей (26 пар)</h2>
             <div className="grid md:grid-cols-2 gap-5">
               {comparisons.map((comp) => (
                 <Link
