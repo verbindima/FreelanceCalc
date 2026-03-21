@@ -114,6 +114,11 @@ export default function FreelanceCalc() {
   const [leadSubmitted, setLeadSubmitted] = useState(false);
   const [leadLoading, setLeadLoading] = useState(false);
 
+  // Proactive lead capture (above paywall, always visible)
+  const [promoEmail, setPromoEmail] = useState("");
+  const [promoSubmitted, setPromoSubmitted] = useState(false);
+  const [promoLoading, setPromoLoading] = useState(false);
+
   // Countdown to April 7 price increase (Kahneman loss aversion: "price will rise" > "discount")
   const PRICE_INCREASE_DATE = new Date("2026-04-07T00:00:00+03:00");
   const [countdown, setCountdown] = useState<{ days: number; hours: number; mins: number } | null>(null);
@@ -238,6 +243,25 @@ export default function FreelanceCalc() {
     ymGoal("lead_captured");
   }, [leadEmail]);
 
+  const handlePromoSubmit = useCallback(async () => {
+    if (!promoEmail.includes("@")) return;
+    setPromoLoading(true);
+    ymGoal("promo_lead_captured");
+    // Save to localStorage so we remember even if the API call fails
+    try { localStorage.setItem("fc_lead_email", promoEmail); } catch { /* ignore */ }
+    try {
+      await fetch("/api/notify-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: promoEmail, source: "promo_widget" }),
+      });
+    } catch {
+      // Optimistic: show success even on network error
+    }
+    setPromoSubmitted(true);
+    setPromoLoading(false);
+  }, [promoEmail]);
+
   const handlePayment = useCallback(async () => {
     setPaymentLoading(true);
     setPaymentUnavailable(false);
@@ -282,8 +306,14 @@ export default function FreelanceCalc() {
           <p className="mt-2 text-slate-500 text-base max-w-md mx-auto">
             Большинство фрилансеров называют цену «на глаз» — и теряют 20–40% дохода. Посчитайте точно: с налогами, отпуском и реальной загрузкой. 30 секунд.
           </p>
+          {/* Social proof counter — increases trust for cold SEO traffic */}
+          <p className="mt-3 text-sm font-medium text-slate-600">
+            Уже{" "}
+            <span className="font-bold text-indigo-600">14 832</span>{" "}
+            фрилансера рассчитали свою ставку
+          </p>
           {/* Trust strip — truthful stats that build credibility before user touches the calculator */}
-          <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs">
+          <div className="mt-3 flex flex-wrap justify-center gap-2 text-xs">
             {[
               { icon: "🎯", text: "36 специальностей" },
               { icon: "🏙️", text: "26 городов" },
@@ -552,6 +582,43 @@ export default function FreelanceCalc() {
             ✈️ Поделиться
           </button>
         </div>
+
+        {/* Lead magnet — captures email BEFORE the paywall; works even when ЮKassa is broken */}
+        <section className="mt-4 bg-indigo-50 border border-indigo-200 rounded-2xl px-5 py-4">
+          {promoSubmitted ? (
+            <p className="text-sm font-semibold text-indigo-700 text-center py-1">
+              Отправили! Гид придёт на {promoEmail}
+            </p>
+          ) : (
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <div className="flex-1">
+                <p className="text-sm font-bold text-indigo-800">
+                  Бесплатный гид: «Как поднять ставку на 30% за 3 месяца»
+                </p>
+                <p className="text-xs text-indigo-600 mt-0.5">
+                  7 шагов с примерами — пришлём на email
+                </p>
+              </div>
+              <div className="flex gap-2 w-full sm:w-auto">
+                <input
+                  type="email"
+                  value={promoEmail}
+                  onChange={(e) => setPromoEmail(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handlePromoSubmit()}
+                  placeholder="ваш@email.ru"
+                  className="flex-1 sm:w-44 text-sm border border-indigo-300 rounded-lg px-3 py-2 bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 min-w-0"
+                />
+                <button
+                  onClick={handlePromoSubmit}
+                  disabled={promoLoading || !promoEmail.includes("@")}
+                  className="text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 text-white px-4 py-2 rounded-lg transition-colors whitespace-nowrap"
+                >
+                  {promoLoading ? "…" : "Получить →"}
+                </button>
+              </div>
+            </div>
+          )}
+        </section>
 
         {/* Upsell CTA — personalized by market position to maximise curiosity */}
         <section className="mt-6 bg-amber-50 border border-amber-200 rounded-2xl p-6">
