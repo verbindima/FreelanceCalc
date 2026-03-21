@@ -94,6 +94,12 @@ const jsonLd = {
           url: `${BASE_URL}/alternativa/yandex-pay-kalkulator`,
           name: "Альтернатива Яндекс Pay калькулятору НПД — FreelanceCalc",
         },
+        {
+          "@type": "WebPage",
+          "@id": `${BASE_URL}/alternativa/freelancehunt-kalkulator`,
+          url: `${BASE_URL}/alternativa/freelancehunt-kalkulator`,
+          name: "Альтернатива Freelancehunt: персональный калькулятор ставки — FreelanceCalc",
+        },
       ],
     },
     {
@@ -291,6 +297,15 @@ const competitors = [
     tags: ["только налог НПД", "без ставки", "экосистема Яндекс"],
     pros: "Удобен в экосистеме Яндекс, точный расчёт НПД",
     cons: "Не считает ставку — задача стоит до получения дохода, а не после",
+  },
+  {
+    slug: "freelancehunt-kalkulator",
+    name: "Freelancehunt",
+    url: "freelancehunt.com/statistics/rates",
+    description: "Крупная фриланс-биржа со статистикой ставок по платформе. Полезный ориентир, но средние цифры не учитывают ваши налоги, загрузку и отпуск — нужен персональный расчёт.",
+    tags: ["биржа фриланса", "статистика ставок", "нет персонального расчёта"],
+    pros: "Реальные данные о ценах на бирже",
+    cons: "Нет персонального калькулятора с налогами и загрузкой",
   },
 ];
 
