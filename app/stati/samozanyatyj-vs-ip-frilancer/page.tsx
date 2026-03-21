@@ -637,6 +637,12 @@ export default function SamozanyatyjVsIpPage() {
           {/* Bottom nav */}
           <div className="border-t border-gray-200 pt-6 flex flex-wrap gap-3">
             <Link
+              href="/stati/samozanyatyj-ipoteka-2026"
+              className="text-sm text-blue-600 hover:underline"
+            >
+              Ипотека для самозанятых 2026 →
+            </Link>
+            <Link
               href="/stati/stavka-samozanyatogo-2026"
               className="text-sm text-blue-600 hover:underline"
             >
