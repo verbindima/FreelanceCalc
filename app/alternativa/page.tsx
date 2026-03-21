@@ -76,6 +76,12 @@ const jsonLd = {
           url: `${BASE_URL}/alternativa/klerk-ru-kalkulator`,
           name: "Альтернатива Klerk.ru для расчёта ставки фрилансера — FreelanceCalc",
         },
+        {
+          "@type": "WebPage",
+          "@id": `${BASE_URL}/alternativa/habr-freelance-kalkulator`,
+          url: `${BASE_URL}/alternativa/habr-freelance-kalkulator`,
+          name: "Калькулятор ставки для Habr Freelance — FreelanceCalc",
+        },
       ],
     },
     {
@@ -246,6 +252,15 @@ const competitors = [
     tags: ["авторитетный ресурс", "статьи о ставках", "нет калькулятора", "нет персональных данных"],
     pros: "Подробные налоговые гайды и аналитика рынка",
     cons: "Нет персонального расчёта ставки с налогами и загрузкой",
+  },
+  {
+    slug: "habr-freelance-kalkulator",
+    name: "Habr Freelance",
+    url: "freelance.habr.com",
+    description: "Главная IT-фриланс платформа в России. Сильное профессиональное сообщество, но нет встроенного калькулятора ставки: IT-специалисты ставят цену «по ощущениям».",
+    tags: ["главная IT-биржа", "нет калькулятора", "нет рыночных данных"],
+    pros: "Качественная аудитория IT-заказчиков",
+    cons: "Нет инструмента для расчёта ставки с налогами и рыночными медианами",
   },
 ];
 
