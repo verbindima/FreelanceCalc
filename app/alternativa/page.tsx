@@ -82,6 +82,18 @@ const jsonLd = {
           url: `${BASE_URL}/alternativa/habr-freelance-kalkulator`,
           name: "Калькулятор ставки для Habr Freelance — FreelanceCalc",
         },
+        {
+          "@type": "WebPage",
+          "@id": `${BASE_URL}/alternativa/konsol-pro`,
+          url: `${BASE_URL}/alternativa/konsol-pro`,
+          name: "Альтернатива Konsol.pro для фрилансеров — FreelanceCalc",
+        },
+        {
+          "@type": "WebPage",
+          "@id": `${BASE_URL}/alternativa/yandex-pay-kalkulator`,
+          url: `${BASE_URL}/alternativa/yandex-pay-kalkulator`,
+          name: "Альтернатива Яндекс Pay калькулятору НПД — FreelanceCalc",
+        },
       ],
     },
     {
@@ -261,6 +273,24 @@ const competitors = [
     tags: ["главная IT-биржа", "нет калькулятора", "нет рыночных данных"],
     pros: "Качественная аудитория IT-заказчиков",
     cons: "Нет инструмента для расчёта ставки с налогами и рыночными медианами",
+  },
+  {
+    slug: "konsol-pro",
+    name: "Konsol.pro",
+    url: "konsol.pro/services/kalkulyator-npd",
+    description: "Сервис для самозанятых: регистрация, расчёт НПД, гайды. Калькулятор считает налог на уже полученный доход — но не помогает рассчитать правильную ставку заранее.",
+    tags: ["только налог НПД", "без расчёта ставки", "без рыночных данных"],
+    pros: "Полезен для управления налогами и регистрации самозанятого",
+    cons: "Не считает ставку — только налог на уже полученный доход",
+  },
+  {
+    slug: "yandex-pay-kalkulator",
+    name: "Яндекс Pay",
+    url: "pay.yandex.ru/business/calculators/kalkulyator-npd",
+    description: "Калькулятор НПД от Яндекс Pay: вводишь доход — получаешь налог 4% или 6%. Полезная утилита, но не поможет рассчитать ставку с учётом загрузки, отпуска и рыночных данных.",
+    tags: ["только налог НПД", "без ставки", "экосистема Яндекс"],
+    pros: "Удобен в экосистеме Яндекс, точный расчёт НПД",
+    cons: "Не считает ставку — задача стоит до получения дохода, а не после",
   },
 ];
 
