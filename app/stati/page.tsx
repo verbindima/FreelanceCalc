@@ -29,6 +29,14 @@ export const metadata: Metadata = {
 
 const ARTICLES = [
   {
+    slug: "kak-stat-frilanserom-2026",
+    title: "Как стать фрилансером в 2026: пошаговый план для начинающих",
+    description:
+      "6 шагов перехода на фриланс с реальными цифрами: специальность, расчёт ставки, самозанятость, портфолио, первые клиенты, финансовая подушка.",
+    readTime: "10 мин",
+    tag: "Руководство",
+  },
+  {
     slug: "pochemu-frilansery-zanizhayt-stavki",
     title: "Почему фрилансеры занижают ставки — и теряют 480 000 ₽ в год",
     description:
