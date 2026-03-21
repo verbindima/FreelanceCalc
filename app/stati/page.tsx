@@ -172,6 +172,14 @@ const ARTICLES = [
     readTime: "8 мин",
     tag: "Рынок",
   },
+  {
+    slug: "skolko-stoit-chas-raboty-programmista-2026",
+    title: "Сколько стоит час работы программиста-фрилансера в 2026 году",
+    description:
+      "Реальные ставки программистов-фрилансеров в России: Frontend, Backend, Fullstack, Mobile, Python, PHP, DevOps, 1С. Медианы по городам + бесплатный калькулятор для расчёта вашей ставки.",
+    readTime: "7 мин",
+    tag: "Рынок",
+  },
 ];
 
 const TAG_COLORS: Record<string, string> = {
