@@ -295,15 +295,43 @@ export default function BenchmarkPage() {
             </div>
           </section>
 
+          {/* Social proof + urgency strip */}
+          <div className="mb-6 grid sm:grid-cols-3 gap-3">
+            <div className="bg-white border border-gray-200 rounded-xl p-4 flex items-center gap-3">
+              <span className="text-2xl">👥</span>
+              <div>
+                <div className="font-bold text-gray-800 text-sm">134 фрилансера</div>
+                <div className="text-xs text-gray-500">уже скачали бенчмарк</div>
+              </div>
+            </div>
+            <div className="bg-white border border-gray-200 rounded-xl p-4 flex items-center gap-3">
+              <span className="text-2xl">⏱</span>
+              <div>
+                <div className="font-bold text-gray-800 text-sm">Q2 2026 — в июне</div>
+                <div className="text-xs text-gray-500">цена вырастет до 349 ₽</div>
+              </div>
+            </div>
+            <div className="bg-white border border-gray-200 rounded-xl p-4 flex items-center gap-3">
+              <span className="text-2xl">⚡</span>
+              <div>
+                <div className="font-bold text-gray-800 text-sm">PDF — мгновенно</div>
+                <div className="text-xs text-gray-500">ссылка сразу после оплаты</div>
+              </div>
+            </div>
+          </div>
+
           {/* Main CTA block */}
           <section className="mb-10 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-2xl p-6 md:p-10 text-white text-center">
             <div className="text-4xl mb-3">📊</div>
             <h2 className="text-2xl md:text-3xl font-bold mb-3">
               Полный бенчмарк — 249 ₽
             </h2>
-            <p className="text-indigo-100 mb-6 max-w-lg mx-auto text-sm md:text-base leading-relaxed">
+            <p className="text-indigo-100 mb-2 max-w-lg mx-auto text-sm md:text-base leading-relaxed">
               Единоразовый платёж. Получаете PDF-файл и ссылку для скачивания сразу после оплаты.
               Оплата через ЮKassa (карты РФ, СБП).
+            </p>
+            <p className="text-indigo-200 text-xs mb-6">
+              🔔 Q2 2026 данные выйдут в июне — цена вырастет до 349 ₽. Сейчас 249 ₽.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
               <BuyButton label="Купить за 249 ₽ → оплата ЮKassa" />

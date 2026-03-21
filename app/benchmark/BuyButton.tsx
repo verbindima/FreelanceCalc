@@ -11,9 +11,11 @@ function ymGoal(name: string) {
 
 export default function BuyButton({ label = "Купить полный PDF — 249 ₽" }: { label?: string }) {
   const [loading, setLoading] = useState(false);
+  const [unavailable, setUnavailable] = useState(false);
 
   const handlePayment = async () => {
     setLoading(true);
+    setUnavailable(false);
     ymGoal("upsell_click");
     try {
       const res = await fetch("/api/payment", { method: "POST" });
@@ -22,14 +24,36 @@ export default function BuyButton({ label = "Купить полный PDF — 2
         ymGoal("payment_started");
         window.location.href = data.url;
       } else {
-        alert(data.error || "Ошибка при создании платежа. Попробуйте позже.");
+        setUnavailable(true);
         setLoading(false);
       }
     } catch {
-      alert("Не удалось связаться с сервером оплаты. Попробуйте позже.");
+      setUnavailable(true);
       setLoading(false);
     }
   };
+
+  if (unavailable) {
+    return (
+      <div className="text-left">
+        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-2">
+          <p className="text-sm font-medium text-amber-800 mb-1">
+            ⏳ Оплата временно недоступна
+          </p>
+          <p className="text-xs text-amber-700 leading-relaxed">
+            Мы настраиваем платёжную систему. Вернитесь через несколько часов —
+            PDF будет доступен по той же цене 249 ₽.
+          </p>
+        </div>
+        <button
+          onClick={() => setUnavailable(false)}
+          className="text-xs text-indigo-600 hover:underline"
+        >
+          Попробовать ещё раз
+        </button>
+      </div>
+    );
+  }
 
   return (
     <button

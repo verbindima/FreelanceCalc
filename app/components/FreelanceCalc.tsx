@@ -104,6 +104,7 @@ export default function FreelanceCalc() {
   const [billableRatio, setBillableRatio] = useState(() => Number(getParam("load")) || 70);
   const [showUpsellModal, setShowUpsellModal] = useState(false);
   const [paymentLoading, setPaymentLoading] = useState(false);
+  const [paymentUnavailable, setPaymentUnavailable] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
   const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
   const calcUsedTracked = useRef(false);
@@ -192,6 +193,7 @@ export default function FreelanceCalc() {
 
   const handlePayment = useCallback(async () => {
     setPaymentLoading(true);
+    setPaymentUnavailable(false);
     ymGoal("payment_started");
     try {
       const res = await fetch("/api/payment", { method: "POST" });
@@ -200,11 +202,11 @@ export default function FreelanceCalc() {
       if (data.url) {
         window.location.href = data.url;
       } else {
-        alert(data.error || "Ошибка при создании платежа. Попробуйте позже.");
+        setPaymentUnavailable(true);
         setPaymentLoading(false);
       }
     } catch {
-      alert("Не удалось связаться с сервером оплаты. Попробуйте позже.");
+      setPaymentUnavailable(true);
       setPaymentLoading(false);
     }
   }, []);
@@ -704,21 +706,38 @@ export default function FreelanceCalc() {
 
             <p className="text-2xl font-bold text-indigo-700 mb-1">249 ₽</p>
             <p className="text-xs text-slate-400 mb-5">Единоразово · Без подписки · PDF сразу после оплаты · Данные Q1 2026</p>
-            <div className="flex gap-3">
-              <button
-                className="flex-1 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors"
-                onClick={handlePayment}
-                disabled={paymentLoading}
-              >
-                {paymentLoading ? "Переход к оплате…" : "Скачать PDF — 249 ₽"}
-              </button>
-              <button
-                className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-500 hover:bg-slate-50 transition-colors"
-                onClick={() => setShowUpsellModal(false)}
-              >
-                Закрыть
-              </button>
-            </div>
+            {paymentUnavailable ? (
+              <div className="mb-3">
+                <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-2">
+                  <p className="text-sm font-medium text-amber-800 mb-1">⏳ Оплата временно недоступна</p>
+                  <p className="text-xs text-amber-700 leading-relaxed">
+                    Мы настраиваем платёжную систему. Вернитесь через несколько часов — PDF будет доступен по той же цене 249 ₽.
+                  </p>
+                </div>
+                <button
+                  className="text-xs text-indigo-600 hover:underline"
+                  onClick={() => setPaymentUnavailable(false)}
+                >
+                  Попробовать ещё раз
+                </button>
+              </div>
+            ) : (
+              <div className="flex gap-3">
+                <button
+                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors"
+                  onClick={handlePayment}
+                  disabled={paymentLoading}
+                >
+                  {paymentLoading ? "Переход к оплате…" : "Скачать PDF — 249 ₽"}
+                </button>
+                <button
+                  className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-500 hover:bg-slate-50 transition-colors"
+                  onClick={() => setShowUpsellModal(false)}
+                >
+                  Закрыть
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
