@@ -232,6 +232,23 @@ export default function FreelanceCalc() {
           <p className="mt-2 text-slate-500 text-base max-w-md mx-auto">
             Введите желаемый доход — за 30 секунд узнайте точную ставку с учётом налогов, отпуска и загрузки. Большинство фрилансеров занижают цену на 20–40%.
           </p>
+          {/* Trust strip — truthful stats that build credibility before user touches the calculator */}
+          <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs">
+            {[
+              { icon: "🎯", text: "22 специальности" },
+              { icon: "🏙️", text: "23 города" },
+              { icon: "🧾", text: "Самозанятый и ИП" },
+              { icon: "📅", text: "Данные Q1 2026" },
+              { icon: "✅", text: "Бесплатно" },
+            ].map(({ icon, text }) => (
+              <span
+                key={text}
+                className="inline-flex items-center gap-1 bg-slate-100 text-slate-500 px-3 py-1 rounded-full"
+              >
+                {icon} {text}
+              </span>
+            ))}
+          </div>
         </header>
 
         {/* Inputs */}
@@ -415,6 +432,19 @@ export default function FreelanceCalc() {
               </button>
             </p>
           </div>
+        </div>
+
+        {/* Viral share nudge — appears after user sees their rate; drives Telegram sharing */}
+        <div className="mt-3 flex items-center justify-between gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
+          <p className="text-xs text-slate-500">
+            💬 Узнайте, сколько берут коллеги — поделитесь калькулятором в чате
+          </p>
+          <button
+            onClick={handleShareTelegram}
+            className="shrink-0 flex items-center gap-1.5 text-xs bg-[#2AABEE] hover:bg-[#229ED9] text-white px-3 py-1.5 rounded-lg transition-colors font-medium"
+          >
+            ✈️ Поделиться
+          </button>
         </div>
 
         {/* Upsell CTA — personalized: show user's own rate to trigger market curiosity */}
