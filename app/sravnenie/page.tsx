@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Сравнение специальностей фрилансеров: кто больше зарабатывает в 2026",
     description:
-      "Детальные сравнения ставок по 11 парам специальностей. Junior, Middle, Senior — кто зарабатывает больше и почему.",
+      "Детальные сравнения ставок по 15 парам специальностей. Junior, Middle, Senior — кто зарабатывает больше и почему.",
     type: "website",
     locale: "ru_RU",
     url: `${BASE_URL}/sravnenie`,
@@ -40,7 +40,7 @@ const jsonLd = {
       url: `${BASE_URL}/sravnenie`,
       name: "Сравнение специальностей фрилансеров — FreelanceCalc",
       description:
-        "Сравнение почасовых ставок по 12 парам специальностей на фрилансе в России. Junior, Middle, Senior уровни — актуальные данные 2026 года.",
+        "Сравнение почасовых ставок по 15 парам специальностей на фрилансе в России. Junior, Middle, Senior уровни — актуальные данные 2026 года.",
       inLanguage: "ru",
       isPartOf: { "@id": BASE_URL },
     },
@@ -199,6 +199,42 @@ const comparisons = [
     seniorDiff: "5 500 vs 6 500 ₽/час",
     tags: ["IT", "Разработка"],
   },
+  {
+    slug: "golang-razrabotchik-vs-python-razrabotchik",
+    title: "Golang vs Python разработчик",
+    subtitle: "Разработчики",
+    winner: "Golang +29%",
+    winnerColor: "cyan",
+    description: "Go-разработчики зарабатывают на 29% больше на Middle. Дефицит Go-специалистов держит ставки высокими.",
+    juniorDiff: "2 000 vs 1 800 ₽/час",
+    middleDiff: "4 500 vs 3 500 ₽/час",
+    seniorDiff: "7 500 vs 6 500 ₽/час",
+    tags: ["IT", "Разработка"],
+  },
+  {
+    slug: "php-razrabotchik-vs-python-razrabotchik",
+    title: "PHP vs Python разработчик",
+    subtitle: "Веб-разработка",
+    winner: "Python +40%",
+    winnerColor: "yellow",
+    description: "Python зарабатывает на 40% больше PHP на Middle. PHP лидирует по количеству заказов (WordPress, Bitrix).",
+    juniorDiff: "1 200 vs 1 800 ₽/час",
+    middleDiff: "2 500 vs 3 500 ₽/час",
+    seniorDiff: "4 500 vs 6 500 ₽/час",
+    tags: ["IT", "Веб"],
+  },
+  {
+    slug: "seo-specialist-vs-smm-specialist",
+    title: "SEO vs SMM специалист",
+    subtitle: "Digital-маркетинг",
+    winner: "SEO +25%",
+    winnerColor: "green",
+    description: "SEO зарабатывает на 25% больше SMM на Middle. Долгосрочные ретейнеры поднимают ставку SEO-специалиста.",
+    juniorDiff: "700 vs 500 ₽/час",
+    middleDiff: "1 500 vs 1 200 ₽/час",
+    seniorDiff: "3 500 vs 2 500 ₽/час",
+    tags: ["Маркетинг", "SEO"],
+  },
 ];
 
 const winnerColorMap: Record<string, string> = {
@@ -246,7 +282,7 @@ export default function SravneniePage() {
 
           <p className="text-lg text-gray-600 mb-8 leading-relaxed">
             Выбираете специальность или думаете о смене направления? Здесь — честное сравнение ставок
-            по 12 парам специальностей: от IT-разработки и мобильной разработки до маркетинга и дизайна.
+            по 15 парам специальностей: от IT-разработки и мобильной разработки до маркетинга и дизайна.
             Данные Junior, Middle, Senior с расчётом месячного дохода. Актуально на Q1 2026.
           </p>
 
@@ -267,7 +303,7 @@ export default function SravneniePage() {
 
           {/* Comparison grid */}
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Все сравнения специальностей (12 пар)</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Все сравнения специальностей (15 пар)</h2>
             <div className="grid md:grid-cols-2 gap-5">
               {comparisons.map((comp) => (
                 <Link
