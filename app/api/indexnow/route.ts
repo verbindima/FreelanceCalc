@@ -93,10 +93,21 @@ function getAllUrls(): string[] {
     `${BASE_URL}/sravnenie/devops-vs-ml-inzhener`,
     `${BASE_URL}/sravnenie/fullstack-vs-mobilnyj-razrabotchik`,
     `${BASE_URL}/sravnenie/python-razrabotchik-vs-data-analyst`,
-    // Missing stati
+    // Missing stati — batch 1
     `${BASE_URL}/stati/kak-stat-frilanserom-2026`,
     `${BASE_URL}/stati/pochemu-frilansery-zanizhayt-stavki`,
     `${BASE_URL}/stati/dogovor-gph-nalogi-frilansera-2026`,
+    // Missing stati — batch 2 (added 2026-03-21)
+    `${BASE_URL}/stati/kak-oformit-samozanyatost-2026`,
+    `${BASE_URL}/stati/kak-najti-pervogo-klienta-frilansera-2026`,
+    `${BASE_URL}/stati/portfolio-frilansera-2026`,
+    `${BASE_URL}/stati/frilanser-inostrannyj-zakazchik-2026`,
+    `${BASE_URL}/stati/samozanyatyj-ipoteka-2026`,
+    `${BASE_URL}/stati/peregovory-o-stavke-s-zakazchikom`,
+    `${BASE_URL}/stati/fl-ru-vs-kwork-birzha-frilanserov-2026`,
+    `${BASE_URL}/stati/stavki-1c-razrabotchikov-frilanserov-2026`,
+    `${BASE_URL}/stati/stavki-proekt-menedzherov-frilanserov-2026`,
+    `${BASE_URL}/stati/kak-vystavit-schet-samozanyatomu-2026`,
   ];
 
   // Specialty pages
