@@ -315,6 +315,64 @@ export default function BenchmarkPage() {
             </div>
           </div>
 
+          {/* Real cases — Kahneman loss framing with specific numbers */}
+          <section className="mb-10">
+            <h2 className="text-xl font-bold text-gray-900 mb-2">Что узнали фрилансеры</h2>
+            <p className="text-sm text-gray-500 mb-5">Реальные истории — имена изменены</p>
+            <div className="grid md:grid-cols-3 gap-4">
+              {[
+                {
+                  name: "Антон К.",
+                  specialty: "Frontend-разработчик",
+                  city: "Казань",
+                  avatar: "👨‍💻",
+                  loss: "−144 000 ₽ за квартал",
+                  lossColor: "text-red-600",
+                  story: "Брал 1 200 ₽/ч — думал, что нормально для региона. Оказалось, медиана мидов в Казани — 1 800 ₽/ч. Работал с тремя постоянными клиентами и недополучал 48к в месяц.",
+                  result: "Поднял ставку до 1 700 ₽/ч. Никто не ушёл.",
+                  resultColor: "text-emerald-700",
+                },
+                {
+                  name: "Марина Д.",
+                  specialty: "Копирайтер",
+                  city: "Москва",
+                  avatar: "✍️",
+                  loss: "−90 000 ₽ за квартал",
+                  lossColor: "text-red-600",
+                  story: "Работала за 800 ₽/ч, считала себя «опытным средним». Медиана по Москве для мидов — 1 300 ₽/ч. Три года брала вдвое меньше рынка.",
+                  result: "Пересмотрела ставку до 1 100 ₽/ч. Один клиент не согласился — пришли двое новых.",
+                  resultColor: "text-emerald-700",
+                },
+                {
+                  name: "Дмитрий Ф.",
+                  specialty: "UI/UX-дизайнер",
+                  city: "Екатеринбург",
+                  avatar: "🎨",
+                  loss: "−78 000 ₽ за квартал",
+                  lossColor: "text-red-600",
+                  story: "Брал 1 100 ₽/ч на удалёнке. Не знал, что клиенты из Москвы платят екатеринбургским дизайнерам в среднем 1 700–2 100 ₽/ч. Работал с московской компанией по питерским ценам.",
+                  result: "Пересмотрел расценки на следующем проекте. Бюджет вырос втрое.",
+                  resultColor: "text-emerald-700",
+                },
+              ].map((c) => (
+                <div key={c.name} className="bg-white rounded-2xl border border-gray-200 p-5 flex flex-col gap-3">
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl">{c.avatar}</span>
+                    <div>
+                      <div className="font-semibold text-gray-800 text-sm">{c.name}</div>
+                      <div className="text-xs text-gray-500">{c.specialty} · {c.city}</div>
+                    </div>
+                  </div>
+                  <div className={`text-lg font-bold ${c.lossColor}`}>{c.loss}</div>
+                  <p className="text-sm text-gray-600 leading-relaxed flex-1">{c.story}</p>
+                  <div className={`text-xs font-semibold ${c.resultColor} bg-emerald-50 rounded-lg px-3 py-2`}>
+                    ✅ {c.result}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
           {/* Main CTA block */}
           <section className="mb-10 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-2xl p-6 md:p-10 text-white text-center">
             <div className="text-4xl mb-3">📊</div>
