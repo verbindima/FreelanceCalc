@@ -173,10 +173,17 @@ export default function FreelanceCalc() {
     const hourly = Math.round(results.hourlyRate);
     const daily = Math.round(results.dailyRate);
     const fmtNum = (n: number) => new Intl.NumberFormat("ru-RU").format(n);
+    const isBelow = hourly < 1200;
+    const hook = isBelow
+      ? `Посчитал ставку — калькулятор говорит, что я занижаю цену. Неприятно, но полезно знать.`
+      : marketCtx.label === "Выше медианы" || marketCtx.label === "Топ рынка"
+      ? `Посчитал ставку — оказывается, я в топе рынка. Проверь свою, интересно сравнить.`
+      : `Посчитал свою ставку фрилансера. В большинстве чатов никто не называет реальные цифры — вот мои:`;
     const text =
-      `${marketCtx.emoji} Моя ставка фрилансера: ${fmtNum(hourly)} ₽/час — ${marketCtx.label.toLowerCase()}\n` +
-      `📅 ${fmtNum(daily)} ₽/день · ${fmtNum(netMonthly)} ₽/мес на руки\n\n` +
-      `Посчитай свою → ${url}`;
+      `${hook}\n\n` +
+      `${marketCtx.emoji} ${fmtNum(hourly)} ₽/час · ${fmtNum(daily)} ₽/день — ${marketCtx.label.toLowerCase()}\n` +
+      `(с налогами, отпуском и реальной загрузкой)\n\n` +
+      `Сколько берёшь ты? → ${url}`;
     const tgUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
     window.open(tgUrl, "_blank", "noopener,noreferrer");
   }, [results, netMonthly, marketCtx]);
@@ -255,7 +262,7 @@ export default function FreelanceCalc() {
             Калькулятор ставки фрилансера
           </h1>
           <p className="mt-2 text-slate-500 text-base max-w-md mx-auto">
-            Введите желаемый доход — за 30 секунд узнайте точную ставку с учётом налогов, отпуска и загрузки. Большинство фрилансеров занижают цену на 20–40%.
+            Большинство фрилансеров называют цену «на глаз» — и теряют 20–40% дохода. Посчитайте точно: с налогами, отпуском и реальной загрузкой. 30 секунд.
           </p>
           {/* Trust strip — truthful stats that build credibility before user touches the calculator */}
           <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs">
@@ -518,7 +525,7 @@ export default function FreelanceCalc() {
         {/* Viral share nudge — appears after user sees their rate; drives Telegram sharing */}
         <div className="mt-3 flex items-center justify-between gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
           <p className="text-xs text-slate-500">
-            💬 Узнайте, сколько берут коллеги — поделитесь калькулятором в чате
+            💬 В большинстве фриланс-чатов никто не называет реальные ставки. Нарушьте традицию — поделитесь своей.
           </p>
           <button
             onClick={handleShareTelegram}
