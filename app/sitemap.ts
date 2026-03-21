@@ -306,6 +306,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${BASE_URL}/stati/fl-ru-vs-kwork-birzha-frilanserov-2026`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/stati/stavki-1c-razrabotchikov-frilanserov-2026`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    {
       url: `${BASE_URL}/instrumenty`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
@@ -319,6 +331,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/instrumenty/kalkulator-stoimosti-proekta`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/instrumenty/kalkulator-stoimosti-sotrudnika`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/instrumenty/kalkulator-pensii-samozanyatogo`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/instrumenty/kalkulator-komissii-birzhi`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.9,
