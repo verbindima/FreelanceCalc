@@ -244,6 +244,14 @@ const ARTICLES = [
     readTime: "7 мин",
     tag: "Рынок",
   },
+  {
+    slug: "fl-ru-vs-kwork-birzha-frilanserov-2026",
+    title: "FL.ru или Kwork: какую биржу выбрать фрилансеру в 2026 году",
+    description:
+      "Сравниваем FL.ru и Kwork: комиссии 7–20% vs 20%, типы заказов, условия выплат. Таблица с расчётом потерь на комиссии — и как учесть это в своей ставке.",
+    readTime: "7 мин",
+    tag: "Биржи",
+  },
 ];
 
 const TAG_COLORS: Record<string, string> = {
@@ -254,6 +262,7 @@ const TAG_COLORS: Record<string, string> = {
   Карьера: "bg-emerald-50 text-emerald-700",
   Заказчикам: "bg-rose-50 text-rose-700",
   Финансы: "bg-red-50 text-red-700",
+  Биржи: "bg-teal-50 text-teal-700",
 };
 
 const jsonLd = {

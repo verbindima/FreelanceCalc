@@ -4,6 +4,14 @@ const BASE_URL = "https://freelancecalc-one.vercel.app";
 
 const ARTICLES = [
   {
+    slug: "fl-ru-vs-kwork-birzha-frilanserov-2026",
+    title: "FL.ru или Kwork: какую биржу выбрать фрилансеру в 2026 году",
+    description:
+      "Сравниваем FL.ru и Kwork: комиссии 7–20% vs 20%, типы заказов, условия выплат. Считаем реальные потери на комиссии — и как учесть их в ставке.",
+    tag: "Биржи",
+    pubDate: "Sat, 21 Mar 2026 18:00:00 +0300",
+  },
+  {
     slug: "stavki-razrabotchikov-po-yazykam-2026",
     title: "Ставки разработчиков по языкам программирования 2026 — Python, JS, PHP, Go, Java",
     description:
