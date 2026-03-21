@@ -6,7 +6,7 @@ const BASE_URL = "https://freelancecalc-one.vercel.app";
 export const metadata: Metadata = {
   title: "Сравнение специальностей фрилансеров: кто больше зарабатывает в 2026",
   description:
-    "Сравниваем ставки фрилансеров по специальностям: Frontend vs Backend, Android vs iOS, DevOps vs Backend, 1С vs PHP, Python vs Frontend, UI/UX vs Графический дизайн, SMM vs Таргет, Data Analyst vs ML. Таблицы с Junior, Middle, Senior ставками 2026 года.",
+    "Сравниваем ставки фрилансеров по 23 парам специальностей: Frontend vs Backend, Android vs iOS, DevOps vs ML, Python vs Data Analyst, PM vs BA, SEO vs Таргет и другие. Таблицы с Junior, Middle, Senior ставками 2026 года.",
   keywords: [
     "сравнение специальностей фрилансеров",
     "кто больше зарабатывает фрилансер",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Сравнение специальностей фрилансеров: кто больше зарабатывает в 2026",
     description:
-      "Детальные сравнения ставок по 18 парам специальностей. Junior, Middle, Senior — кто зарабатывает больше и почему.",
+      "Детальные сравнения ставок по 23 парам специальностей. Junior, Middle, Senior — кто зарабатывает больше и почему.",
     type: "website",
     locale: "ru_RU",
     url: `${BASE_URL}/sravnenie`,
@@ -271,6 +271,66 @@ const comparisons = [
     seniorDiff: "5 000 vs 5 500 ₽/час",
     tags: ["IT", "Enterprise"],
   },
+  {
+    slug: "menedzher-proektov-vs-biznes-analitik",
+    title: "PM vs Бизнес-аналитик",
+    subtitle: "IT-менеджмент",
+    winner: "BA +33%",
+    winnerColor: "green",
+    description: "Бизнес-аналитик зарабатывает на 33% больше PM на Middle. Глубокая экспертиза в требованиях стоит дороже координации.",
+    juniorDiff: "800 vs 900 ₽/час",
+    middleDiff: "1 500 vs 2 000 ₽/час",
+    seniorDiff: "3 000 vs 4 000 ₽/час",
+    tags: ["IT", "Менеджмент"],
+  },
+  {
+    slug: "seo-specialist-vs-targetolog",
+    title: "SEO vs Таргетолог",
+    subtitle: "Digital-маркетинг",
+    winner: "Таргет +20%",
+    winnerColor: "orange",
+    description: "Таргетолог зарабатывает на 20% больше SEO на Middle. Прямой измеримый ROI поднимает ставку.",
+    juniorDiff: "700 vs 700 ₽/час",
+    middleDiff: "1 500 vs 1 800 ₽/час",
+    seniorDiff: "3 500 vs 3 500 ₽/час",
+    tags: ["Маркетинг", "SEO"],
+  },
+  {
+    slug: "devops-vs-ml-inzhener",
+    title: "DevOps vs ML-инженер",
+    subtitle: "IT-инфраструктура и AI",
+    winner: "ML +45%",
+    winnerColor: "violet",
+    description: "ML-инженер зарабатывает на 45% больше DevOps на Middle. AI-бум 2024–2026 разогнал ставки до 9 000 ₽/час на Senior.",
+    juniorDiff: "2 000 vs 3 000 ₽/час",
+    middleDiff: "3 800 vs 5 500 ₽/час",
+    seniorDiff: "6 500 vs 9 000 ₽/час",
+    tags: ["IT", "AI", "Инфраструктура"],
+  },
+  {
+    slug: "fullstack-vs-mobilnyj-razrabotchik",
+    title: "Fullstack vs Мобильный разработчик",
+    subtitle: "Разработка",
+    winner: "Мобильный +13%",
+    winnerColor: "emerald",
+    description: "Мобильный разработчик берёт на 13% больше Fullstack. Узкая платформенная специализация создаёт дефицит.",
+    juniorDiff: "2 000 vs 2 200 ₽/час",
+    middleDiff: "4 000 vs 4 500 ₽/час",
+    seniorDiff: "7 000 vs 7 500 ₽/час",
+    tags: ["IT", "Разработка", "Mobile"],
+  },
+  {
+    slug: "python-razrabotchik-vs-data-analyst",
+    title: "Python разработчик vs Data Analyst",
+    subtitle: "Data Science",
+    winner: "Python +17%",
+    winnerColor: "yellow",
+    description: "Python разработчик зарабатывает на 17% больше аналитика данных. Прямой продуктовый результат ценится выше инсайтов.",
+    juniorDiff: "1 800 vs 1 500 ₽/час",
+    middleDiff: "3 500 vs 3 000 ₽/час",
+    seniorDiff: "6 500 vs 5 500 ₽/час",
+    tags: ["IT", "Data Science"],
+  },
 ];
 
 const winnerColorMap: Record<string, string> = {
@@ -318,7 +378,7 @@ export default function SravneniePage() {
 
           <p className="text-lg text-gray-600 mb-8 leading-relaxed">
             Выбираете специальность или думаете о смене направления? Здесь — честное сравнение ставок
-            по 18 парам специальностей: от IT-разработки и мобильной разработки до маркетинга и дизайна.
+            по 23 парам специальностей: от IT-разработки и мобильной разработки до маркетинга, дизайна и аналитики.
             Данные Junior, Middle, Senior с расчётом месячного дохода. Актуально на Q1 2026.
           </p>
 
@@ -339,7 +399,7 @@ export default function SravneniePage() {
 
           {/* Comparison grid */}
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Все сравнения специальностей (18 пар)</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Все сравнения специальностей (23 пары)</h2>
             <div className="grid md:grid-cols-2 gap-5">
               {comparisons.map((comp) => (
                 <Link
