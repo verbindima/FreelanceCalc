@@ -144,6 +144,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: `${BASE_URL}/stati/pochemu-frilansery-zanizhayt-stavki`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    },
+    {
       url: `${BASE_URL}/stati/samozanyatyj-vs-ip-frilancer`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,

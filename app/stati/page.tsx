@@ -29,6 +29,14 @@ export const metadata: Metadata = {
 
 const ARTICLES = [
   {
+    slug: "pochemu-frilansery-zanizhayt-stavki",
+    title: "Почему фрилансеры занижают ставки — и теряют 480 000 ₽ в год",
+    description:
+      "Средний фрилансер недооценивает себя на 30–40%. В рублях это 400–600 тысяч потерь ежегодно. Разбираем 5 психологических причин и как из них выйти.",
+    readTime: "6 мин",
+    tag: "Карьера",
+  },
+  {
     slug: "skolko-zarabatyvayut-frilansery-2026",
     title: "Сколько реально зарабатывают фрилансеры в 2026 году: честная математика",
     description:
