@@ -70,6 +70,14 @@ const jsonLd = {
           operatingSystem: "Web",
           offers: { "@type": "Offer", price: "0", priceCurrency: "RUB" },
         },
+        {
+          "@type": "WebApplication",
+          name: "Калькулятор комиссии биржи фрилансеров",
+          url: `${BASE_URL}/instrumenty/kalkulator-komissii-birzhi`,
+          applicationCategory: "BusinessApplication",
+          operatingSystem: "Web",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "RUB" },
+        },
       ],
     },
   ],
@@ -84,6 +92,15 @@ const tools = [
       "НПД 4% или 6% с учётом бонуса первого года и лимита 2 400 000 ₽",
     badge: "Популярное",
     badgeColor: "bg-orange-100 text-orange-700",
+  },
+  {
+    href: "/instrumenty/kalkulator-komissii-birzhi",
+    emoji: "📉",
+    title: "Калькулятор комиссии биржи",
+    description:
+      "Сколько Kwork, FL.ru и Хабр Фриланс забирают с каждого заказа — и сколько вы теряете за год",
+    badge: "Новое",
+    badgeColor: "bg-red-100 text-red-700",
   },
   {
     href: "/?utm_source=instrumenty&utm_medium=hub",
