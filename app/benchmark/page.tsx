@@ -319,17 +319,17 @@ export default function BenchmarkPage() {
           <section className="mb-10 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-2xl p-6 md:p-10 text-white text-center">
             <div className="text-4xl mb-3">📊</div>
             <h2 className="text-2xl md:text-3xl font-bold mb-3">
-              Полный бенчмарк — 249 ₽
+              С 7 апреля цена — 349 ₽
             </h2>
             <p className="text-indigo-100 mb-2 max-w-lg mx-auto text-sm md:text-base leading-relaxed">
-              Единоразовый платёж. Получаете PDF-файл и ссылку для скачивания сразу после оплаты.
+              Сейчас бенчмарк стоит <strong>249 ₽</strong>. Единоразовый платёж — PDF мгновенно после оплаты.
               Оплата через ЮKassa (карты РФ, СБП).
             </p>
             <p className="text-indigo-200 text-xs mb-6">
-              ⏳ С 7 апреля 2026 цена вырастет до 349 ₽ — счётчик тикает. Сейчас 249 ₽.
+              ⏳ Купи сейчас — не плати лишние 100 ₽ с 7 апреля.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-              <BuyButton label="Купить за 249 ₽ → оплата ЮKassa" />
+              <BuyButton label="Купить за 249 ₽ до повышения цены" />
               <Link
                 href="/"
                 className="text-sm text-indigo-200 hover:text-white underline underline-offset-2"

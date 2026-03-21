@@ -12,6 +12,9 @@ function ymGoal(name: string) {
 export default function BuyButton({ label = "Купить полный PDF — 249 ₽" }: { label?: string }) {
   const [loading, setLoading] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
+  const [leadEmail, setLeadEmail] = useState("");
+  const [leadLoading, setLeadLoading] = useState(false);
+  const [leadSubmitted, setLeadSubmitted] = useState(false);
 
   const handlePayment = async () => {
     setLoading(true);
@@ -33,24 +36,66 @@ export default function BuyButton({ label = "Купить полный PDF — 2
     }
   };
 
+  const handleLeadSubmit = async () => {
+    if (!leadEmail.includes("@")) return;
+    setLeadLoading(true);
+    ymGoal("lead_captured");
+    try {
+      await fetch("/api/notify-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: leadEmail }),
+      });
+    } catch {
+      // silent
+    }
+    setLeadSubmitted(true);
+    setLeadLoading(false);
+  };
+
   if (unavailable) {
     return (
-      <div className="text-left">
-        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-2">
-          <p className="text-sm font-medium text-amber-800 mb-1">
+      <div className="text-left w-full max-w-sm">
+        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-4 mb-2">
+          <p className="text-sm font-semibold text-amber-800 mb-1">
             ⏳ Оплата временно недоступна
           </p>
-          <p className="text-xs text-amber-700 leading-relaxed">
-            Мы настраиваем платёжную систему. Вернитесь через несколько часов —
-            PDF будет доступен по той же цене 249 ₽.
+          <p className="text-xs text-amber-700 leading-relaxed mb-3">
+            Цена 249 ₽ действует до&nbsp;<strong>7 апреля</strong> — потом 349 ₽.
+            Оставь почту, зафиксируем твою цену и напишем как только откроется оплата.
           </p>
+          {leadSubmitted ? (
+            <p className="text-sm font-semibold text-green-700">
+              ✅ Зафиксировали! Напишем как откроется оплата.
+            </p>
+          ) : (
+            <div className="flex gap-2">
+              <input
+                type="email"
+                value={leadEmail}
+                onChange={(e) => setLeadEmail(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleLeadSubmit()}
+                placeholder="твой@email.ru"
+                className="flex-1 text-sm border border-amber-300 rounded-lg px-3 py-2 bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400 min-w-0"
+              />
+              <button
+                onClick={handleLeadSubmit}
+                disabled={leadLoading || !leadEmail.includes("@")}
+                className="text-sm font-semibold bg-amber-500 hover:bg-amber-600 disabled:bg-amber-300 text-white px-3 py-2 rounded-lg transition-colors whitespace-nowrap"
+              >
+                {leadLoading ? "…" : "Зафиксировать →"}
+              </button>
+            </div>
+          )}
         </div>
-        <button
-          onClick={() => setUnavailable(false)}
-          className="text-xs text-indigo-600 hover:underline"
-        >
-          Попробовать ещё раз
-        </button>
+        {!leadSubmitted && (
+          <button
+            onClick={() => { setUnavailable(false); setLeadEmail(""); }}
+            className="text-xs text-indigo-600 hover:underline"
+          >
+            Попробовать ещё раз
+          </button>
+        )}
       </div>
     );
   }
