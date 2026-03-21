@@ -107,6 +107,7 @@ export default function FreelanceCalc() {
   const [paymentUnavailable, setPaymentUnavailable] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
   const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
+  const [yearsFreelancing, setYearsFreelancing] = useState(3);
   const calcUsedTracked = useRef(false);
 
   // Lead capture for broken-payment state
@@ -558,12 +559,34 @@ export default function FreelanceCalc() {
                     : `Ваша ставка выше медианы на ${diffPct}% — вы в числе лидеров по специальности! 🎉`}
                 </p>
                 {isBelow && (
+                <>
+                  {/* Cumulative loss slider — Kahneman: multi-year total is far more emotional than annual */}
+                  <div className="mt-3 bg-red-100/60 rounded-lg px-3 py-2.5">
+                    <label className="text-xs text-red-800 font-medium">
+                      Сколько лет вы работаете по этой ставке?{" "}
+                      <strong>{yearsFreelancing} {yearsFreelancing === 1 ? "год" : yearsFreelancing < 5 ? "года" : "лет"}</strong>
+                    </label>
+                    <input
+                      type="range" min={1} max={10} step={1}
+                      value={yearsFreelancing}
+                      onChange={(e) => setYearsFreelancing(+e.target.value)}
+                      className="w-full mt-1.5 accent-red-600"
+                    />
+                    <p className="text-base font-bold text-red-700 mt-1.5">
+                      За {yearsFreelancing} {yearsFreelancing === 1 ? "год" : yearsFreelancing < 5 ? "года" : "лет"} потерянный доход:{" "}
+                      <span className="text-lg">{fmt(annualGap * yearsFreelancing)}</span>
+                    </p>
+                    <p className="text-xs text-red-600 mt-0.5 opacity-80">
+                      Это деньги, которые вы не получили из-за ставки ниже рынка
+                    </p>
+                  </div>
                   <button
                     onClick={() => { handleOpenUpsell(); ymGoal("upsell_gap_click", { slug: selectedSpecialty }); }}
                     className="mt-2 text-xs font-semibold text-red-700 underline hover:text-red-900"
                   >
-                    Полные данные по городам и опыту → Бенчмарк PDF 249 ₽
+                    Посмотреть точные данные по {spec.title} по городам → Бенчмарк PDF 249 ₽
                   </button>
+                </>
                 )}
               </div>
             );
