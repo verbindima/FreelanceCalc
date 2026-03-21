@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { CITIES as CITY_DATA } from "../../goroda/cities";
 import { SPECIALTIES as SPECIALTY_DATA } from "../../stavka/[slug]/specialties";
+import { LEVELS } from "../../stavka/[slug]/opyt/[level]/levels";
 
 const BASE_URL = "https://freelancecalc-one.vercel.app";
 const INDEXNOW_KEY = "65be3d47fc9c440b9c82afe4b001c2ba";
@@ -32,14 +33,17 @@ function getAllUrls(): string[] {
     `${BASE_URL}/stati/stavki-marketologov-frilanserov-2026`,
     `${BASE_URL}/stati/stavki-analitikov-frilanserov-2026`,
     `${BASE_URL}/stati/stavki-kopirajterov-frilanserov-2026`,
+    `${BASE_URL}/stati/stavki-yuristov-perevodchikov-frilanserov-2026`,
+    `${BASE_URL}/stati/stavki-qa-testerov-frilanserov-2026`,
     `${BASE_URL}/stati/skolko-stoit-chas-raboty-programmista-2026`,
     `${BASE_URL}/stati/skolko-zarabatyvayut-frilansery-2026`,
     `${BASE_URL}/stati/finansy-frilansera-kak-raspredelyat-dohod`,
     // Instrumenty
     `${BASE_URL}/instrumenty/kalkulator-naloga-samozanyatogo`,
     `${BASE_URL}/instrumenty/kalkulator-stoimosti-proekta`,
-    // Open data report
+    // Open data report + Rating
     `${BASE_URL}/otchet-2026`,
+    `${BASE_URL}/reyting`,
     // Alternativa
     `${BASE_URL}/alternativa/moj-nalog-kalkulator`,
     `${BASE_URL}/alternativa/digital-broccoli`,
@@ -51,6 +55,9 @@ function getAllUrls(): string[] {
     `${BASE_URL}/alternativa/npd-calculator`,
     `${BASE_URL}/alternativa/cossa-kalkulator`,
     `${BASE_URL}/alternativa/klerk-ru-kalkulator`,
+    `${BASE_URL}/alternativa/habr-freelance-kalkulator`,
+    `${BASE_URL}/alternativa/konsol-pro`,
+    `${BASE_URL}/alternativa/yandex-pay-kalkulator`,
   ];
 
   // Specialty pages
@@ -67,6 +74,22 @@ function getAllUrls(): string[] {
   for (const spec of SPECIALTY_DATA) {
     for (const city of CITY_DATA) {
       urls.push(`${BASE_URL}/stavka/${spec.slug}/${city.slug}`);
+    }
+  }
+
+  // Experience-level pages: 26 specs × 3 levels = 78 pages
+  for (const spec of SPECIALTY_DATA) {
+    for (const lvl of LEVELS) {
+      urls.push(`${BASE_URL}/stavka/${spec.slug}/opyt/${lvl.slug}`);
+    }
+  }
+
+  // Experience-level × City: 26 × 3 × 24 = 1872 pages
+  for (const spec of SPECIALTY_DATA) {
+    for (const lvl of LEVELS) {
+      for (const city of CITY_DATA) {
+        urls.push(`${BASE_URL}/stavka/${spec.slug}/opyt/${lvl.slug}/${city.slug}`);
+      }
     }
   }
 
