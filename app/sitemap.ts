@@ -483,6 +483,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.8,
     },
+    {
+      url: `${BASE_URL}/alternativa/yandex-uslugi-kalkulator`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/alternativa/avito-uslugi-kalkulator`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
     // Specialty comparison pages (high-volume "X vs Y зарплата" searches)
     {
       url: `${BASE_URL}/sravnenie`,
@@ -628,6 +640,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.75,
+    },
+    {
+      url: `${BASE_URL}/sravnenie/react-razrabotchik-vs-frontend-razrabotchik`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    },
+    {
+      url: `${BASE_URL}/sravnenie/product-manager-vs-menedzher-proektov`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    },
+    {
+      url: `${BASE_URL}/sravnenie/marketolog-frilanser-vs-smm-specialist`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
     },
     // /nalog/ cluster — tax regime calculators and comparison
     {
