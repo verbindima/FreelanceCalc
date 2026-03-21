@@ -548,6 +548,8 @@ export default function FreelanceCalc() {
             &nbsp;·&nbsp;
             <Link href="/stavka" className="hover:text-indigo-600">Специальности</Link>
             &nbsp;·&nbsp;
+            <Link href="/reyting" className="hover:text-indigo-600">Рейтинг ставок</Link>
+            &nbsp;·&nbsp;
             <Link href="/rukovodstvo" className="hover:text-indigo-600">Руководство</Link>
             &nbsp;·&nbsp;
             <Link href="/benchmark" className="hover:text-indigo-600">Бенчмарк ставок PDF</Link>

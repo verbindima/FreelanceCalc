@@ -211,6 +211,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.9,
     },
+    // Rating page — linkable/shareable content
+    {
+      url: `${BASE_URL}/reyting`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
     // Competitor alternatives pages (high-intent SEO traffic)
     {
       url: `${BASE_URL}/alternativa`,
