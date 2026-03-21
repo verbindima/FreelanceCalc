@@ -6,11 +6,14 @@ const BASE_URL = "https://freelancecalc-one.vercel.app";
 export const metadata: Metadata = {
   title: "Сравнение специальностей фрилансеров: кто больше зарабатывает в 2026",
   description:
-    "Сравниваем ставки фрилансеров по специальностям: Frontend vs Backend, Python vs Frontend, UI/UX vs Графический дизайн, SMM vs Таргет, Data Analyst vs ML и другие. Таблицы с Junior, Middle, Senior ставками 2026 года.",
+    "Сравниваем ставки фрилансеров по специальностям: Frontend vs Backend, Android vs iOS, DevOps vs Backend, 1С vs PHP, Python vs Frontend, UI/UX vs Графический дизайн, SMM vs Таргет, Data Analyst vs ML. Таблицы с Junior, Middle, Senior ставками 2026 года.",
   keywords: [
     "сравнение специальностей фрилансеров",
     "кто больше зарабатывает фрилансер",
     "frontend vs backend зарплата",
+    "android vs ios разработчик зарплата",
+    "devops vs backend зарплата",
+    "1с разработчик vs php зарплата",
     "smm vs таргетолог зарплата",
     "data analyst vs ml зарплата",
     "сравнение ставок разработчиков 2026",
@@ -20,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Сравнение специальностей фрилансеров: кто больше зарабатывает в 2026",
     description:
-      "Детальные сравнения ставок по 8 парам специальностей. Junior, Middle, Senior — кто зарабатывает больше и почему.",
+      "Детальные сравнения ставок по 11 парам специальностей. Junior, Middle, Senior — кто зарабатывает больше и почему.",
     type: "website",
     locale: "ru_RU",
     url: `${BASE_URL}/sravnenie`,
@@ -37,7 +40,7 @@ const jsonLd = {
       url: `${BASE_URL}/sravnenie`,
       name: "Сравнение специальностей фрилансеров — FreelanceCalc",
       description:
-        "Сравнение почасовых ставок по 8 парам специальностей на фрилансе в России. Junior, Middle, Senior уровни — актуальные данные 2026 года.",
+        "Сравнение почасовых ставок по 11 парам специальностей на фрилансе в России. Junior, Middle, Senior уровни — актуальные данные 2026 года.",
       inLanguage: "ru",
       isPartOf: { "@id": BASE_URL },
     },
@@ -148,6 +151,42 @@ const comparisons = [
     seniorDiff: "2 000 vs 2 000 ₽/час",
     tags: ["Контент", "Тексты"],
   },
+  {
+    slug: "android-vs-ios-razrabotchik",
+    title: "Android vs iOS разработчик",
+    subtitle: "Мобильная разработка",
+    winner: "iOS +14%",
+    winnerColor: "blue",
+    description: "iOS берёт на 14–17% больше. Но Android даёт больше заказов на российском рынке.",
+    juniorDiff: "1 500 vs 1 800 ₽/час",
+    middleDiff: "2 800 vs 3 200 ₽/час",
+    seniorDiff: "5 000 vs 5 800 ₽/час",
+    tags: ["IT", "Мобильная"],
+  },
+  {
+    slug: "devops-vs-backend",
+    title: "DevOps vs Backend",
+    subtitle: "IT-инфраструктура",
+    winner: "DevOps +8%",
+    winnerColor: "cyan",
+    description: "DevOps берёт на 8–10% больше. Ретейнерные контракты дают DevOps стабильный доход.",
+    juniorDiff: "1 800 vs 2 000 ₽/час",
+    middleDiff: "3 500 vs 3 800 ₽/час",
+    seniorDiff: "6 000 vs 6 500 ₽/час",
+    tags: ["IT", "Инфраструктура"],
+  },
+  {
+    slug: "1c-razrabotchik-vs-php",
+    title: "1С разработчик vs PHP",
+    subtitle: "Разработка (RU-рынок)",
+    winner: "1С +12%",
+    winnerColor: "amber",
+    description: "1С берёт на 12–25% больше PHP. Нет международной конкуренции, стабильный B2B-спрос.",
+    juniorDiff: "1 200 vs 1 500 ₽/час",
+    middleDiff: "2 500 vs 2 800 ₽/час",
+    seniorDiff: "4 000 vs 4 500 ₽/час",
+    tags: ["IT", "1С", "RU"],
+  },
 ];
 
 const winnerColorMap: Record<string, string> = {
@@ -159,6 +198,8 @@ const winnerColorMap: Record<string, string> = {
   purple: "bg-purple-100 text-purple-800",
   orange: "bg-orange-100 text-orange-800",
   indigo: "bg-indigo-100 text-indigo-800",
+  cyan: "bg-cyan-100 text-cyan-800",
+  amber: "bg-amber-100 text-amber-800",
 };
 
 export default function SravneniePage() {
@@ -193,7 +234,7 @@ export default function SravneniePage() {
 
           <p className="text-lg text-gray-600 mb-8 leading-relaxed">
             Выбираете специальность или думаете о смене направления? Здесь — честное сравнение ставок
-            по 8 парам специальностей: от IT-разработки до маркетинга и дизайна.
+            по 11 парам специальностей: от IT-разработки и мобильной разработки до маркетинга и дизайна.
             Данные Junior, Middle, Senior с расчётом месячного дохода. Актуально на Q1 2026.
           </p>
 
@@ -214,7 +255,7 @@ export default function SravneniePage() {
 
           {/* Comparison grid */}
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Все сравнения специальностей</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Все сравнения специальностей (11 пар)</h2>
             <div className="grid md:grid-cols-2 gap-5">
               {comparisons.map((comp) => (
                 <Link
@@ -288,9 +329,13 @@ export default function SravneniePage() {
                     { name: "Frontend разработчик", rate: "3 000", monthly: "480 000", slug: "frontend-vs-backend", badge: "", badgeColor: "" },
                     { name: "Data Analyst", rate: "3 000", monthly: "480 000", slug: "data-analyst-vs-ml", badge: "", badgeColor: "" },
                     { name: "UI/UX дизайнер", rate: "2 500", monthly: "400 000", slug: "ui-ux-vs-graficheskij-dizajner", badge: "", badgeColor: "" },
+                    { name: "iOS разработчик", rate: "3 200", monthly: "512 000", slug: "android-vs-ios-razrabotchik", badge: "", badgeColor: "" },
+                    { name: "Android разработчик", rate: "2 800", monthly: "448 000", slug: "android-vs-ios-razrabotchik", badge: "", badgeColor: "" },
+                    { name: "1С разработчик", rate: "2 800", monthly: "448 000", slug: "1c-razrabotchik-vs-php", badge: "RU", badgeColor: "bg-amber-100 text-amber-800" },
                     { name: "QA-тестировщик", rate: "1 800", monthly: "288 000", slug: "qa-vs-frontend", badge: "", badgeColor: "" },
                     { name: "Таргетолог", rate: "1 800", monthly: "288 000", slug: "smm-vs-targetolog", badge: "", badgeColor: "" },
                     { name: "Графический дизайнер", rate: "1 800", monthly: "288 000", slug: "ui-ux-vs-graficheskij-dizajner", badge: "", badgeColor: "" },
+                    { name: "PHP разработчик", rate: "2 500", monthly: "400 000", slug: "1c-razrabotchik-vs-php", badge: "", badgeColor: "" },
                     { name: "SMM-специалист", rate: "1 200", monthly: "192 000", slug: "smm-vs-targetolog", badge: "", badgeColor: "" },
                     { name: "Контент-менеджер", rate: "900", monthly: "144 000", slug: "kopirayter-vs-kontent-menedzher", badge: "", badgeColor: "" },
                     { name: "Копирайтер", rate: "800", monthly: "128 000", slug: "kopirayter-vs-kontent-menedzher", badge: "", badgeColor: "" },
