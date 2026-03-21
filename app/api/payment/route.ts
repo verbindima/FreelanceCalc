@@ -3,7 +3,13 @@ import { NextResponse } from "next/server";
 const SHOP_ID = process.env.YOOKASSA_SHOP_ID!;
 const SECRET_KEY = process.env.YOOKASSA_SECRET_KEY!;
 const RETURN_URL =
-  process.env.NEXT_PUBLIC_BASE_URL ?? "https://freelancecalc.ru";
+  process.env.NEXT_PUBLIC_BASE_URL ?? "https://freelancecalc-one.vercel.app";
+
+// Sync with FreelanceCalc.tsx: 249 ₽ before April 7, 349 ₽ after (loss aversion countdown)
+const PRICE_DEADLINE = new Date("2026-04-07T00:00:00+03:00"); // MSK midnight
+function getCurrentPrice(): number {
+  return new Date() < PRICE_DEADLINE ? 249 : 349;
+}
 
 export async function POST() {
   if (!SHOP_ID || !SECRET_KEY) {
@@ -13,6 +19,7 @@ export async function POST() {
     );
   }
 
+  const price = getCurrentPrice();
   const idempotenceKey = crypto.randomUUID();
 
   try {
@@ -26,14 +33,14 @@ export async function POST() {
           Buffer.from(`${SHOP_ID}:${SECRET_KEY}`).toString("base64"),
       },
       body: JSON.stringify({
-        amount: { value: "249.00", currency: "RUB" },
+        amount: { value: `${price}.00`, currency: "RUB" },
         capture: true,
         confirmation: {
           type: "redirect",
           return_url: `${RETURN_URL}/payment/success`,
         },
-        description: "PDF «Рыночные ставки фрилансеров» Q1 2026",
-        metadata: { product: "market_rates_pdf" },
+        description: `PDF «Рыночные ставки фрилансеров» Q1 2026 — ${price} ₽`,
+        metadata: { product: "market_rates_pdf", price_rub: price },
       }),
     });
 
@@ -56,7 +63,7 @@ export async function POST() {
       );
     }
 
-    return NextResponse.json({ url: redirectUrl, paymentId: payment.id });
+    return NextResponse.json({ url: redirectUrl, paymentId: payment.id, price });
   } catch (e) {
     console.error("Payment error:", e);
     return NextResponse.json(

@@ -6,6 +6,10 @@ import { NextRequest, NextResponse } from "next/server";
 // Or open in browser: https://ntfy.sh/freelancecalc-leads-xk9m2p
 const NTFY_TOPIC = process.env.NTFY_TOPIC || "freelancecalc-leads-xk9m2p";
 
+// Sync with payment/route.ts: 249 ₽ before April 7, 349 ₽ after (loss aversion countdown)
+const PRICE_DEADLINE = new Date("2026-04-07T00:00:00+03:00");
+const getLockedPrice = () => (new Date() < PRICE_DEADLINE ? 249 : 349);
+
 export async function POST(req: NextRequest) {
   let email = "";
   try {
@@ -19,8 +23,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "invalid email" }, { status: 400 });
   }
 
+  const lockedPrice = getLockedPrice();
+
   // Always log for Vercel log drain fallback
-  console.log(`[LEAD] email=${email} ts=${new Date().toISOString()}`);
+  console.log(`[LEAD] email=${email} price=${lockedPrice} ts=${new Date().toISOString()}`);
 
   // Non-blocking push to ntfy.sh
   try {
@@ -32,7 +38,7 @@ export async function POST(req: NextRequest) {
         Tags: "money_with_wings,email",
         Priority: "default",
       },
-      body: `Email: ${email}\nВремя: ${new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })}\n\nПользователь хотел купить PDF 249 ₽ — оплата недоступна.`,
+      body: `Email: ${email}\nЗафиксированная цена: ${lockedPrice} ₽\nВремя: ${new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })}\n\nПользователь оставил email — оплата ${lockedPrice} ₽ пока недоступна. Напиши ему как только ЮKassa подключена.`,
     });
   } catch (err) {
     // Fail silently — email already logged to Vercel logs above
