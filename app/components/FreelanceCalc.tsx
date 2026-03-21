@@ -114,6 +114,24 @@ export default function FreelanceCalc() {
   const [leadSubmitted, setLeadSubmitted] = useState(false);
   const [leadLoading, setLeadLoading] = useState(false);
 
+  // Countdown to April 7 price increase (Kahneman loss aversion: "price will rise" > "discount")
+  const PRICE_INCREASE_DATE = new Date("2026-04-07T00:00:00+03:00");
+  const [countdown, setCountdown] = useState<{ days: number; hours: number; mins: number } | null>(null);
+  useEffect(() => {
+    function calcCountdown() {
+      const diff = PRICE_INCREASE_DATE.getTime() - Date.now();
+      if (diff <= 0) { setCountdown(null); return; }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      setCountdown({ days, hours, mins });
+    }
+    calcCountdown();
+    const timer = setInterval(calcCountdown, 60_000);
+    return () => clearInterval(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const results = useMemo(() => {
     const taxRate = TAX_RATES[taxRegime];
     const grossMonthly = taxRate < 1 ? netMonthly / (1 - taxRate) : netMonthly;
@@ -569,9 +587,15 @@ export default function FreelanceCalc() {
             </button>
           </div>
           <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1">
-            <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">
-              ⚡ С 7 апреля — 349 ₽
-            </span>
+            {countdown ? (
+              <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">
+                ⏳ До +100 ₽: {countdown.days}д {countdown.hours}ч {countdown.mins}мин
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">
+                ⚡ Цена — 349 ₽
+              </span>
+            )}
             <span className="text-xs text-amber-700/70">22 специальности · 10 городов · Junior / Mid / Senior</span>
           </div>
         </section>
@@ -742,9 +766,15 @@ export default function FreelanceCalc() {
 
             <div className="flex items-baseline gap-3 mb-1">
               <p className="text-2xl font-bold text-indigo-700">249 ₽</p>
-              <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">
-                ⚡ С 7 апреля — 349 ₽
-              </span>
+              {countdown ? (
+                <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">
+                  ⏳ До +100 ₽: {countdown.days}д {countdown.hours}ч {countdown.mins}мин
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">
+                  ⚡ Цена — 349 ₽
+                </span>
+              )}
             </div>
             <p className="text-xs text-slate-400 mb-5">Единоразово · Без подписки · PDF сразу после оплаты · Цена 249 ₽ до 7 апреля</p>
             {paymentUnavailable ? (
