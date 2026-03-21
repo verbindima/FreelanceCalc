@@ -2,6 +2,7 @@ import { MetadataRoute } from "next";
 import { CITIES as CITY_DATA } from "./goroda/cities";
 import { SPECIALTIES as SPECIALTY_DATA } from "./stavka/[slug]/specialties";
 import { LEVELS } from "./stavka/[slug]/opyt/[level]/levels";
+import { CITY_PAIRS } from "./goroda/sravnenie/page";
 
 // TODO: switch to custom domain once purchased & configured in Vercel
 const BASE_URL = "https://freelancecalc-one.vercel.app";
@@ -249,6 +250,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.85,
     },
+    // City comparison hub + 12 city-vs-city pages
+    {
+      url: `${BASE_URL}/goroda/sravnenie`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    },
+    ...CITY_PAIRS.map(({ city1, city2 }) => ({
+      url: `${BASE_URL}/goroda/sravnenie/${city1}-vs-${city2}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    })),
     // Monetization page — benchmark PDF
     {
       url: `${BASE_URL}/benchmark`,
