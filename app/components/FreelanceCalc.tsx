@@ -568,9 +568,12 @@ export default function FreelanceCalc() {
                 : "Убедиться, что не теряю — 249 ₽"}
             </button>
           </div>
-          <p className="mt-3 text-xs text-amber-700/70">
-            📅 Q1 2026 · 22 специальности · 10 городов · Junior / Mid / Senior
-          </p>
+          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">
+              ⚡ С 1 апреля — 349 ₽
+            </span>
+            <span className="text-xs text-amber-700/70">22 специальности · 10 городов · Junior / Mid / Senior</span>
+          </div>
         </section>
 
         {/* Affiliate section */}
@@ -737,8 +740,13 @@ export default function FreelanceCalc() {
               🔄 Q1 2026 · Данные с FL.ru, Хабр Карьера, Kwork · Разбивка Junior / Mid / Senior
             </div>
 
-            <p className="text-2xl font-bold text-indigo-700 mb-1">249 ₽</p>
-            <p className="text-xs text-slate-400 mb-5">Единоразово · Без подписки · PDF сразу после оплаты · Данные Q1 2026</p>
+            <div className="flex items-baseline gap-3 mb-1">
+              <p className="text-2xl font-bold text-indigo-700">249 ₽</p>
+              <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">
+                ⚡ С 1 апреля — 349 ₽
+              </span>
+            </div>
+            <p className="text-xs text-slate-400 mb-5">Единоразово · Без подписки · PDF сразу после оплаты · Цена 249 ₽ до 1 апреля</p>
             {paymentUnavailable ? (
               <div className="mb-3">
                 <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-2">
