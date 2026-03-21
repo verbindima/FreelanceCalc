@@ -589,7 +589,7 @@ export default function FreelanceCalc() {
           <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1">
             {countdown ? (
               <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">
-                ⏳ До +100 ₽: {countdown.days}д {countdown.hours}ч {countdown.mins}мин
+                ⏳ Цена вырастет на 40% через {countdown.days}д {countdown.hours}ч {countdown.mins}мин
               </span>
             ) : (
               <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">
@@ -768,7 +768,7 @@ export default function FreelanceCalc() {
               <p className="text-2xl font-bold text-indigo-700">249 ₽</p>
               {countdown ? (
                 <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">
-                  ⏳ До +100 ₽: {countdown.days}д {countdown.hours}ч {countdown.mins}мин
+                  ⏳ Цена вырастет на 40% через {countdown.days}д {countdown.hours}ч {countdown.mins}мин
                 </span>
               ) : (
                 <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">

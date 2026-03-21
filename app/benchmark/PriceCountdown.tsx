@@ -57,7 +57,7 @@ export default function PriceCountdown() {
             isUrgent ? "text-red-600" : "text-amber-600"
           }`}
         >
-          С 7 апреля цена вырастет до 349 ₽ — сейчас 249 ₽
+          С 7 апреля цена вырастет на 40% — с 249 до 349 ₽
         </div>
       </div>
     </div>
