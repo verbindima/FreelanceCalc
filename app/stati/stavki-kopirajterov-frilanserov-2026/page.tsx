@@ -432,6 +432,33 @@ export default function CopywriterRatesArticle() {
             </div>
           </section>
 
+          {/* Benchmark upsell — loss aversion (Каннеман: "цена вырастет", не "сэкономьте") */}
+          <div className="mb-10 bg-amber-50 border border-amber-200 rounded-2xl p-6">
+            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+              <div className="flex-1">
+                <p className="text-xs font-semibold text-amber-600 uppercase tracking-wide mb-1">
+                  📊 Бенчмарк ставок · Q1 2026
+                </p>
+                <h3 className="font-bold text-gray-900 text-base mb-1">
+                  Ваша ставка выше или ниже медианы по вашему городу?
+                </h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  Медианные ставки по 22 специальностям × 10 городам с разбивкой джун&nbsp;/&nbsp;мид&nbsp;/&nbsp;сеньор.
+                  Данные Q1 2026.
+                </p>
+              </div>
+              <Link
+                href="/benchmark"
+                className="shrink-0 bg-amber-500 hover:bg-amber-600 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-colors whitespace-nowrap"
+              >
+                Сравнить свою ставку → 249 ₽
+              </Link>
+            </div>
+            <p className="text-xs text-amber-700/70 mt-2">
+              ⏳ С 7 апреля цена вырастет до 349 ₽ — сейчас 249 ₽
+            </p>
+          </div>
+
           {/* Final CTA */}
           <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-8 text-white text-center">
             <h2 className="text-2xl font-bold mb-3">Рассчитайте свою ставку прямо сейчас</h2>
