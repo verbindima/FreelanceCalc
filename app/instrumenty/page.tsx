@@ -104,6 +104,24 @@ const tools = [
     badgeColor: "bg-green-100 text-green-700",
   },
   {
+    href: "/nalog/ip-usn",
+    emoji: "🏢",
+    title: "Калькулятор налога ИП УСН 6%",
+    description:
+      "Налог УСН 6%, страховые взносы 2026, вычет взносов из налога — полный расчёт для ИП",
+    badge: "Новое",
+    badgeColor: "bg-purple-100 text-purple-700",
+  },
+  {
+    href: "/nalog/sravnenie",
+    emoji: "⚖️",
+    title: "Самозанятый vs ИП: сравнение",
+    description:
+      "Интерактивное сравнение налогов: НПД против ИП УСН 6%. Найдите точку перехода для вашего дохода",
+    badge: "Новое",
+    badgeColor: "bg-purple-100 text-purple-700",
+  },
+  {
     href: "/stavka",
     emoji: "📊",
     title: "Ставки по специальностям",

@@ -533,6 +533,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.75,
     },
+    // /nalog/ cluster — tax regime calculators and comparison
+    {
+      url: `${BASE_URL}/nalog`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/nalog/ip-usn`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/nalog/sravnenie`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
     ...specialtyPages,
     ...cityPages,
     ...specialtyCityPages,
