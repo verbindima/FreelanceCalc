@@ -108,6 +108,8 @@ export default function FreelanceCalc() {
   const [shareCopied, setShareCopied] = useState(false);
   const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
   const [yearsFreelancing, setYearsFreelancing] = useState(3);
+  const [showNegotiationScript, setShowNegotiationScript] = useState(false);
+  const [scriptCopied, setScriptCopied] = useState<string | null>(null);
   const calcUsedTracked = useRef(false);
 
   // Lead capture for broken-payment state
@@ -262,6 +264,17 @@ export default function FreelanceCalc() {
     setPromoSubmitted(true);
     setPromoLoading(false);
   }, [promoEmail]);
+
+  const handleCopyScript = useCallback(async (text: string, key: string) => {
+    ymGoal("negotiation_script_copy", { variant: key });
+    try {
+      await navigator.clipboard.writeText(text);
+      setScriptCopied(key);
+      setTimeout(() => setScriptCopied(null), 2500);
+    } catch {
+      window.prompt("Скопируйте скрипт:", text);
+    }
+  }, []);
 
   const handlePayment = useCallback(async () => {
     setPaymentLoading(true);
@@ -580,6 +593,87 @@ export default function FreelanceCalc() {
                       Это деньги, которые вы не получили из-за ставки ниже рынка
                     </p>
                   </div>
+                  {/* Negotiation Script Generator — персонализированный скрипт для переговоров */}
+                  <div className="mt-3">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowNegotiationScript((v) => !v);
+                        ymGoal("negotiation_script_open", { slug: selectedSpecialty ?? "" });
+                      }}
+                      className="text-xs font-semibold text-red-800 bg-red-200/60 hover:bg-red-200 px-3 py-1.5 rounded-lg transition-colors"
+                    >
+                      {showNegotiationScript ? "▲ Скрыть скрипт" : "💬 Получить скрипт переговоров о повышении ставки →"}
+                    </button>
+                    {showNegotiationScript && (() => {
+                      const myRound = Math.round(results.hourlyRate / 50) * 50;
+                      const targetRound = Math.round(spec.mid / 50) * 50;
+                      const fmtN = (n: number) => new Intl.NumberFormat("ru-RU").format(n);
+                      const scripts = [
+                        {
+                          key: "chat",
+                          label: "В переписке (Telegram / почта)",
+                          icon: "💬",
+                          text:
+                            `Привет! Хочу обсудить ставку по следующему проекту.\n\n` +
+                            `Я проанализировал рынок по специальности «${spec.title}» — медиана сейчас ${spec.median} ₽/час. Мои текущие ${fmtN(myRound)} ₽/час были актуальны, но уже не отражают мой опыт и рыночную реальность.\n\n` +
+                            `Предлагаю перейти на ${fmtN(targetRound)} ₽/час со следующего проекта. Это медиана по рынку — не топ, просто рынок.\n\n` +
+                            `Как смотришь?`,
+                        },
+                        {
+                          key: "formal",
+                          label: "Формально (для новых клиентов)",
+                          icon: "📧",
+                          text:
+                            `Добрый день!\n\n` +
+                            `Мои услуги в области «${spec.title}»: ${fmtN(targetRound)} ₽/час.\n\n` +
+                            `Это медианная ставка по рынку на Q1 2026 — соответствует специалистам с опытом от 3 лет. Включает: разработку, коммуникацию, итерации по ТЗ.\n\n` +
+                            `Для оценки проекта пришлите описание задачи — отвечу в течение дня.`,
+                        },
+                        {
+                          key: "bump",
+                          label: "Для постоянных клиентов (повышение)",
+                          icon: "📈",
+                          text:
+                            `Привет! Хочу предупредить заранее.\n\n` +
+                            `С [дата через 30 дней] моя ставка меняется: ${fmtN(myRound)} → ${fmtN(targetRound)} ₽/час.\n\n` +
+                            `Причина: я отслеживаю рынок по «${spec.title}» — медиана сейчас ${spec.median} ₽/час, и мои текущие ${fmtN(myRound)} уже ниже рынка на ${Math.round(((spec.mid - results.hourlyRate) / spec.mid) * 100)}%.\n\n` +
+                            `Текущие проекты завершим по старой ставке. Новые задачи — по ${fmtN(targetRound)} ₽/час.\n\n` +
+                            `Если хочешь зафиксировать объём работ по старой ставке — давай обсудим до [дата].`,
+                        },
+                      ];
+                      return (
+                        <div className="mt-3 bg-white border border-red-200 rounded-xl p-4 space-y-3">
+                          <p className="text-xs font-semibold text-slate-700">
+                            ✍️ Готовые скрипты для вашей ситуации — скопируйте и отредактируйте под себя:
+                          </p>
+                          {scripts.map((s) => (
+                            <div key={s.key} className="bg-slate-50 rounded-lg p-3">
+                              <div className="flex items-center justify-between mb-1.5">
+                                <span className="text-xs font-semibold text-slate-600">
+                                  {s.icon} {s.label}
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => handleCopyScript(s.text, s.key)}
+                                  className="text-xs bg-slate-200 hover:bg-indigo-100 hover:text-indigo-700 text-slate-600 px-2.5 py-1 rounded transition-colors"
+                                >
+                                  {scriptCopied === s.key ? "✅ Скопировано!" : "Копировать"}
+                                </button>
+                              </div>
+                              <pre className="text-xs text-slate-600 whitespace-pre-wrap leading-relaxed font-sans">
+                                {s.text}
+                              </pre>
+                            </div>
+                          ))}
+                          <p className="text-xs text-slate-400">
+                            💡 Замените [дата] на конкретную дату. Скрипты основаны на ваших реальных числах.
+                          </p>
+                        </div>
+                      );
+                    })()}
+                  </div>
+
                   <button
                     onClick={() => { handleOpenUpsell(); ymGoal("upsell_gap_click", { slug: selectedSpecialty }); }}
                     className="mt-2 text-xs font-semibold text-red-700 underline hover:text-red-900"
