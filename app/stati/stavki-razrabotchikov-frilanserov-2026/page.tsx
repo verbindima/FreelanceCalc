@@ -110,6 +110,29 @@ const articleJsonLd = {
         },
       ],
     },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "FreelanceCalc",
+          item: BASE_URL,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Статьи",
+          item: `${BASE_URL}/stati`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Ставки разработчиков-фрилансеров 2026",
+          item: `${BASE_URL}/stati/stavki-razrabotchikov-frilanserov-2026`,
+        },
+      ],
+    },
   ],
 };
 

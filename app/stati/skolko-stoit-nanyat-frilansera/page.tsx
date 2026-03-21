@@ -93,6 +93,29 @@ const faqJsonLd = {
         text: "Сравните предложенную ставку с медианными данными по рынку: откройте PDF-бенчмарк FreelanceCalc с медианными ставками по 22 специальностям и 10 городам России. Это позволяет быстро понять, укладывается ли предложение специалиста в рыночный диапазон.",
       },
     },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "FreelanceCalc",
+          item: BASE_URL,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Статьи",
+          item: `${BASE_URL}/stati`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Сколько стоит нанять фрилансера",
+          item: `${BASE_URL}/stati/skolko-stoit-nanyat-frilansera`,
+        },
+      ],
+    },
   ],
 };
 

@@ -142,6 +142,29 @@ const jsonLd = {
         },
       ],
     },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "FreelanceCalc",
+          item: BASE_URL,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Статьи",
+          item: `${BASE_URL}/stati`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Как рассчитать ставку фрилансера",
+          item: `${BASE_URL}/stati/kak-raschitat-stavku-frilansera`,
+        },
+      ],
+    },
   ],
 };
 
