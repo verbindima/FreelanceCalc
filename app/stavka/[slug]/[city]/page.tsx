@@ -239,6 +239,26 @@ export default async function SpecialtyCityPage({ params }: Props) {
           specialty={`${spec.shortTitle} ${city.nameIn}`}
         />
 
+        {/* Benchmark upsell — hot zone right after user sees their city rate */}
+        <section className="mt-6 bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-100 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div className="flex-1">
+            <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wide mb-1">📊 Полный бенчмарк Q1 2026</p>
+            <p className="text-sm font-bold text-slate-900 mb-1">
+              {spec.shortTitle}: ставки во всех 10 городах России
+            </p>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              {city.name} + Москва, СПб, Новосибирск, Екатеринбург, Казань и ещё 4 города.
+              Джун / мид / сеньор. <span className="text-red-600 font-medium">С 7 апреля — 349 ₽.</span>
+            </p>
+          </div>
+          <Link
+            href="/benchmark"
+            className="flex-shrink-0 inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors whitespace-nowrap shadow-sm"
+          >
+            Открыть за 249 ₽ →
+          </Link>
+        </section>
+
         {/* FAQ */}
         <section className="mt-10 space-y-4">
           <h2 className="text-lg font-bold text-slate-800">
