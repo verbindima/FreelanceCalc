@@ -86,6 +86,14 @@ const jsonLd = {
           operatingSystem: "Web",
           offers: { "@type": "Offer", price: "0", priceCurrency: "RUB" },
         },
+        {
+          "@type": "WebApplication",
+          name: "Калькулятор реальной стоимости сотрудника",
+          url: `${BASE_URL}/instrumenty/kalkulator-stoimosti-sotrudnika`,
+          applicationCategory: "FinanceApplication",
+          operatingSystem: "Web",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "RUB" },
+        },
       ],
     },
   ],
@@ -127,6 +135,15 @@ const tools = [
       "Посчитайте минимальную почасовую ставку по желаемому доходу, режиму налогов и загрузке",
     badge: "Основной",
     badgeColor: "bg-blue-100 text-blue-700",
+  },
+  {
+    href: "/instrumenty/kalkulator-stoimosti-sotrudnika",
+    emoji: "👔",
+    title: "Калькулятор реальной стоимости сотрудника",
+    description:
+      "Штатный сотрудник за 100 000 ₽ gross стоит работодателю ≈150 000 ₽/мес. Сравните с фрилансером — пошлите заказчику, когда говорит «дорого»",
+    badge: "Новое",
+    badgeColor: "bg-red-100 text-red-700",
   },
   {
     href: "/instrumenty/kalkulator-stoimosti-proekta",
