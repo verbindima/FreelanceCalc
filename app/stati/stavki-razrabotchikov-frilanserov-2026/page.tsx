@@ -4,9 +4,9 @@ import Link from "next/link";
 const BASE_URL = "https://freelancecalc-one.vercel.app";
 
 export const metadata: Metadata = {
-  title: "Ставки разработчиков-фрилансеров в России 2026: таблица по 10 специализациям",
+  title: "Ставки разработчиков-фрилансеров в России 2026: таблица по 15 специализациям",
   description:
-    "Сколько берёт программист-фрилансер в России в 2026 году? Медианные почасовые ставки для Frontend, Backend, Fullstack, Mobile, Python, PHP, DevOps, 1С, ML и QA разработчиков. Данные + калькулятор.",
+    "Сколько берёт программист-фрилансер в России в 2026 году? Медианные почасовые ставки для Frontend, Backend, Fullstack, iOS, Android, Bitrix, WordPress, .NET, Python, PHP, DevOps, 1С, ML и QA. Данные + калькулятор.",
   keywords: [
     "ставки разработчиков фрилансеров 2026",
     "сколько берёт программист фрилансер",
@@ -17,11 +17,16 @@ export const metadata: Metadata = {
     "ставка мобильного разработчика фрилансер",
     "ставка devops фрилансер",
     "ставки it специалистов фрилансеров",
+    "ставка bitrix разработчика",
+    "ставка ios разработчика фрилансер",
+    "ставка android разработчика фрилансер",
+    "ставка wordpress разработчика",
+    "ставка net разработчика фрилансер",
   ],
   metadataBase: new URL(BASE_URL),
   alternates: { canonical: "/stati/stavki-razrabotchikov-frilanserov-2026" },
   openGraph: {
-    title: "Ставки разработчиков-фрилансеров в России 2026: таблица по 10 специализациям",
+    title: "Ставки разработчиков-фрилансеров в России 2026: таблица по 15 специализациям",
     description:
       "Медианные почасовые ставки для Frontend, Backend, Fullstack, Mobile, Python, DevOps и других IT-специализаций на фрилансе. Актуальные данные 2026 года.",
     type: "article",
@@ -37,7 +42,7 @@ const articleJsonLd = {
     {
       "@type": "Article",
       "@id": `${BASE_URL}/stati/stavki-razrabotchikov-frilanserov-2026#article`,
-      headline: "Ставки разработчиков-фрилансеров в России 2026: таблица по 10 специализациям",
+      headline: "Ставки разработчиков-фрилансеров в России 2026: таблица по 15 специализациям",
       description:
         "Медианные почасовые ставки для 10 IT-специализаций на фрилансе в России. Реальные данные 2026 года.",
       author: { "@type": "Organization", name: "FreelanceCalc", url: BASE_URL },
@@ -189,6 +194,46 @@ const devSpecialties = [
     demand: "Очень высокий",
     notes: "Самый быстрорастущий сегмент. PyTorch, LLM, компьютерное зрение.",
   },
+  {
+    name: "Bitrix-разработчик",
+    slug: "bitrix-razrabotchik",
+    median: "1 500–3 500 ₽/час",
+    monthlyIncome: "от 150 000 до 380 000 ₽",
+    demand: "Высокий",
+    notes: "1С-Bitrix, Bitrix24. Самая популярная CMS в российском корпоративном сегменте.",
+  },
+  {
+    name: "WordPress-разработчик",
+    slug: "wordpress-razrabotchik",
+    median: "1 000–2 500 ₽/час",
+    monthlyIncome: "от 100 000 до 270 000 ₽",
+    demand: "Средний",
+    notes: "WordPress, WooCommerce, Elementor. Огромный рынок малого бизнеса.",
+  },
+  {
+    name: "iOS-разработчик",
+    slug: "ios-razrabotchik",
+    median: "2 500–5 500 ₽/час",
+    monthlyIncome: "от 250 000 до 600 000 ₽",
+    demand: "Высокий",
+    notes: "Swift, SwiftUI, UIKit. Высокий порог входа — высокие ставки.",
+  },
+  {
+    name: "Android-разработчик",
+    slug: "android-razrabotchik",
+    median: "2 000–4 500 ₽/час",
+    monthlyIncome: "от 200 000 до 500 000 ₽",
+    demand: "Высокий",
+    notes: "Kotlin, Jetpack Compose. Android — 70%+ рынка смартфонов в России.",
+  },
+  {
+    name: ".NET / C# разработчик",
+    slug: "net-razrabotchik",
+    median: "2 000–5 000 ₽/час",
+    monthlyIncome: "от 200 000 до 550 000 ₽",
+    demand: "Высокий",
+    notes: "ASP.NET Core, C#. Корпоративный сектор, банки, государственные системы.",
+  },
 ];
 
 export default function DevRatesArticle() {
@@ -220,7 +265,7 @@ export default function DevRatesArticle() {
           </nav>
 
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
-            Ставки разработчиков-фрилансеров в России 2026: таблица по 10 специализациям
+            Ставки разработчиков-фрилансеров в России 2026: таблица по 15 специализациям
           </h1>
 
           <div className="flex flex-wrap gap-3 text-sm text-gray-500 mb-6">
@@ -232,8 +277,8 @@ export default function DevRatesArticle() {
           <p className="text-lg text-gray-600 mb-8 leading-relaxed">
             Разработчики — самая многочисленная и высокооплачиваемая категория фрилансеров в России.
             Но «сколько берёт программист» — это почти бессмысленный вопрос без уточнения специализации.
-            Ставка ML-инженера и ставка PHP-разработчика могут отличаться в 5 раз.
-            Ниже — актуальные медианные данные по 10 IT-специализациям и объяснение, из чего складываются эти цифры.
+            Ставка ML-инженера и ставка WordPress-разработчика могут отличаться в 7 раз.
+            Ниже — актуальные медианные данные по 15 IT-специализациям: от Bitrix и 1С до iOS, Android и .NET.
           </p>
 
           {/* Quick CTA */}
@@ -254,7 +299,7 @@ export default function DevRatesArticle() {
           {/* Main table */}
           <section className="mb-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              Медианные ставки разработчиков-фрилансеров в 2026 году
+              Медианные ставки разработчиков-фрилансеров в 2026 году: 15 специализаций
             </h2>
             <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm">
               <table className="w-full text-sm">
