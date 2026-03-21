@@ -21,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  // 26 specialties × 16 cities = 416 cross-pages targeting long-tail queries
+  // 26 specialties × 24 cities = 624 cross-pages targeting long-tail queries
   const specialtyCityPages: MetadataRoute.Sitemap = [];
   for (const spec of SPECIALTY_DATA) {
     for (const city of CITY_DATA) {
@@ -47,7 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
-  // 26 specialties × 3 levels × 16 cities = 1248 pages targeting "ставка junior frontend в Москве"
+  // 26 specialties × 3 levels × 24 cities = 1872 pages targeting "ставка junior frontend в Москве"
   const levelCityPages: MetadataRoute.Sitemap = [];
   for (const spec of SPECIALTY_DATA) {
     for (const lvl of LEVELS) {
