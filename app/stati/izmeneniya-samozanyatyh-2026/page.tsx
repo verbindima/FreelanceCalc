@@ -354,6 +354,23 @@ export default function IzmeneniyaSamozanyatyh2026Page() {
             </p>
           </section>
 
+          {/* SFR calculator inline CTA */}
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-6">
+            <p className="text-sm font-semibold text-blue-900 mb-1">
+              💡 Стоит ли вам платить в СФР?
+            </p>
+            <p className="text-sm text-blue-800 mb-3">
+              Используйте калькулятор — введите свой стаж и число дней болезни в год, и узнайте
+              точку окупаемости для вашей ситуации.
+            </p>
+            <Link
+              href="/nalog/sfr"
+              className="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+            >
+              Калькулятор страхования в СФР →
+            </Link>
+          </div>
+
           {/* CTA Calculator */}
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-6 md:p-8 mb-10 text-white text-center">
             <h2 className="text-xl md:text-2xl font-bold mb-3">

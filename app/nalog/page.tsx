@@ -253,6 +253,30 @@ export default function NalogPage() {
             </div>
           </section>
 
+          {/* Новинка 2026: СФР страхование */}
+          <section className="bg-blue-50 rounded-xl border border-blue-200 p-6 mb-10">
+            <div className="flex items-start gap-3">
+              <span className="text-2xl mt-0.5">🆕</span>
+              <div className="flex-1">
+                <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1">Новое с 2026 года</p>
+                <h2 className="text-lg font-semibold text-blue-900 mb-2">
+                  Добровольное страхование самозанятых в СФР — стоит ли подключать?
+                </h2>
+                <p className="text-sm text-blue-800 mb-3 leading-relaxed">
+                  С 1 января 2026 года самозанятые могут платить добровольные взносы в Социальный
+                  фонд (1 344–1 920 ₽/мес) и получать оплачиваемые больничные. Рассчитайте, при
+                  каком количестве дней болезни это выгодно именно вам.
+                </p>
+                <Link
+                  href="/nalog/sfr"
+                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
+                >
+                  Открыть калькулятор страхования →
+                </Link>
+              </div>
+            </div>
+          </section>
+
           {/* FAQ */}
           <section className="mb-10">
             <h2 className="text-xl font-semibold text-gray-900 mb-5">Частые вопросы</h2>
