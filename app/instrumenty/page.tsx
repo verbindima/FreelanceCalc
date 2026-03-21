@@ -78,12 +78,29 @@ const jsonLd = {
           operatingSystem: "Web",
           offers: { "@type": "Offer", price: "0", priceCurrency: "RUB" },
         },
+        {
+          "@type": "WebApplication",
+          name: "Калькулятор пенсии самозанятого",
+          url: `${BASE_URL}/instrumenty/kalkulator-pensii-samozanyatogo`,
+          applicationCategory: "BusinessApplication",
+          operatingSystem: "Web",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "RUB" },
+        },
       ],
     },
   ],
 };
 
 const tools = [
+  {
+    href: "/instrumenty/kalkulator-pensii-samozanyatogo",
+    emoji: "🏦",
+    title: "Калькулятор пенсии самозанятого",
+    description:
+      "Каждый год без взносов — минус 171 ₽/мес к пенсии навсегда. Узнайте, сколько теряете и стоит ли платить в СФР",
+    badge: "Новое",
+    badgeColor: "bg-red-100 text-red-700",
+  },
   {
     href: "/instrumenty/kalkulator-naloga-samozanyatogo",
     emoji: "🧾",
@@ -99,8 +116,8 @@ const tools = [
     title: "Калькулятор комиссии биржи",
     description:
       "Сколько Kwork, FL.ru и Хабр Фриланс забирают с каждого заказа — и сколько вы теряете за год",
-    badge: "Новое",
-    badgeColor: "bg-red-100 text-red-700",
+    badge: null,
+    badgeColor: "",
   },
   {
     href: "/?utm_source=instrumenty&utm_medium=hub",

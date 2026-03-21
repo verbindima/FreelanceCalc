@@ -728,6 +728,16 @@ export default function FreelanceCalc() {
               </a>{" "}
               — приём платежей от физлиц и компаний
             </li>
+            <li>
+              <Link
+                href="/instrumenty/kalkulator-pensii-samozanyatogo"
+                className="text-indigo-600 hover:underline"
+                onClick={() => ymGoal("pension_calc_click")}
+              >
+                Калькулятор пенсии самозанятого
+              </Link>{" "}
+              — узнайте, сколько теряете без добровольных взносов в СФР
+            </li>
           </ul>
         </section>
 
