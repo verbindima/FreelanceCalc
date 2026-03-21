@@ -5,6 +5,7 @@ import { SPECIALTIES, getSpecialty } from "../../../specialties";
 import { CITIES, getCity } from "../../../../../goroda/cities";
 import { LEVELS, getLevel, ExperienceLevel } from "../levels";
 import SpecialtyCalc from "../../../SpecialtyCalc";
+import { SPECIALTY_ARTICLES } from "../../../related-articles";
 
 const BASE_URL = "https://freelancecalc.ru";
 
@@ -309,6 +310,13 @@ export default async function LevelCityPage({ params }: Props) {
                 {spec.title} — полный обзор
               </Link>
             </li>
+            {SPECIALTY_ARTICLES[slug] && (
+              <li>
+                <Link href={SPECIALTY_ARTICLES[slug].href} className="text-sm text-indigo-600 hover:underline font-medium">
+                  {SPECIALTY_ARTICLES[slug].title}
+                </Link>
+              </li>
+            )}
             <li>
               <Link href="/rukovodstvo" className="text-sm text-indigo-600 hover:underline">
                 Как рассчитать ставку фрилансера: полное руководство 2026

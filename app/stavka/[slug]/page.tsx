@@ -5,6 +5,7 @@ import { SPECIALTIES, getSpecialty, Specialty } from "./specialties";
 import { CITIES } from "../../goroda/cities";
 import { LEVELS } from "./opyt/[level]/levels";
 import SpecialtyCalc from "./SpecialtyCalc";
+import { SPECIALTY_ARTICLES } from "./related-articles";
 
 // TODO: switch to custom domain once purchased & configured in Vercel
 const BASE_URL = "https://freelancecalc.ru";
@@ -277,6 +278,13 @@ export default async function SpecialtyPage({ params }: Props) {
             Читайте по теме
           </h2>
           <ul className="space-y-2">
+            {SPECIALTY_ARTICLES[slug] && (
+              <li>
+                <Link href={SPECIALTY_ARTICLES[slug].href} className="text-sm text-indigo-600 hover:underline font-medium">
+                  {SPECIALTY_ARTICLES[slug].title}
+                </Link>
+              </li>
+            )}
             <li>
               <Link href="/rukovodstvo" className="text-sm text-indigo-600 hover:underline">
                 Как рассчитать ставку фрилансера: полное руководство 2026

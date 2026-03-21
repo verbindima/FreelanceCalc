@@ -4,6 +4,7 @@ import Link from "next/link";
 import { SPECIALTIES, getSpecialty } from "../specialties";
 import { CITIES, getCity } from "../../../goroda/cities";
 import SpecialtyCalc from "../SpecialtyCalc";
+import { SPECIALTY_ARTICLES } from "../related-articles";
 
 const BASE_URL = "https://freelancecalc.ru";
 
@@ -342,6 +343,13 @@ export default async function SpecialtyCityPage({ params }: Props) {
             Читайте по теме
           </h2>
           <ul className="space-y-2">
+            {SPECIALTY_ARTICLES[slug] && (
+              <li>
+                <Link href={SPECIALTY_ARTICLES[slug].href} className="text-sm text-indigo-600 hover:underline font-medium">
+                  {SPECIALTY_ARTICLES[slug].title}
+                </Link>
+              </li>
+            )}
             <li>
               <Link href="/rukovodstvo" className="text-sm text-indigo-600 hover:underline">
                 Как рассчитать ставку фрилансера: полное руководство 2026
