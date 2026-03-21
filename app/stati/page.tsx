@@ -141,6 +141,14 @@ const ARTICLES = [
     tag: "Рынок",
   },
   {
+    slug: "stavki-razrabotchikov-po-yazykam-2026",
+    title: "Ставки разработчиков по языкам программирования 2026: Python, JS, Go, PHP, Java",
+    description:
+      "Медианные часовые ставки по 12 языкам: Python, JavaScript/TypeScript, Go, Java, PHP, C#, 1С, Swift, Kotlin, Rust. Разбивка Junior / Middle / Senior с таблицей.",
+    readTime: "7 мин",
+    tag: "Рынок",
+  },
+  {
     slug: "stavki-dizajnerov-frilanserov-2026",
     title: "Ставки дизайнеров-фрилансеров в России 2026: таблица по специализациям",
     description:
