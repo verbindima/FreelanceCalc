@@ -10,17 +10,28 @@ const BASE_URL = "https://freelancecalc-one.vercel.app";
 
 type Props = { params: Promise<{ slug: string; level: string; city: string }> };
 
+// Top specialties and cities for static pre-build (reduces build size)
+const TOP_SPECIALTIES = [
+  "frontend-razrabotchik", "backend-razrabotchik", "fullstack-razrabotchik",
+  "dizajner-ui-ux", "kopirayter", "1c-razrabotchik", "php-razrabotchik",
+  "python-razrabotchik", "ios-razrabotchik", "android-razrabotchik",
+];
+const TOP_CITIES = ["moskva", "sankt-peterburg", "novosibirsk", "ekaterinburg", "krasnodar"];
+
 export async function generateStaticParams() {
   const params: { slug: string; level: string; city: string }[] = [];
-  for (const spec of SPECIALTIES) {
+  for (const spec of SPECIALTIES.filter(s => TOP_SPECIALTIES.includes(s.slug))) {
     for (const lvl of LEVELS) {
-      for (const city of CITIES) {
+      for (const city of CITIES.filter(c => TOP_CITIES.includes(c.slug))) {
         params.push({ slug: spec.slug, level: lvl.slug, city: city.slug });
       }
     }
   }
   return params;
 }
+
+// Long-tail slug/level/city combos are SSR on-demand (SEO-safe, crawlable)
+export const dynamicParams = true;
 
 /** Parse "1 500–3 000 ₽/час" and apply combined multiplier */
 function adjustRate(median: string, multiplier: number): string {
