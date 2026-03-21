@@ -299,7 +299,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.85,
     },
-    // City comparison hub + 12 city-vs-city pages
+    // City comparison hub + 276 city-vs-city pages (all combinations of 24 cities)
     {
       url: `${BASE_URL}/goroda/sravnenie`,
       lastModified: new Date(),
