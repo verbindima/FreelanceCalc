@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { SPECIALTIES, getSpecialty, Specialty } from "./specialties";
 import { CITIES } from "../../goroda/cities";
+import { LEVELS } from "./opyt/[level]/levels";
 import SpecialtyCalc from "./SpecialtyCalc";
 
 // TODO: switch to custom domain once purchased & configured in Vercel
@@ -135,8 +136,26 @@ export default async function SpecialtyPage({ params }: Props) {
           specialty={spec.shortTitle}
         />
 
-        {/* Links to this specialty by city */}
+        {/* Links by experience level */}
         <section className="mt-10">
+          <h2 className="text-base font-semibold text-slate-700 mb-3">
+            {spec.shortTitle} по уровню опыта
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {LEVELS.map((lvl) => (
+              <Link
+                key={lvl.slug}
+                href={`/stavka/${slug}/opyt/${lvl.slug}`}
+                className="text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-100 px-3 py-1.5 rounded-full transition-colors font-medium"
+              >
+                {lvl.name} · {lvl.years}
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* Links to this specialty by city */}
+        <section className="mt-6">
           <h2 className="text-base font-semibold text-slate-700 mb-3">
             {spec.shortTitle} по городам
           </h2>

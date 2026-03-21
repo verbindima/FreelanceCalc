@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 import { CITIES as CITY_DATA } from "./goroda/cities";
 import { SPECIALTIES as SPECIALTY_DATA } from "./stavka/[slug]/specialties";
+import { LEVELS } from "./stavka/[slug]/opyt/[level]/levels";
 
 // TODO: switch to custom domain once purchased & configured in Vercel
 const BASE_URL = "https://freelancecalc-one.vercel.app";
@@ -20,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  // 22 specialties × 16 cities = 352 cross-pages targeting long-tail queries
+  // 26 specialties × 16 cities = 416 cross-pages targeting long-tail queries
   const specialtyCityPages: MetadataRoute.Sitemap = [];
   for (const spec of SPECIALTY_DATA) {
     for (const city of CITY_DATA) {
@@ -29,6 +30,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: new Date(),
         changeFrequency: "monthly" as const,
         priority: 0.7,
+      });
+    }
+  }
+
+  // 26 specialties × 3 levels = 78 experience-level pages targeting "ставка junior/middle/senior [профессия]"
+  const experienceLevelPages: MetadataRoute.Sitemap = [];
+  for (const spec of SPECIALTY_DATA) {
+    for (const lvl of LEVELS) {
+      experienceLevelPages.push({
+        url: `${BASE_URL}/stavka/${spec.slug}/opyt/${lvl.slug}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly" as const,
+        priority: 0.75,
       });
     }
   }
@@ -267,5 +281,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...specialtyPages,
     ...cityPages,
     ...specialtyCityPages,
+    ...experienceLevelPages,
   ];
 }
