@@ -750,12 +750,12 @@ export default function FreelanceCalc() {
             {paymentUnavailable ? (
               <div className="mb-3">
                 <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-2">
-                  <p className="text-sm font-medium text-amber-800 mb-1">⏳ Оплата временно недоступна</p>
+                  <p className="text-sm font-medium text-amber-800 mb-1">⚡ Зафиксируй цену до повышения</p>
                   <p className="text-xs text-amber-700 leading-relaxed mb-3">
-                    Оставьте email — пришлём PDF как только платёжная система заработает. Цена останется 249 ₽.
+                    Оплата открывается скоро. Оставь email — забронируем цену 249 ₽. <strong>С 7 апреля будет 349 ₽</strong> — потеряешь 100 ₽.
                   </p>
                   {leadSubmitted ? (
-                    <p className="text-sm font-semibold text-emerald-700">✅ Отлично! Напишем вам как только будет готово.</p>
+                    <p className="text-sm font-semibold text-emerald-700">✅ Зафиксировано! Пришлём за 249 ₽, не переплатишь.</p>
                   ) : (
                     <div className="flex gap-2">
                       <input
@@ -771,7 +771,7 @@ export default function FreelanceCalc() {
                         disabled={!leadEmail.includes("@") || leadLoading}
                         className="bg-amber-500 hover:bg-amber-600 disabled:bg-amber-300 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap"
                       >
-                        {leadLoading ? "…" : "Уведомить меня"}
+                        {leadLoading ? "…" : "Зафиксировать →"}
                       </button>
                     </div>
                   )}

@@ -58,11 +58,11 @@ export default function BuyButton({ label = "Купить полный PDF — 2
       <div className="text-left w-full max-w-sm">
         <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-4 mb-2">
           <p className="text-sm font-semibold text-amber-800 mb-1">
-            ⏳ Оплата временно недоступна
+            ⚡ Зафиксируй цену 249 ₽ до 7 апреля
           </p>
           <p className="text-xs text-amber-700 leading-relaxed mb-3">
-            Цена 249 ₽ действует до&nbsp;<strong>7 апреля</strong> — потом 349 ₽.
-            Оставь почту, зафиксируем твою цену и напишем как только откроется оплата.
+            С 7 апреля цена вырастет до <strong>349 ₽</strong> — потеряешь 100 ₽.
+            Оставь почту, забронируем цену и пришлём PDF как только откроется оплата.
           </p>
           {leadSubmitted ? (
             <p className="text-sm font-semibold text-green-700">
