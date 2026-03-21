@@ -409,6 +409,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.7,
     },
+    {
+      url: `${BASE_URL}/sravnenie/java-razrabotchik-vs-python-razrabotchik`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    },
     ...specialtyPages,
     ...cityPages,
     ...specialtyCityPages,

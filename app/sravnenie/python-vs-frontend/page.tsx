@@ -207,7 +207,7 @@ export default function PythonVsFrontendPage() {
                 </p>
               </div>
               <div className="bg-white border border-gray-200 rounded-xl p-5">
-                <h3 className="font-semibold text-gray-900 mb-2">Скорость входа в профессию</html3>
+                <h3 className="font-semibold text-gray-900 mb-2">Скорость входа в профессию</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
                   Frontend привлекателен быстрым стартом: первые коммерческие проекты реальны
                   через 6–9 месяцев обучения. Python для backend требует больше времени на освоение

@@ -40,7 +40,7 @@ const jsonLd = {
       url: `${BASE_URL}/sravnenie`,
       name: "Сравнение специальностей фрилансеров — FreelanceCalc",
       description:
-        "Сравнение почасовых ставок по 11 парам специальностей на фрилансе в России. Junior, Middle, Senior уровни — актуальные данные 2026 года.",
+        "Сравнение почасовых ставок по 12 парам специальностей на фрилансе в России. Junior, Middle, Senior уровни — актуальные данные 2026 года.",
       inLanguage: "ru",
       isPartOf: { "@id": BASE_URL },
     },
@@ -187,6 +187,18 @@ const comparisons = [
     seniorDiff: "4 000 vs 4 500 ₽/час",
     tags: ["IT", "1С", "RU"],
   },
+  {
+    slug: "java-razrabotchik-vs-python-razrabotchik",
+    title: "Java vs Python разработчик",
+    subtitle: "Разработчики",
+    winner: "Python +18% (Senior)",
+    winnerColor: "blue",
+    description: "Python обгоняет Java на Senior-уровне за счёт ML/AI (6 500 vs 5 500 ₽/час). Java лучше для старта.",
+    juniorDiff: "1 700 vs 1 500 ₽/час",
+    middleDiff: "3 200 vs 3 500 ₽/час",
+    seniorDiff: "5 500 vs 6 500 ₽/час",
+    tags: ["IT", "Разработка"],
+  },
 ];
 
 const winnerColorMap: Record<string, string> = {
@@ -234,7 +246,7 @@ export default function SravneniePage() {
 
           <p className="text-lg text-gray-600 mb-8 leading-relaxed">
             Выбираете специальность или думаете о смене направления? Здесь — честное сравнение ставок
-            по 11 парам специальностей: от IT-разработки и мобильной разработки до маркетинга и дизайна.
+            по 12 парам специальностей: от IT-разработки и мобильной разработки до маркетинга и дизайна.
             Данные Junior, Middle, Senior с расчётом месячного дохода. Актуально на Q1 2026.
           </p>
 
@@ -246,7 +258,7 @@ export default function SravneniePage() {
               налогов, загрузки и города.
             </p>
             <a
-              href="https://freelancecalc-one.vercel.app/"
+              href="/stavka"
               className="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
             >
               Рассчитать свою ставку бесплатно →
@@ -255,7 +267,7 @@ export default function SravneniePage() {
 
           {/* Comparison grid */}
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Все сравнения специальностей (11 пар)</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Все сравнения специальностей (12 пар)</h2>
             <div className="grid md:grid-cols-2 gap-5">
               {comparisons.map((comp) => (
                 <Link
@@ -325,7 +337,8 @@ export default function SravneniePage() {
                     { name: "ML-инженер", rate: "5 500", monthly: "880 000", slug: "data-analyst-vs-ml", badge: "Топ", badgeColor: "bg-violet-100 text-violet-800" },
                     { name: "Fullstack разработчик", rate: "4 000", monthly: "640 000", slug: "fullstack-vs-backend", badge: "", badgeColor: "" },
                     { name: "Backend разработчик", rate: "3 500", monthly: "560 000", slug: "frontend-vs-backend", badge: "", badgeColor: "" },
-                    { name: "Python разработчик", rate: "3 500", monthly: "560 000", slug: "python-vs-frontend", badge: "", badgeColor: "" },
+                    { name: "Python разработчик", rate: "3 500", monthly: "560 000", slug: "java-razrabotchik-vs-python-razrabotchik", badge: "", badgeColor: "" },
+                    { name: "Java разработчик", rate: "3 200", monthly: "512 000", slug: "java-razrabotchik-vs-python-razrabotchik", badge: "", badgeColor: "" },
                     { name: "Frontend разработчик", rate: "3 000", monthly: "480 000", slug: "frontend-vs-backend", badge: "", badgeColor: "" },
                     { name: "Data Analyst", rate: "3 000", monthly: "480 000", slug: "data-analyst-vs-ml", badge: "", badgeColor: "" },
                     { name: "UI/UX дизайнер", rate: "2 500", monthly: "400 000", slug: "ui-ux-vs-graficheskij-dizajner", badge: "", badgeColor: "" },
@@ -378,7 +391,7 @@ export default function SravneniePage() {
               с учётом налогов (НПД / ИП), загрузки, отпуска и рыночной медианы по вашей специальности.
             </p>
             <a
-              href="https://freelancecalc-one.vercel.app/"
+              href="/stavka"
               className="inline-block bg-white text-blue-700 font-bold px-8 py-3 rounded-xl hover:bg-blue-50 transition-colors"
             >
               Рассчитать свою ставку бесплатно →
