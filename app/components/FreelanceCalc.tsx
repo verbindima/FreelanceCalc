@@ -220,7 +220,7 @@ export default function FreelanceCalc() {
             Калькулятор ставки фрилансера
           </h1>
           <p className="mt-2 text-slate-500 text-base max-w-md mx-auto">
-            Большинство фрилансеров занижают ставку на 20–40%. Введите желаемый доход — узнайте точную цифру с учётом налогов, отпуска и реальной загрузки
+            Введите желаемый доход — за 30 секунд узнайте точную ставку с учётом налогов, отпуска и загрузки. Большинство фрилансеров занижают цену на 20–40%.
           </p>
         </header>
 
@@ -408,17 +408,17 @@ export default function FreelanceCalc() {
                 Ваша ставка: {fmt(Math.round(results.hourlyRate))} / час
               </p>
               <h3 className="font-bold text-slate-800 text-base">
-                Не продешевили ли вы?
+                Как ваша ставка выглядит рядом с рынком?
               </h3>
               <p className="text-sm text-slate-600 mt-1">
-                PDF с медианными ставками 22 специальностей в 10 городах — посмотрите, сколько берут коллеги с тем же опытом.
+                Реальные данные по 22 специальностям × 10 городам. Большинство фрилансеров после сравнения удивляются — и поднимают ставку.
               </p>
             </div>
             <button
               onClick={handleOpenUpsell}
               className="shrink-0 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors"
             >
-              Сравнить — 249 ₽
+              Проверить по рынку — 249 ₽
             </button>
           </div>
           <p className="mt-3 text-xs text-amber-700/70">
@@ -572,16 +572,17 @@ export default function FreelanceCalc() {
               <p className="text-2xl font-bold text-amber-800">{fmt(Math.round(results.hourlyRate))} / час</p>
             </div>
             <h2 className="text-xl font-bold text-slate-900 mb-2">
-              Не продешевили ли вы?
+              Ваша ставка vs рынок Q1 2026
             </h2>
             <p className="text-slate-600 text-sm mb-4">
-              PDF с медианными ставками: 22 специальности × 10 городов × 3 уровня опыта. Посмотрите, где вы в этой шкале.
+              Точные медианные ставки по 22 специальностям × 10 городам × 3 уровня опыта. Узнайте, занижаете ли вы цену — и на сколько.
             </p>
             <ul className="text-sm text-slate-700 space-y-1 mb-4">
-              <li>✅ Frontend в Москве: 1 700–3 200 ₽/час</li>
-              <li>✅ UI/UX дизайнер: 1 300–2 800 ₽/час</li>
-              <li>✅ Копирайтер: 700–1 700 ₽/час</li>
-              <li>✅ SEO-специалист: 1 100–2 200 ₽/час</li>
+              <li>✅ Frontend-разработчик в Москве: <strong>1 700–3 200 ₽/час</strong></li>
+              <li>✅ UI/UX дизайнер: <strong>1 300–2 800 ₽/час</strong></li>
+              <li>✅ Копирайтер: <strong>700–1 700 ₽/час</strong></li>
+              <li>✅ SEO-специалист: <strong>1 100–2 200 ₽/час</strong></li>
+              <li className="text-slate-400 text-xs pt-1">+ 18 других специальностей и разбивка по городам</li>
             </ul>
 
             {/* Info block */}
@@ -590,14 +591,14 @@ export default function FreelanceCalc() {
             </div>
 
             <p className="text-2xl font-bold text-indigo-700 mb-1">249 ₽</p>
-            <p className="text-xs text-slate-400 mb-5">Единоразово · Без подписки · Скачать сразу после оплаты</p>
+            <p className="text-xs text-slate-400 mb-5">Единоразово · Без подписки · PDF сразу после оплаты · Данные Q1 2026</p>
             <div className="flex gap-3">
               <button
                 className="flex-1 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors"
                 onClick={handlePayment}
                 disabled={paymentLoading}
               >
-                {paymentLoading ? "Переход к оплате…" : "Оплатить через ЮKassa"}
+                {paymentLoading ? "Переход к оплате…" : "Скачать PDF — 249 ₽"}
               </button>
               <button
                 className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-500 hover:bg-slate-50 transition-colors"
