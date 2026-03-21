@@ -110,6 +110,7 @@ export default function FreelanceCalc() {
   const [yearsFreelancing, setYearsFreelancing] = useState(3);
   const [showNegotiationScript, setShowNegotiationScript] = useState(false);
   const [scriptCopied, setScriptCopied] = useState<string | null>(null);
+  const [showAllSpecialties, setShowAllSpecialties] = useState(false);
   const calcUsedTracked = useRef(false);
 
   // Sticky results bar — visible when user scrolls past the results section
@@ -642,7 +643,7 @@ export default function FreelanceCalc() {
             Выберите специальность — сравним с рынком:
           </p>
           <div className="flex flex-wrap gap-1.5 mb-0">
-            {QUICK_SPECIALTIES.map((s) => (
+            {(showAllSpecialties ? QUICK_SPECIALTIES : QUICK_SPECIALTIES.slice(0, QUICK_SPECIALTIES_VISIBLE_DEFAULT)).map((s) => (
               <button
                 key={s.slug}
                 type="button"
@@ -660,6 +661,16 @@ export default function FreelanceCalc() {
                 {s.title}
               </button>
             ))}
+            <button
+              type="button"
+              onClick={() => {
+                setShowAllSpecialties((v) => !v);
+                ymGoal("specialty_show_all_toggle", { expanded: !showAllSpecialties });
+              }}
+              className="text-xs px-2.5 py-1 rounded-full border border-dashed border-slate-300 text-slate-400 hover:border-indigo-400 hover:text-indigo-500 transition-colors"
+            >
+              {showAllSpecialties ? "Свернуть ↑" : `Ещё ${QUICK_SPECIALTIES.length - QUICK_SPECIALTIES_VISIBLE_DEFAULT} →`}
+            </button>
           </div>
           {selectedSpecialty && (() => {
             const spec = QUICK_SPECIALTIES.find((s) => s.slug === selectedSpecialty);
@@ -1276,19 +1287,37 @@ function ResultCard({
 
 /** Quick specialty market benchmarks — mid = midpoint of rate range from /reyting data */
 const QUICK_SPECIALTIES = [
+  // Top 12 — shown by default
   { slug: "frontend-razrabotchik",  title: "Frontend",      median: "1 500–3 000", mid: 2250 },
   { slug: "backend-razrabotchik",   title: "Backend",       median: "2 000–4 000", mid: 3000 },
   { slug: "fullstack-razrabotchik", title: "Fullstack",     median: "2 000–4 500", mid: 3250 },
   { slug: "python-razrabotchik",    title: "Python",        median: "2 000–4 500", mid: 3250 },
+  { slug: "ml-inzhener",            title: "ML/AI",         median: "3 000–7 000", mid: 5000 },
+  { slug: "devops-inzhener",        title: "DevOps",        median: "2 500–6 000", mid: 4250 },
+  { slug: "mobilnyj-razrabotchik",  title: "Мобильный",     median: "2 500–5 000", mid: 3750 },
   { slug: "dizajner-ui-ux",         title: "UI/UX",         median: "1 000–2 500", mid: 1750 },
   { slug: "graficheskij-dizajner",  title: "Дизайн",        median: "800–1 800",   mid: 1300 },
   { slug: "kopirayter",             title: "Копирайтинг",   median: "500–1 500",   mid: 1000 },
   { slug: "seo-specialist",         title: "SEO",           median: "900–2 000",   mid: 1450 },
   { slug: "targetolog",             title: "Таргет",        median: "800–2 000",   mid: 1400 },
+  // Extended — shown when "show all" is toggled
   { slug: "smm-specialist",         title: "SMM",           median: "700–1 500",   mid: 1100 },
   { slug: "testirovshchik-qa",      title: "QA",            median: "900–2 000",   mid: 1450 },
-  { slug: "ml-inzhener",            title: "ML/AI",         median: "3 000–7 000", mid: 5000 },
+  { slug: "php-razrabotchik",       title: "PHP",           median: "1 200–2 800", mid: 2000 },
+  { slug: "1c-razrabotchik",        title: "1С",            median: "1 200–2 800", mid: 2000 },
+  { slug: "data-analyst",           title: "Data Analyst",  median: "1 500–3 500", mid: 2500 },
+  { slug: "biznes-analitik",        title: "Бизнес-аналит", median: "1 500–3 500", mid: 2500 },
+  { slug: "menedzher-proektov",     title: "PM",            median: "1 000–2 500", mid: 1750 },
+  { slug: "yurist-frilanser",       title: "Юрист",         median: "1 200–3 500", mid: 2350 },
+  { slug: "buhgalter-frilanser",    title: "Бухгалтер",     median: "800–2 500",   mid: 1650 },
+  { slug: "illustrator-frilanser",  title: "Иллюстратор",   median: "700–2 500",   mid: 1600 },
+  { slug: "videomontazhyor",        title: "Видеомонтаж",   median: "700–2 000",   mid: 1350 },
+  { slug: "fotograf-frilanser",     title: "Фотограф",      median: "1 500–5 000", mid: 3250 },
+  { slug: "perevodchik",            title: "Переводчик",    median: "400–1 200",   mid: 800  },
+  { slug: "kontent-menedzher",      title: "Контент",       median: "500–1 200",   mid: 850  },
 ];
+
+const QUICK_SPECIALTIES_VISIBLE_DEFAULT = 12;
 
 const FEATURED_SPECIALTIES = [
   { title: "Frontend-разработчик", slug: "frontend-razrabotchik" },
