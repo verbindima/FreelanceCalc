@@ -112,6 +112,10 @@ export default function FreelanceCalc() {
   const [scriptCopied, setScriptCopied] = useState<string | null>(null);
   const calcUsedTracked = useRef(false);
 
+  // Sticky results bar — visible when user scrolls past the results section
+  const [showStickyBar, setShowStickyBar] = useState(false);
+  const resultsRef = useRef<HTMLElement>(null);
+
   // Lead capture for broken-payment state
   const [leadEmail, setLeadEmail] = useState("");
   const [leadSubmitted, setLeadSubmitted] = useState(false);
@@ -182,6 +186,18 @@ export default function FreelanceCalc() {
       load: String(billableRatio),
     });
   }, [netMonthly, taxRegime, hoursPerDay, daysPerWeek, vacationDays, billableRatio]);
+
+  // Show sticky bar when results section scrolls out of view (user keeps the rate top of mind)
+  useEffect(() => {
+    const el = resultsRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowStickyBar(!entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const handleShare = useCallback(async () => {
     ymGoal("share_click");
@@ -326,6 +342,37 @@ export default function FreelanceCalc() {
 
   return (
     <>
+      {/* Sticky rate bar — appears when user scrolls past results; Kahneman: rate always visible = loss always felt */}
+      {showStickyBar && results.hourlyRate > 0 && (
+        <div className="fixed top-0 left-0 right-0 z-50 bg-indigo-700 text-white shadow-lg border-b border-indigo-800 animate-in slide-in-from-top duration-200">
+          <div className="max-w-2xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="text-base leading-none">{marketCtx.emoji}</span>
+              <span className="font-bold text-sm whitespace-nowrap">
+                {fmt(Math.round(results.hourlyRate))}/час
+              </span>
+              <span className="text-indigo-300 text-xs truncate hidden sm:inline">
+                · {marketCtx.label}
+              </span>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => { handleShareTelegram(); ymGoal("sticky_bar_share_click"); }}
+                className="text-xs bg-white/20 hover:bg-white/30 text-white px-2.5 py-1.5 rounded-lg transition-colors font-medium"
+              >
+                ✈️ Поделиться
+              </button>
+              <button
+                onClick={() => { handleOpenUpsell(); ymGoal("sticky_bar_upsell_click"); }}
+                className="text-xs bg-amber-400 hover:bg-amber-300 text-amber-900 px-2.5 py-1.5 rounded-lg transition-colors font-semibold hidden sm:block"
+              >
+                Сравнить с рынком →
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* РСЯ Banner — top (only when ads are actually enabled; no placeholder above the fold) */}
       {adsEnabled && (
         <div className="w-full flex justify-center py-2 bg-slate-100 border-b border-slate-200">
@@ -498,7 +545,7 @@ export default function FreelanceCalc() {
         </section>
 
         {/* Results */}
-        <section className="mt-6 bg-indigo-600 text-white rounded-2xl shadow-md p-6">
+        <section ref={resultsRef} className="mt-6 bg-indigo-600 text-white rounded-2xl shadow-md p-6">
           <div className="flex items-center justify-between mb-4 gap-2">
             <h2 className="text-lg font-bold text-indigo-100">Ваша ставка</h2>
             <div className="flex items-center gap-2">
