@@ -228,6 +228,14 @@ const ARTICLES = [
     readTime: "7 мин",
     tag: "Рынок",
   },
+  {
+    slug: "stavki-proekt-menedzherov-frilanserov-2026",
+    title: "Ставки проект-менеджеров и продакт-менеджеров фрилансеров 2026: таблица",
+    description:
+      "Сколько берёт проект-менеджер или продакт-менеджер на фрилансе в России в 2026 году? Медианные ставки для PM, Product Manager, Scrum Master, Agile Coach и Product Owner. Реальные данные.",
+    readTime: "7 мин",
+    tag: "Рынок",
+  },
 ];
 
 const TAG_COLORS: Record<string, string> = {
