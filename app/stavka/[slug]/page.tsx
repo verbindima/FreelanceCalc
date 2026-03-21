@@ -33,6 +33,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+/** Parse "1 500–3 000 ₽/час" → { low, high } */
+function parseRateRange(median: string): { low: number; high: number } | null {
+  const nums = [...median.matchAll(/(\d[\d\s]*\d|\d+)/g)]
+    .map((m) => parseInt(m[0].replace(/\s/g, ""), 10))
+    .filter((n) => n >= 100);
+  if (nums.length < 2) return null;
+  return { low: nums[0], high: nums[1] };
+}
+
 /** Generate 4 specialty-specific FAQ items from structured data */
 function buildSpecialtyFaq(spec: Specialty) {
   const name = spec.shortTitle; // e.g. "Ставка Frontend-разработчика"
@@ -93,6 +102,31 @@ export default async function SpecialtyPage({ params }: Props) {
     })),
   };
 
+  const rateRange = parseRateRange(spec.medianHourly);
+  const occupationJsonLd = rateRange
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Occupation",
+        name: spec.shortTitle.replace(/^Ставка\s+/i, ""),
+        description: spec.description,
+        occupationLocation: {
+          "@type": "Country",
+          name: "Russia",
+        },
+        estimatedSalary: [
+          {
+            "@type": "MonetaryAmountDistribution",
+            name: "hourly rate",
+            currency: "RUB",
+            duration: "PT1H",
+            percentile10: Math.round(rateRange.low * 0.7 / 100) * 100,
+            median: Math.round((rateRange.low + rateRange.high) / 2 / 100) * 100,
+            percentile90: Math.round(rateRange.high * 1.2 / 100) * 100,
+          },
+        ],
+      }
+    : null;
+
   return (
     <>
       <script
@@ -103,6 +137,12 @@ export default async function SpecialtyPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
+      {occupationJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(occupationJsonLd) }}
+        />
+      )}
 
       <main className="max-w-2xl mx-auto px-4 py-10">
         {/* Breadcrumb */}

@@ -19,6 +19,15 @@ export async function generateStaticParams() {
   return params;
 }
 
+/** Parse "1 500–3 000 ₽/час" style strings → { low, high } numbers */
+function parseRateRange(median: string): { low: number; high: number } | null {
+  const nums = [...median.matchAll(/(\d[\d\s]*\d|\d+)/g)]
+    .map((m) => parseInt(m[0].replace(/\s/g, ""), 10))
+    .filter((n) => n >= 100);
+  if (nums.length < 2) return null;
+  return { low: nums[0], high: nums[1] };
+}
+
 /** Parse "1 500–3 000 ₽/час" style strings and apply city multiplier */
 function adjustRate(median: string, multiplier: number): string {
   const matches = [...median.matchAll(/(\d[\d ]*\d|\d+)/g)];
@@ -141,6 +150,32 @@ export default async function SpecialtyCityPage({ params }: Props) {
     ],
   };
 
+  const baseRange = parseRateRange(spec.medianHourly);
+  const occupationJsonLd = baseRange
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Occupation",
+        name: spec.shortTitle.replace(/^Ставка\s+/i, ""),
+        description: `Ставка ${spec.shortTitle.toLowerCase()} ${city.nameIn} с учётом регионального коэффициента ${city.multiplier}.`,
+        occupationLocation: {
+          "@type": "City",
+          name: city.name,
+          containedInPlace: { "@type": "Country", name: "Russia" },
+        },
+        estimatedSalary: [
+          {
+            "@type": "MonetaryAmountDistribution",
+            name: "hourly rate",
+            currency: "RUB",
+            duration: "PT1H",
+            percentile10: Math.round(baseRange.low * city.multiplier * 0.7 / 100) * 100,
+            median: Math.round(((baseRange.low + baseRange.high) / 2) * city.multiplier / 100) * 100,
+            percentile90: Math.round(baseRange.high * city.multiplier * 1.2 / 100) * 100,
+          },
+        ],
+      }
+    : null;
+
   const otherCities = CITIES.filter((c) => c.slug !== citySlug);
   const otherSpecialties = SPECIALTIES.filter((s) => s.slug !== slug);
 
@@ -150,6 +185,12 @@ export default async function SpecialtyCityPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {occupationJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(occupationJsonLd) }}
+        />
+      )}
 
       <main className="max-w-2xl mx-auto px-4 py-10">
         {/* Breadcrumb */}
