@@ -166,6 +166,36 @@ export default function FreelanceCalc() {
 
   const marketCtx = useMemo(() => getMarketContext(results.hourlyRate), [results.hourlyRate]);
 
+  /** Pick 3 articles contextually: below-market users get rate-raise content; self-employed get tax content; default is foundational */
+  const contextualArticles = useMemo(() => {
+    const isBelowMarket =
+      marketCtx.label === "Ниже рынка" || marketCtx.label === "Нижний квартиль рынка";
+    const isSelfEmployed =
+      taxRegime === "self_employed_fl" || taxRegime === "self_employed_ul";
+    const isIP = taxRegime === "ip_usn6" || taxRegime === "ip_usn15";
+
+    const priority: Array<"below_market" | "self_employed" | "ip" | "default"> = isBelowMarket
+      ? ["below_market", "self_employed", "ip", "default"]
+      : isSelfEmployed
+      ? ["self_employed", "default", "below_market", "ip"]
+      : isIP
+      ? ["ip", "self_employed", "default", "below_market"]
+      : ["default", "self_employed", "below_market", "ip"];
+
+    const seen = new Set<string>();
+    const result: typeof CONTEXTUAL_ARTICLES = [];
+    for (const ctx of priority) {
+      for (const art of CONTEXTUAL_ARTICLES) {
+        if (!seen.has(art.slug) && art.contexts.includes(ctx)) {
+          seen.add(art.slug);
+          result.push(art);
+          if (result.length === 3) return result;
+        }
+      }
+    }
+    return result;
+  }, [marketCtx.label, taxRegime]);
+
   // Track calculator usage once user changes any value
   useEffect(() => {
     if (!calcUsedTracked.current) {
@@ -1010,6 +1040,42 @@ export default function FreelanceCalc() {
           </div>
         </section>
 
+        {/* Contextual article recommendations — internal SEO links + keeps user on site after calc */}
+        <section className="mt-8">
+          <h2 className="text-base font-bold text-slate-800 mb-3">📚 Читайте по теме</h2>
+          <div className="grid gap-2.5">
+            {contextualArticles.map((art) => (
+              <Link
+                key={art.slug}
+                href={`/stati/${art.slug}`}
+                className="flex items-start gap-3 bg-white border border-slate-200 rounded-xl px-4 py-3 hover:border-indigo-300 hover:bg-indigo-50/40 transition-colors group"
+                onClick={() => ymGoal("contextual_article_click", { slug: art.slug })}
+              >
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">
+                      {art.tag}
+                    </span>
+                    <span className="text-xs text-slate-400">{art.readTime}</span>
+                  </div>
+                  <p className="text-sm font-semibold text-slate-800 group-hover:text-indigo-700 transition-colors leading-snug">
+                    {art.title}
+                  </p>
+                  <p className="text-xs text-slate-500 mt-0.5">{art.snippet}</p>
+                </div>
+                <span className="text-slate-400 group-hover:text-indigo-500 text-sm shrink-0 mt-1">→</span>
+              </Link>
+            ))}
+          </div>
+          <Link
+            href="/stati"
+            className="mt-3 inline-block text-xs text-indigo-600 hover:underline"
+            onClick={() => ymGoal("all_articles_click")}
+          >
+            Все 33 статьи →
+          </Link>
+        </section>
+
         {/* FAQ Section — rich snippets для Яндекса */}
         <section className="mt-8">
           <h2 className="text-lg font-bold text-slate-800 mb-4">Частые вопросы</h2>
@@ -1233,6 +1299,73 @@ const FEATURED_SPECIALTIES = [
   { title: "SMM-специалист", slug: "smm-specialist" },
   { title: "SEO-специалист", slug: "seo-specialist" },
   { title: "Тестировщик QA", slug: "testirovshchik-qa" },
+];
+
+/** Contextual article recommendations — shown after calculation, personalised by market position + tax regime */
+const CONTEXTUAL_ARTICLES: Array<{
+  slug: string;
+  title: string;
+  snippet: string;
+  tag: string;
+  readTime: string;
+  contexts: Array<"below_market" | "self_employed" | "ip" | "default">;
+}> = [
+  {
+    slug: "kak-povysit-stavku-frilansera",
+    title: "Как повысить ставку фрилансера: 7 конкретных шагов",
+    snippet: "Когда поднимать, как сообщить клиентам и не потерять заказы. Пошаговый план с примерами.",
+    tag: "Ставка",
+    readTime: "8 мин",
+    contexts: ["below_market"],
+  },
+  {
+    slug: "peregovory-o-stavke-s-zakazchikom",
+    title: "Переговоры о ставке: как отвечать на «дорого»",
+    snippet: "Скрипты и стратегии переговоров, которые работают с русскоязычными заказчиками.",
+    tag: "Переговоры",
+    readTime: "6 мин",
+    contexts: ["below_market"],
+  },
+  {
+    slug: "kak-oformit-samozanyatost-2026",
+    title: "Как оформить самозанятость в 2026: пошаговая инструкция",
+    snippet: "Регистрация за 10 минут, налоговый бонус 10 000 ₽ от ФНС и частые ошибки новичков.",
+    tag: "Самозанятость",
+    readTime: "7 мин",
+    contexts: ["self_employed"],
+  },
+  {
+    slug: "samozanyatyj-vs-ip-frilancer",
+    title: "Самозанятый vs ИП: что выгоднее для фрилансера в 2026",
+    snippet: "Налоги, лимиты, взносы — конкретные расчёты для разных уровней дохода.",
+    tag: "Налоги",
+    readTime: "7 мин",
+    contexts: ["self_employed", "ip"],
+  },
+  {
+    slug: "kak-raschitat-stavku-frilansera",
+    title: "Как рассчитать ставку фрилансера: формула и примеры",
+    snippet: "Разбираем формулу с налогами, отпуском и реальной загрузкой. Примеры для 5 специальностей.",
+    tag: "Ставка",
+    readTime: "6 мин",
+    contexts: ["default"],
+  },
+  {
+    slug: "pochemu-frilansery-zanizhayt-stavki",
+    title: "Почему фрилансеры занижают ставки — и как остановиться",
+    snippet: "3 психологические причины + конкретные шаги, чтобы перестать работать ниже рынка.",
+    tag: "Психология",
+    readTime: "5 мин",
+    contexts: ["default"],
+  },
+  {
+    slug: "frilanser-inostrannyj-zakazchik-2026",
+    title: "Фриланс с иностранными заказчиками 2026: как получать оплату",
+    snippet: "Актуальные способы получения оплаты из-за рубежа, легализация доходов и налоги.",
+    tag: "Международный",
+    readTime: "10 мин",
+    contexts: ["default"],
+  },
 ];
 
 const FAQ_ITEMS = [
