@@ -4,6 +4,14 @@ const BASE_URL = "https://freelancecalc-one.vercel.app";
 
 const ARTICLES = [
   {
+    slug: "stavki-qa-testerov-frilanserov-2026",
+    title: "Ставки QA-тестировщиков-фрилансеров в России 2026: ручное и автоматизированное тестирование",
+    description:
+      "Сколько берёт QA-тестировщик-фрилансер в России в 2026 году? Медианные ставки для Manual QA, Automation QA, Mobile QA и нагрузочного тестирования. Реальные данные рынка.",
+    tag: "Рынок",
+    pubDate: "Sat, 21 Mar 2026 11:00:00 +0300",
+  },
+  {
     slug: "skolko-zarabatyvayut-frilansery-2026",
     title: "Сколько реально зарабатывают фрилансеры в 2026 году: честная математика",
     description:

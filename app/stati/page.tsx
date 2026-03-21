@@ -180,6 +180,14 @@ const ARTICLES = [
     readTime: "7 мин",
     tag: "Рынок",
   },
+  {
+    slug: "stavki-qa-testerov-frilanserov-2026",
+    title: "Ставки QA-тестировщиков-фрилансеров в России 2026: ручное и автоматизированное тестирование",
+    description:
+      "Сколько берёт QA-тестировщик-фрилансер в России в 2026 году? Медианные ставки для ручного тестирования, automation QA, mobile QA и нагрузочного тестирования. Реальные данные рынка.",
+    readTime: "7 мин",
+    tag: "Рынок",
+  },
 ];
 
 const TAG_COLORS: Record<string, string> = {
