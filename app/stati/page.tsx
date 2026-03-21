@@ -29,6 +29,13 @@ export const metadata: Metadata = {
 
 const ARTICLES = [
   {
+    slug: "kak-vystavit-schet-samozanyatomu",
+    title: "Как выставить счёт самозанятому клиенту: чек в Мой налог 2026",
+    description: "Самозанятые выставляют не счета, а чеки через приложение Мой налог. Пошаговая инструкция: как оформить чек для физлица и юрлица, сроки, штрафы и аннулирование.",
+    readTime: "6 мин",
+    tag: "Самозанятость",
+  },
+  {
     slug: "kak-oformit-samozanyatost-2026",
     title: "Как оформить самозанятость в 2026: пошаговая инструкция",
     description:
