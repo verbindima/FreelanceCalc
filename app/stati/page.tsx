@@ -29,6 +29,14 @@ export const metadata: Metadata = {
 
 const ARTICLES = [
   {
+    slug: "skolko-zarabatyvayut-frilansery-2026",
+    title: "Сколько реально зарабатывают фрилансеры в 2026 году: честная математика",
+    description:
+      "44% фрилансеров зарабатывают менее 30 000 ₽/мес. Почему так — и как попасть в топ 21%, которые получают 100 000+. Реальные данные, честный расчёт.",
+    readTime: "8 мин",
+    tag: "Рынок",
+  },
+  {
     slug: "izmeneniya-samozanyatyh-2026",
     title: "Изменения для самозанятых в 2026 году: ставки, лимиты, новые правила",
     description:
