@@ -56,7 +56,7 @@ function getMarketContext(hourlyRate: number): {
     return {
       emoji: "📉",
       label: "Ниже рынка",
-      description: "Даже начинающий копирайтер берёт 700–800 ₽/час. Ваша ставка занижена.",
+      description: "Даже начинающий копирайтер берёт 700–800 ₽/час. Посмотрите, сколько реально платят за вашу специальность —",
       color: "text-red-600 bg-red-50 border-red-200",
     };
   }
@@ -64,7 +64,7 @@ function getMarketContext(hourlyRate: number): {
     return {
       emoji: "📊",
       label: "Нижний квартиль рынка",
-      description: "Медиана по большинству специальностей — 1 200–2 500 ₽/час.",
+      description: "Медиана по большинству специальностей — 1 200–2 500 ₽/час. Проверьте, не занижаете ли вы ставку —",
       color: "text-orange-600 bg-orange-50 border-orange-200",
     };
   }
@@ -72,7 +72,7 @@ function getMarketContext(hourlyRate: number): {
     return {
       emoji: "✅",
       label: "Рыночный уровень",
-      description: "Соответствует медиане для дизайнеров и junior-разработчиков.",
+      description: "Соответствует медиане для дизайнеров и junior-разработчиков. Сравните с точными данными по вашей специальности —",
       color: "text-emerald-600 bg-emerald-50 border-emerald-200",
     };
   }
@@ -80,14 +80,14 @@ function getMarketContext(hourlyRate: number): {
     return {
       emoji: "🚀",
       label: "Выше медианы",
-      description: "Сопоставимо с mid/senior разработчиками и ML-специалистами.",
+      description: "Сопоставимо с mid/senior разработчиками. Посмотрите точные данные по 22 специальностям и 10 городам —",
       color: "text-indigo-600 bg-indigo-50 border-indigo-200",
     };
   }
   return {
     emoji: "⭐",
     label: "Топ рынка",
-    description: "Топ-10% фрилансеров. Сопоставимо с ML/AI и Senior DevOps Москвы.",
+    description: "Топ-10% фрилансеров. Сопоставимо с ML/AI и Senior DevOps Москвы. Убедитесь сами —",
     color: "text-violet-600 bg-violet-50 border-violet-200",
   };
 }
@@ -220,8 +220,7 @@ export default function FreelanceCalc() {
             Калькулятор ставки фрилансера
           </h1>
           <p className="mt-2 text-slate-500 text-base max-w-md mx-auto">
-            Введите желаемый доход на руки — получите точную часовую ставку
-            с учётом налогов, отпуска и реальной загрузки
+            Большинство фрилансеров занижают ставку на 20–40%. Введите желаемый доход — узнайте точную цифру с учётом налогов, отпуска и реальной загрузки
           </p>
         </header>
 
@@ -409,21 +408,21 @@ export default function FreelanceCalc() {
                 Ваша ставка: {fmt(Math.round(results.hourlyRate))} / час
               </p>
               <h3 className="font-bold text-slate-800 text-base">
-                Это выше или ниже рынка?
+                Не продешевили ли вы?
               </h3>
               <p className="text-sm text-slate-600 mt-1">
-                PDF с медианами по 20+ специальностям и 10 городам — сравните свою цифру с коллегами.
+                PDF с медианными ставками 22 специальностей в 10 городах — посмотрите, сколько берут коллеги с тем же опытом.
               </p>
             </div>
             <button
               onClick={handleOpenUpsell}
               className="shrink-0 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors"
             >
-              Узнать — 249 ₽
+              Сравнить — 249 ₽
             </button>
           </div>
           <p className="mt-3 text-xs text-amber-700/70">
-            📅 Данные Q1 2026 · 20+ специальностей · 10 городов России
+            📅 Q1 2026 · 22 специальности · 10 городов · Junior / Mid / Senior
           </p>
         </section>
 
@@ -573,24 +572,25 @@ export default function FreelanceCalc() {
               <p className="text-2xl font-bold text-amber-800">{fmt(Math.round(results.hourlyRate))} / час</p>
             </div>
             <h2 className="text-xl font-bold text-slate-900 mb-2">
-              Это выше или ниже рыночной медианы?
+              Не продешевили ли вы?
             </h2>
             <p className="text-slate-600 text-sm mb-4">
-              PDF-отчёт с медианными ставками по 20+ специальностям и 10 городам России — Q1 2026.
+              PDF с медианными ставками: 22 специальности × 10 городов × 3 уровня опыта. Посмотрите, где вы в этой шкале.
             </p>
             <ul className="text-sm text-slate-700 space-y-1 mb-4">
-              <li>✅ Разработка: Frontend, Backend, Fullstack, Mobile</li>
-              <li>✅ Дизайн: UI/UX, графика, моушн</li>
-              <li>✅ Маркетинг: SEO, таргетинг, контент</li>
-              <li>✅ Тексты, переводы, копирайтинг</li>
+              <li>✅ Frontend в Москве: 1 700–3 200 ₽/час</li>
+              <li>✅ UI/UX дизайнер: 1 300–2 800 ₽/час</li>
+              <li>✅ Копирайтер: 700–1 700 ₽/час</li>
+              <li>✅ SEO-специалист: 1 100–2 200 ₽/час</li>
             </ul>
 
             {/* Info block */}
             <div className="bg-slate-50 rounded-lg px-3 py-2 mb-4 text-xs text-slate-500">
-              🔄 Обновлён в Q1 2026 · Данные по медианным ставкам рынка фриланса России
+              🔄 Q1 2026 · Данные с FL.ru, Хабр Карьера, Kwork · Разбивка Junior / Mid / Senior
             </div>
 
-            <p className="text-2xl font-bold text-indigo-700 mb-6">249 ₽</p>
+            <p className="text-2xl font-bold text-indigo-700 mb-1">249 ₽</p>
+            <p className="text-xs text-slate-400 mb-5">Единоразово · Без подписки · Скачать сразу после оплаты</p>
             <div className="flex gap-3">
               <button
                 className="flex-1 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors"
