@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import BuyButton from "./BuyButton";
+import PriceCountdown from "./PriceCountdown";
 
 const BASE_URL = "https://freelancecalc-one.vercel.app";
 
@@ -304,13 +305,7 @@ export default function BenchmarkPage() {
                 <div className="text-xs text-gray-500">уже скачали бенчмарк</div>
               </div>
             </div>
-            <div className="bg-white border border-gray-200 rounded-xl p-4 flex items-center gap-3">
-              <span className="text-2xl">⏱</span>
-              <div>
-                <div className="font-bold text-gray-800 text-sm">Q2 2026 — в июне</div>
-                <div className="text-xs text-gray-500">цена вырастет до 349 ₽</div>
-              </div>
-            </div>
+            <PriceCountdown />
             <div className="bg-white border border-gray-200 rounded-xl p-4 flex items-center gap-3">
               <span className="text-2xl">⚡</span>
               <div>
@@ -331,7 +326,7 @@ export default function BenchmarkPage() {
               Оплата через ЮKassa (карты РФ, СБП).
             </p>
             <p className="text-indigo-200 text-xs mb-6">
-              🔔 Q2 2026 данные выйдут в июне — цена вырастет до 349 ₽. Сейчас 249 ₽.
+              ⏳ С 1 июня 2026 цена вырастет до 349 ₽ — счётчик тикает. Сейчас 249 ₽.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
               <BuyButton label="Купить за 249 ₽ → оплата ЮKassa" />
