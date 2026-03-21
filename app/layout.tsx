@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "как рассчитать ставку фрилансера",
   ],
   metadataBase: new URL(BASE_URL),
-  alternates: { canonical: "/" },
+  alternates: { canonical: "/", types: { "application/rss+xml": `${BASE_URL}/rss.xml` } },
   openGraph: {
     title: "FreelanceCalc — калькулятор ставки фрилансера",
     description: "Рассчитайте оптимальную ставку с учётом налогов, отпуска и реальной загрузки.",
