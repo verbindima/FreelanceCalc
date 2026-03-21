@@ -94,6 +94,14 @@ const jsonLd = {
           operatingSystem: "Web",
           offers: { "@type": "Offer", price: "0", priceCurrency: "RUB" },
         },
+        {
+          "@type": "WebApplication",
+          name: "Калькулятор договора ГПХ",
+          url: `${BASE_URL}/instrumenty/kalkulator-dogovora-gph`,
+          applicationCategory: "FinanceApplication",
+          operatingSystem: "Web",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "RUB" },
+        },
       ],
     },
   ],
@@ -171,6 +179,15 @@ const tools = [
       "Интерактивное сравнение налогов: НПД против ИП УСН 6%. Найдите точку перехода для вашего дохода",
     badge: "Новое",
     badgeColor: "bg-purple-100 text-purple-700",
+  },
+  {
+    href: "/instrumenty/kalkulator-dogovora-gph",
+    emoji: "📋",
+    title: "Калькулятор договора ГПХ",
+    description:
+      "Сколько НДФЛ удержат по договору ГПХ? Сравнение с самозанятым — кто выгоднее для вас и заказчика",
+    badge: "Новое",
+    badgeColor: "bg-red-100 text-red-700",
   },
   {
     href: "/stavka",

@@ -372,6 +372,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${BASE_URL}/instrumenty/kalkulator-dogovora-gph`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    {
       url: `${BASE_URL}/embed`,
       lastModified: new Date(),
       changeFrequency: "yearly" as const,

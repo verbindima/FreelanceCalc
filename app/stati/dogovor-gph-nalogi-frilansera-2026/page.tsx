@@ -264,12 +264,20 @@ export default function Page() {
           <p className="text-indigo-100 text-sm mb-4">
             Чтобы получить нужную сумму «на руки», ставка в договоре должна быть выше. Калькулятор автоматически закладывает налог в ставку — просто введите желаемый доход.
           </p>
-          <Link
-            href="/?tax=none"
-            className="inline-block bg-white text-indigo-700 hover:bg-indigo-50 font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors"
-          >
-            Открыть калькулятор ставки →
-          </Link>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/instrumenty/kalkulator-dogovora-gph"
+              className="inline-block bg-white text-indigo-700 hover:bg-indigo-50 font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors"
+            >
+              Калькулятор ГПХ: сколько получу на руки →
+            </Link>
+            <Link
+              href="/?tax=none"
+              className="inline-block bg-indigo-500 hover:bg-indigo-400 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors"
+            >
+              Калькулятор ставки фрилансера →
+            </Link>
+          </div>
         </div>
 
         {/* Section 4 — Comparison table */}
@@ -441,6 +449,8 @@ export default function Page() {
             <Link href="/" className="hover:text-indigo-600">Калькулятор ставки</Link>
             &nbsp;·&nbsp;
             <Link href="/instrumenty/kalkulator-naloga-samozanyatogo" className="hover:text-indigo-600">Калькулятор НПД</Link>
+            &nbsp;·&nbsp;
+            <Link href="/instrumenty/kalkulator-dogovora-gph" className="hover:text-indigo-600">Калькулятор ГПХ</Link>
           </div>
           <div>© {new Date().getFullYear()} FreelanceCalc · Материал носит информационный характер. Проконсультируйтесь с бухгалтером по конкретной ситуации.</div>
         </footer>
