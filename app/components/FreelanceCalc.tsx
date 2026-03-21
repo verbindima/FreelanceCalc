@@ -105,6 +105,7 @@ export default function FreelanceCalc() {
   const [showUpsellModal, setShowUpsellModal] = useState(false);
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
+  const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
   const calcUsedTracked = useRef(false);
 
   const results = useMemo(() => {
@@ -434,6 +435,62 @@ export default function FreelanceCalc() {
           </div>
         </div>
 
+        {/* Specialty Gap — personalized market comparison to drive upsell + viral sharing */}
+        <div className="mt-3 bg-white border border-slate-200 rounded-xl p-4">
+          <p className="text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wide">
+            Выберите специальность — сравним с рынком:
+          </p>
+          <div className="flex flex-wrap gap-1.5 mb-0">
+            {QUICK_SPECIALTIES.map((s) => (
+              <button
+                key={s.slug}
+                type="button"
+                onClick={() => {
+                  const next = selectedSpecialty === s.slug ? null : s.slug;
+                  setSelectedSpecialty(next);
+                  if (next) ymGoal("specialty_gap_select", { slug: s.slug });
+                }}
+                className={`text-xs px-2.5 py-1 rounded-full border transition-colors ${
+                  selectedSpecialty === s.slug
+                    ? "bg-indigo-600 text-white border-indigo-600"
+                    : "bg-white text-slate-500 border-slate-300 hover:border-indigo-400 hover:text-indigo-600"
+                }`}
+              >
+                {s.title}
+              </button>
+            ))}
+          </div>
+          {selectedSpecialty && (() => {
+            const spec = QUICK_SPECIALTIES.find((s) => s.slug === selectedSpecialty);
+            if (!spec) return null;
+            const myRate = results.hourlyRate;
+            const diff = myRate - spec.mid;
+            const diffPct = Math.round((Math.abs(diff) / spec.mid) * 100);
+            const annualGap = Math.abs(diff) * results.billableDays * hoursPerDay;
+            const isBelow = diff < 0;
+            return (
+              <div className={`mt-3 rounded-xl px-4 py-3 ${isBelow ? "bg-red-50 border border-red-200" : "bg-emerald-50 border border-emerald-200"}`}>
+                <p className="text-sm font-semibold text-slate-800">
+                  {spec.title}: медиана {spec.median} ₽/час
+                </p>
+                <p className={`text-xs mt-1 ${isBelow ? "text-red-700" : "text-emerald-700"}`}>
+                  {isBelow
+                    ? `Ваша ставка ниже медианы на ${diffPct}% — это ~${fmt(annualGap)} недополученного дохода в год`
+                    : `Ваша ставка выше медианы на ${diffPct}% — вы в числе лидеров по специальности! 🎉`}
+                </p>
+                {isBelow && (
+                  <button
+                    onClick={() => { handleOpenUpsell(); ymGoal("upsell_gap_click", { slug: selectedSpecialty }); }}
+                    className="mt-2 text-xs font-semibold text-red-700 underline hover:text-red-900"
+                  >
+                    Полные данные по городам и опыту → Бенчмарк PDF 249 ₽
+                  </button>
+                )}
+              </div>
+            );
+          })()}
+        </div>
+
         {/* Viral share nudge — appears after user sees their rate; drives Telegram sharing */}
         <div className="mt-3 flex items-center justify-between gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
           <p className="text-xs text-slate-500">
@@ -722,6 +779,22 @@ function ResultCard({
     </div>
   );
 }
+
+/** Quick specialty market benchmarks — mid = midpoint of rate range from /reyting data */
+const QUICK_SPECIALTIES = [
+  { slug: "frontend-razrabotchik",  title: "Frontend",      median: "1 500–3 000", mid: 2250 },
+  { slug: "backend-razrabotchik",   title: "Backend",       median: "2 000–4 000", mid: 3000 },
+  { slug: "fullstack-razrabotchik", title: "Fullstack",     median: "2 000–4 500", mid: 3250 },
+  { slug: "python-razrabotchik",    title: "Python",        median: "2 000–4 500", mid: 3250 },
+  { slug: "dizajner-ui-ux",         title: "UI/UX",         median: "1 000–2 500", mid: 1750 },
+  { slug: "graficheskij-dizajner",  title: "Дизайн",        median: "800–1 800",   mid: 1300 },
+  { slug: "kopirayter",             title: "Копирайтинг",   median: "500–1 500",   mid: 1000 },
+  { slug: "seo-specialist",         title: "SEO",           median: "900–2 000",   mid: 1450 },
+  { slug: "targetolog",             title: "Таргет",        median: "800–2 000",   mid: 1400 },
+  { slug: "smm-specialist",         title: "SMM",           median: "700–1 500",   mid: 1100 },
+  { slug: "testirovshchik-qa",      title: "QA",            median: "900–2 000",   mid: 1450 },
+  { slug: "ml-inzhener",            title: "ML/AI",         median: "3 000–7 000", mid: 5000 },
+];
 
 const FEATURED_SPECIALTIES = [
   { title: "Frontend-разработчик", slug: "frontend-razrabotchik" },
