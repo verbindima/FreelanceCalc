@@ -100,6 +100,18 @@ const jsonLd = {
           url: `${BASE_URL}/alternativa/freelancehunt-kalkulator`,
           name: "Альтернатива Freelancehunt: персональный калькулятор ставки — FreelanceCalc",
         },
+        {
+          "@type": "WebPage",
+          "@id": `${BASE_URL}/alternativa/avito-uslugi-kalkulator`,
+          url: `${BASE_URL}/alternativa/avito-uslugi-kalkulator`,
+          name: "Калькулятор ставки для Авито Услуги — FreelanceCalc",
+        },
+        {
+          "@type": "WebPage",
+          "@id": `${BASE_URL}/alternativa/yandex-uslugi-kalkulator`,
+          url: `${BASE_URL}/alternativa/yandex-uslugi-kalkulator`,
+          name: "Калькулятор ставки для Яндекс Услуги — FreelanceCalc",
+        },
       ],
     },
     {
@@ -306,6 +318,24 @@ const competitors = [
     tags: ["биржа фриланса", "статистика ставок", "нет персонального расчёта"],
     pros: "Реальные данные о ценах на бирже",
     cons: "Нет персонального калькулятора с налогами и загрузкой",
+  },
+  {
+    slug: "avito-uslugi-kalkulator",
+    name: "Авито Услуги",
+    url: "avito.ru/services",
+    description: "Крупнейшая платформа объявлений в России — 50+ млн пользователей. Раздел «Услуги» используют миллионы фрилансеров, но нет встроенного калькулятора ставки с учётом налогов.",
+    tags: ["крупнейший маркетплейс", "50+ млн пользователей", "нет калькулятора"],
+    pros: "Огромная аудитория клиентов по всей России",
+    cons: "Нет персонального расчёта ставки с налогами и загрузкой",
+  },
+  {
+    slug: "yandex-uslugi-kalkulator",
+    name: "Яндекс Услуги",
+    url: "uslugi.yandex.ru",
+    description: "Маркетплейс услуг в экосистеме Яндекса. Показывает средние цены по категории, но не учитывает налоги НПД, комиссию платформы (15–20%) и загрузку исполнителя.",
+    tags: ["экосистема Яндекс", "комиссия 15–20%", "нет расчёта ставки"],
+    pros: "Интеграция с самозанятостью и экосистемой Яндекс",
+    cons: "Нет персонального калькулятора с налогами и комиссией",
   },
 ];
 
