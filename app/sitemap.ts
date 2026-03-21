@@ -190,6 +190,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${BASE_URL}/stati/skolko-zarabatyvayut-frilansery-2026`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/stati/finansy-frilansera-kak-raspredelyat-dohod`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    },
+    {
       url: `${BASE_URL}/instrumenty`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,

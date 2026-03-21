@@ -33,6 +33,8 @@ function getAllUrls(): string[] {
     `${BASE_URL}/stati/stavki-analitikov-frilanserov-2026`,
     `${BASE_URL}/stati/stavki-kopirajterov-frilanserov-2026`,
     `${BASE_URL}/stati/skolko-stoit-chas-raboty-programmista-2026`,
+    `${BASE_URL}/stati/skolko-zarabatyvayut-frilansery-2026`,
+    `${BASE_URL}/stati/finansy-frilansera-kak-raspredelyat-dohod`,
     // Instrumenty
     `${BASE_URL}/instrumenty/kalkulator-naloga-samozanyatogo`,
     `${BASE_URL}/instrumenty/kalkulator-stoimosti-proekta`,
