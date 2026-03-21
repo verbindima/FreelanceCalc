@@ -140,6 +140,9 @@ export default function FreelanceCalc() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Dynamic price: 249 ₽ before April 7, 349 ₽ after (auto-update, no manual maintenance)
+  const currentPrice = countdown ? 249 : 349;
+
   const results = useMemo(() => {
     const taxRate = TAX_RATES[taxRegime];
     const grossMonthly = taxRate < 1 ? netMonthly / (1 - taxRate) : netMonthly;
@@ -678,7 +681,7 @@ export default function FreelanceCalc() {
                     onClick={() => { handleOpenUpsell(); ymGoal("upsell_gap_click", { slug: selectedSpecialty }); }}
                     className="mt-2 text-xs font-semibold text-red-700 underline hover:text-red-900"
                   >
-                    Посмотреть точные данные по {spec.title} по городам → Бенчмарк PDF 249 ₽
+                    Посмотреть точные данные по {spec.title} по городам → Бенчмарк PDF {currentPrice} ₽
                   </button>
                 </>
                 )}
@@ -772,10 +775,10 @@ export default function FreelanceCalc() {
               className="shrink-0 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors"
             >
               {marketCtx.label === "Ниже рынка" || marketCtx.label === "Нижний квартиль рынка"
-                ? "Узнать, сколько теряю — 249 ₽"
+                ? `Узнать, сколько теряю — ${currentPrice} ₽`
                 : marketCtx.label === "Рыночный уровень"
-                ? "Найти свой потолок — 249 ₽"
-                : "Убедиться, что не теряю — 249 ₽"}
+                ? `Найти свой потолок — ${currentPrice} ₽`
+                : `Убедиться, что не теряю — ${currentPrice} ₽`}
             </button>
           </div>
           <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1">
@@ -967,7 +970,7 @@ export default function FreelanceCalc() {
             </div>
 
             <div className="flex items-baseline gap-3 mb-1">
-              <p className="text-2xl font-bold text-indigo-700">249 ₽</p>
+              <p className="text-2xl font-bold text-indigo-700">{currentPrice} ₽</p>
               {countdown ? (
                 <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">
                   ⏳ Цена вырастет на 40% через {countdown.days}д {countdown.hours}ч {countdown.mins}мин
@@ -978,16 +981,26 @@ export default function FreelanceCalc() {
                 </span>
               )}
             </div>
-            <p className="text-xs text-slate-400 mb-5">Единоразово · Без подписки · PDF сразу после оплаты · Цена 249 ₽ до 7 апреля</p>
+            <p className="text-xs text-slate-400 mb-5">
+              {countdown
+                ? "Единоразово · Без подписки · PDF сразу после оплаты · Цена 249 ₽ до 7 апреля"
+                : "Единоразово · Без подписки · PDF сразу после оплаты · Q1 2026, актуально"}
+            </p>
             {paymentUnavailable ? (
               <div className="mb-3">
                 <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-2">
-                  <p className="text-sm font-medium text-amber-800 mb-1">⚡ Зафиксируй цену до повышения</p>
+                  <p className="text-sm font-medium text-amber-800 mb-1">
+                    {countdown ? "⚡ Зафиксируй цену до повышения" : "📬 Получи PDF первым"}
+                  </p>
                   <p className="text-xs text-amber-700 leading-relaxed mb-3">
-                    Оплата открывается скоро. Оставь email — забронируем цену 249 ₽. <strong>С 7 апреля будет 349 ₽</strong> — потеряешь 100 ₽.
+                    {countdown
+                      ? <>Оплата открывается скоро. Оставь email — забронируем цену 249 ₽. <strong>С 7 апреля будет 349 ₽</strong> — потеряешь 100 ₽.</>
+                      : "Оплата открывается скоро. Оставь email — пришлём PDF как только будет готово."}
                   </p>
                   {leadSubmitted ? (
-                    <p className="text-sm font-semibold text-emerald-700">✅ Зафиксировано! Пришлём за 249 ₽, не переплатишь.</p>
+                    <p className="text-sm font-semibold text-emerald-700">
+                      {countdown ? "✅ Зафиксировано! Пришлём за 249 ₽, не переплатишь." : "✅ Отлично! Напишем, как только оплата заработает."}
+                    </p>
                   ) : (
                     <div className="flex gap-2">
                       <input
@@ -1022,7 +1035,7 @@ export default function FreelanceCalc() {
                   onClick={handlePayment}
                   disabled={paymentLoading}
                 >
-                  {paymentLoading ? "Переход к оплате…" : "Скачать PDF — 249 ₽"}
+                  {paymentLoading ? "Переход к оплате…" : `Скачать PDF — ${currentPrice} ₽`}
                 </button>
                 <button
                   className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-500 hover:bg-slate-50 transition-colors"

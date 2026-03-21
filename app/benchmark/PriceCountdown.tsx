@@ -30,6 +30,23 @@ export default function PriceCountdown() {
 
   if (daysLeft === null) return null;
 
+  // After deadline: show current price info instead of countdown
+  if (daysLeft === 0) {
+    return (
+      <div className="rounded-xl p-4 flex items-center gap-3 border bg-slate-50 border-slate-200">
+        <span className="text-2xl">📊</span>
+        <div>
+          <div className="font-bold text-sm text-slate-800">
+            Актуальная цена — <span className="text-lg">349 ₽</span>
+          </div>
+          <div className="text-xs mt-0.5 text-slate-500">
+            Q1 2026 · 22 специальности · 10 городов · Junior / Mid / Senior
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const isUrgent = daysLeft <= 21;
 
   return (

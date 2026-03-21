@@ -9,7 +9,10 @@ function ymGoal(name: string) {
   }
 }
 
-export default function BuyButton({ label = "Купить полный PDF — 249 ₽" }: { label?: string }) {
+const PRICE_INCREASE_DATE = new Date("2026-04-07T00:00:00+03:00");
+const currentPrice = Date.now() < PRICE_INCREASE_DATE.getTime() ? 249 : 349;
+
+export default function BuyButton({ label = `Купить полный PDF — ${currentPrice} ₽` }: { label?: string }) {
   const [loading, setLoading] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
   const [leadEmail, setLeadEmail] = useState("");
@@ -58,15 +61,16 @@ export default function BuyButton({ label = "Купить полный PDF — 2
       <div className="text-left w-full max-w-sm">
         <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-4 mb-2">
           <p className="text-sm font-semibold text-amber-800 mb-1">
-            ⚡ Зафиксируй цену 249 ₽ до 7 апреля
+            {currentPrice === 249 ? "⚡ Зафиксируй цену 249 ₽ до 7 апреля" : "📬 Получи PDF первым"}
           </p>
           <p className="text-xs text-amber-700 leading-relaxed mb-3">
-            С 7 апреля цена вырастет до <strong>349 ₽</strong> — потеряешь 100 ₽.
-            Оставь почту, забронируем цену и пришлём PDF как только откроется оплата.
+            {currentPrice === 249
+              ? <>С 7 апреля цена вырастет до <strong>349 ₽</strong> — потеряешь 100 ₽. Оставь почту, забронируем цену и пришлём PDF как только откроется оплата.</>
+              : "Оплата открывается скоро. Оставь почту — пришлём PDF как только будет готово."}
           </p>
           {leadSubmitted ? (
             <p className="text-sm font-semibold text-green-700">
-              ✅ Зафиксировали! Напишем как откроется оплата.
+              {currentPrice === 249 ? "✅ Зафиксировали! Напишем как откроется оплата." : "✅ Отлично! Напишем, как только оплата заработает."}
             </p>
           ) : (
             <div className="flex gap-2">
