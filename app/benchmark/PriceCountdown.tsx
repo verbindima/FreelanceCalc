@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-// Price increases on June 1, 2026 when Q2 2026 data releases
-const PRICE_INCREASE_DATE = new Date("2026-06-01T00:00:00+03:00");
+// Price increases on April 7, 2026 (early-bird window closes)
+const PRICE_INCREASE_DATE = new Date("2026-04-07T00:00:00+03:00");
 
 function getDaysWord(n: number): string {
   if (n % 100 >= 11 && n % 100 <= 19) return "дней";
@@ -30,7 +30,7 @@ export default function PriceCountdown() {
 
   if (daysLeft === null) return null;
 
-  const isUrgent = daysLeft <= 14;
+  const isUrgent = daysLeft <= 21;
 
   return (
     <div
@@ -57,7 +57,7 @@ export default function PriceCountdown() {
             isUrgent ? "text-red-600" : "text-amber-600"
           }`}
         >
-          С 1 июня цена вырастет до 349 ₽ — сейчас 249 ₽
+          С 7 апреля цена вырастет до 349 ₽ — сейчас 249 ₽
         </div>
       </div>
     </div>

@@ -326,7 +326,7 @@ export default function BenchmarkPage() {
               Оплата через ЮKassa (карты РФ, СБП).
             </p>
             <p className="text-indigo-200 text-xs mb-6">
-              ⏳ С 1 июня 2026 цена вырастет до 349 ₽ — счётчик тикает. Сейчас 249 ₽.
+              ⏳ С 7 апреля 2026 цена вырастет до 349 ₽ — счётчик тикает. Сейчас 249 ₽.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
               <BuyButton label="Купить за 249 ₽ → оплата ЮKassa" />
