@@ -174,6 +174,16 @@ export default function FreelanceCalc() {
     window.open(tgUrl, "_blank", "noopener,noreferrer");
   }, [results, netMonthly, marketCtx]);
 
+  const handleShareVK = useCallback(() => {
+    ymGoal("share_vk_click");
+    const url = window.location.href;
+    const hourly = Math.round(results.hourlyRate);
+    const fmtNum = (n: number) => new Intl.NumberFormat("ru-RU").format(n);
+    const title = `${marketCtx.emoji} Моя ставка фрилансера: ${fmtNum(hourly)} ₽/час — ${marketCtx.label.toLowerCase()}`;
+    const vkUrl = `https://vk.com/share.php?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&noparse=true`;
+    window.open(vkUrl, "_blank", "noopener,noreferrer");
+  }, [results, marketCtx]);
+
   const handleOpenUpsell = useCallback(() => {
     setShowUpsellModal(true);
     ymGoal("upsell_click");
@@ -370,6 +380,13 @@ export default function FreelanceCalc() {
                 title="Поделиться в Telegram"
               >
                 ✈️ Telegram
+              </button>
+              <button
+                onClick={handleShareVK}
+                className="flex items-center gap-1.5 text-xs bg-[#2787F5]/80 hover:bg-[#2787F5] active:bg-[#1d6ed4] text-white px-3 py-1.5 rounded-lg transition-colors"
+                title="Поделиться ВКонтакте"
+              >
+                ВК
               </button>
             </div>
           </div>
