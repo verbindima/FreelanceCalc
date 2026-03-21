@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://freelancecalc-one.vercel.app/sitemap.xml
+Sitemap: https://freelancecalc-one.vercel.app/rss.xml

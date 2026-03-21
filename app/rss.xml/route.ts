@@ -186,11 +186,6 @@ export async function GET() {
     <webMaster>hello@freelancecalc.ru (FreelanceCalc)</webMaster>
     <lastBuildDate>Sat, 21 Mar 2026 09:00:00 +0300</lastBuildDate>
     <atom:link href="${BASE_URL}/rss.xml" rel="self" type="application/rss+xml"/>
-    <image>
-      <url>${BASE_URL}/og-image.png</url>
-      <title>FreelanceCalc</title>
-      <link>${BASE_URL}</link>
-    </image>
 ${ARTICLES.map(
     (article) => `    <item>
       <title>${escapeXml(article.title)}</title>
@@ -206,7 +201,7 @@ ${ARTICLES.map(
 
   return new NextResponse(rss, {
     headers: {
-      "Content-Type": "application/xml; charset=utf-8",
+      "Content-Type": "application/rss+xml; charset=utf-8",
       "Cache-Control": "public, max-age=3600, s-maxage=3600",
     },
   });
