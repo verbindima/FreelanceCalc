@@ -120,6 +120,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: `${BASE_URL}/stati/kak-oformit-samozanyatost-2026`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    {
       url: `${BASE_URL}/stati/kak-stat-frilanserom-2026`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
