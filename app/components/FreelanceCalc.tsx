@@ -235,8 +235,8 @@ export default function FreelanceCalc() {
           {/* Trust strip — truthful stats that build credibility before user touches the calculator */}
           <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs">
             {[
-              { icon: "🎯", text: "22 специальности" },
-              { icon: "🏙️", text: "23 города" },
+              { icon: "🎯", text: "36 специальностей" },
+              { icon: "🏙️", text: "26 городов" },
               { icon: "🧾", text: "Самозанятый и ИП" },
               { icon: "📅", text: "Данные Q1 2026" },
               { icon: "✅", text: "Бесплатно" },
@@ -447,15 +447,23 @@ export default function FreelanceCalc() {
           </button>
         </div>
 
-        {/* Upsell CTA — personalized: show user's own rate to trigger market curiosity */}
+        {/* Upsell CTA — personalized by market position to maximise curiosity */}
         <section className="mt-6 bg-amber-50 border border-amber-200 rounded-2xl p-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="flex-1">
               <p className="text-xs font-semibold text-amber-600 uppercase tracking-wide mb-1">
-                Ваша ставка: {fmt(Math.round(results.hourlyRate))} / час
+                Ваша ставка: {fmt(Math.round(results.hourlyRate))} / час · {marketCtx.label}
               </p>
               <h3 className="font-bold text-slate-800 text-base">
-                Как ваша ставка выглядит рядом с рынком?
+                {marketCtx.label === "Ниже рынка"
+                  ? "Вы зарабатываете ниже рынка. Насколько — и что изменить?"
+                  : marketCtx.label === "Нижний квартиль рынка"
+                  ? "Вы в нижней четверти рынка. Медиана выше — проверьте разрыв."
+                  : marketCtx.label === "Рыночный уровень"
+                  ? "Вы на уровне рынка. Сколько берут senior — и где ваш потолок?"
+                  : marketCtx.label === "Выше медианы"
+                  ? "Вы выше медианы. Убедитесь, что не оставляете деньги на столе."
+                  : "Вы в топ-10% рынка. Посмотрите, с кем конкурируете по цене."}
               </h3>
               <p className="text-sm text-slate-600 mt-1">
                 Реальные данные по 22 специальностям × 10 городам. Большинство фрилансеров после сравнения удивляются — и поднимают ставку.
