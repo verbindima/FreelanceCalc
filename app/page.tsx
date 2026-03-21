@@ -31,14 +31,15 @@ export async function generateMetadata({
   };
 }
 
-// SoftwareApplication schema — даёт приложению карточку в поиске
+// WebApplication schema — даёт приложению карточку в поиске
 const appJsonLd = {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "FreelanceCalc — калькулятор ставки фрилансера",
+  "@type": "WebApplication",
+  name: "Калькулятор ставки фрилансера",
+  alternateName: "FreelanceCalc",
   description:
     "Бесплатный онлайн-калькулятор часовой и дневной ставки фрилансера с учётом налогов (самозанятый, ИП), отпуска и реальной загрузки.",
-  applicationCategory: "FinanceApplication",
+  applicationCategory: "BusinessApplication",
   operatingSystem: "Web",
   url: BASE_URL,
   offers: {

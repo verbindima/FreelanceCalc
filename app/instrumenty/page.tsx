@@ -27,6 +27,54 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": `${BASE_URL}/instrumenty`,
+      name: "Инструменты для фрилансера — калькуляторы онлайн 2026",
+      description:
+        "Бесплатные онлайн-калькуляторы для фрилансеров и самозанятых: налог НПД, ставка за час, расчёт стоимости проекта.",
+      url: `${BASE_URL}/instrumenty`,
+      inLanguage: "ru",
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "FreelanceCalc", item: BASE_URL },
+          { "@type": "ListItem", position: 2, name: "Инструменты", item: `${BASE_URL}/instrumenty` },
+        ],
+      },
+      hasPart: [
+        {
+          "@type": "WebApplication",
+          name: "Калькулятор ставки фрилансера",
+          url: BASE_URL,
+          applicationCategory: "BusinessApplication",
+          operatingSystem: "Web",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "RUB" },
+        },
+        {
+          "@type": "WebApplication",
+          name: "Калькулятор налога самозанятого",
+          url: `${BASE_URL}/instrumenty/kalkulator-naloga-samozanyatogo`,
+          applicationCategory: "BusinessApplication",
+          operatingSystem: "Web",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "RUB" },
+        },
+        {
+          "@type": "WebApplication",
+          name: "Калькулятор стоимости найма фрилансера",
+          url: `${BASE_URL}/instrumenty/kalkulator-stoimosti-proekta`,
+          applicationCategory: "BusinessApplication",
+          operatingSystem: "Web",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "RUB" },
+        },
+      ],
+    },
+  ],
+};
+
 const tools = [
   {
     href: "/instrumenty/kalkulator-naloga-samozanyatogo",
@@ -68,6 +116,11 @@ const tools = [
 
 export default function InstrumentyPage() {
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white border-b border-gray-100">
@@ -152,5 +205,6 @@ export default function InstrumentyPage() {
         </p>
       </footer>
     </div>
+    </>
   );
 }

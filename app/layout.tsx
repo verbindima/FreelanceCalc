@@ -72,10 +72,11 @@ const jsonLd = {
     {
       "@type": "WebApplication",
       "@id": `${BASE_URL}/#webapp`,
-      "name": "FreelanceCalc",
+      "name": "Калькулятор ставки фрилансера",
+      "alternateName": "FreelanceCalc",
       "url": BASE_URL,
       "description": "Бесплатный онлайн-калькулятор ставки фрилансера с учётом налогов, отпуска и загрузки",
-      "applicationCategory": "FinanceApplication",
+      "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web",
       "inLanguage": "ru",
       "offers": {
