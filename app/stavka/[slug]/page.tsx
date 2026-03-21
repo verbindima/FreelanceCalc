@@ -7,7 +7,7 @@ import { LEVELS } from "./opyt/[level]/levels";
 import SpecialtyCalc from "./SpecialtyCalc";
 
 // TODO: switch to custom domain once purchased & configured in Vercel
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 type Props = { params: Promise<{ slug: string }> };
 

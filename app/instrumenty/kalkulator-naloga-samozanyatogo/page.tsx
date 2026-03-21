@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import TaxCalc from "./TaxCalc";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 export const metadata: Metadata = {
   title: "Калькулятор налога самозанятого 2026 — НПД 4% и 6% онлайн",

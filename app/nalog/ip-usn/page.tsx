@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import IpUsnCalc from "./IpUsnCalc";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 export const metadata: Metadata = {
   title: "Калькулятор налога ИП УСН 6% 2026 — расчёт онлайн для фрилансера",

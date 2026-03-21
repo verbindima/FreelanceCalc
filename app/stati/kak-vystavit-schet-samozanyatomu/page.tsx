@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 export const metadata: Metadata = {
   title: "Как выставить счёт самозанятому клиенту: чек в Мой налог 2026",

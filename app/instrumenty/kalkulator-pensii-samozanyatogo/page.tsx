@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PensionCalc from "./PensionCalc";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 const CANONICAL = "/instrumenty/kalkulator-pensii-samozanyatogo";
 
 export const metadata: Metadata = {
@@ -193,7 +193,7 @@ export default function PensionCalcPage() {
           <p>
             © {new Date().getFullYear()} FreelanceCalc —{" "}
             <Link href="/" className="hover:text-indigo-600">
-              freelancecalc-one.vercel.app
+              freelancecalc.ru
             </Link>
           </p>
         </footer>

@@ -5,7 +5,7 @@ import { SPECIALTIES as SPECIALTY_DATA } from "../../stavka/[slug]/specialties";
 import { LEVELS } from "../../stavka/[slug]/opyt/[level]/levels";
 import { NAJEM_DATA } from "../../frilanc-vs-najm/najem-data";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 const INDEXNOW_KEY = "65be3d47fc9c440b9c82afe4b001c2ba";
 
 /** Build the same URL list as sitemap.ts */

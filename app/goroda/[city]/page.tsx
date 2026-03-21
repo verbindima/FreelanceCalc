@@ -5,7 +5,7 @@ import { CITIES, getCity } from "../cities";
 import { SPECIALTIES } from "../../stavka/[slug]/specialties";
 import SpecialtyCalc from "../../stavka/[slug]/SpecialtyCalc";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 type Props = { params: Promise<{ city: string }> };
 

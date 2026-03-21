@@ -45,7 +45,7 @@ function fmt(n: number): string {
   }).format(n);
 }
 
-/** Market position based on real Q1-2026 benchmark data (freelancecalc-one.vercel.app/benchmark) */
+/** Market position based on real Q1-2026 benchmark data (freelancecalc.ru/benchmark) */
 function getMarketContext(hourlyRate: number): {
   emoji: string;
   label: string;
@@ -1233,7 +1233,7 @@ export default function FreelanceCalc() {
 
 function EmbedCode() {
   const [copied, setCopied] = useState(false);
-  const code = `<iframe\n  src="https://freelancecalc-one.vercel.app/widget"\n  width="100%"\n  height="420"\n  frameborder="0"\n  style="border-radius:12px;border:1px solid #e2e8f0"\n  title="Калькулятор ставки фрилансера"\n></iframe>`;
+  const code = `<iframe\n  src="https://freelancecalc.ru/widget"\n  width="100%"\n  height="420"\n  frameborder="0"\n  style="border-radius:12px;border:1px solid #e2e8f0"\n  title="Калькулятор ставки фрилансера"\n></iframe>`;
 
   const handleCopy = async () => {
     try {

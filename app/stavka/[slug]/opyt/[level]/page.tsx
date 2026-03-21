@@ -5,7 +5,7 @@ import { SPECIALTIES, getSpecialty } from "../../specialties";
 import SpecialtyCalc from "../../SpecialtyCalc";
 import { LEVELS, getLevel, ExperienceLevel } from "./levels";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 type Props = { params: Promise<{ slug: string; level: string }> };
 

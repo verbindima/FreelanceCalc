@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 export const metadata: Metadata = {
   title: "Рейтинг ставок фрилансеров 2026 — кто зарабатывает больше всех | FreelanceCalc",

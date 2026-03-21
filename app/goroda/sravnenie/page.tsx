@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { getCity } from "../cities";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 export const CITY_PAIRS = [
   { city1: "moskva", city2: "sankt-peterburg" },

@@ -28,7 +28,7 @@ function fmt(n: number): string {
   }).format(n);
 }
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 export default function WidgetCalc() {
   const [netMonthly, setNetMonthly] = useState(150000);

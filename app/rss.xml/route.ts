@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 const ARTICLES = [
   {

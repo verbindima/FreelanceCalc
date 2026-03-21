@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SfrCalc from "./SfrCalc";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 const SLUG = "sfr";
 
 export const metadata: Metadata = {

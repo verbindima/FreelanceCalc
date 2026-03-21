@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 export const metadata: Metadata = {
   title: "Ставки фрилансеров 2026 — бесплатный отчёт по 22 специальностям",
@@ -173,7 +173,7 @@ export default function Otchet2026() {
             <p className="text-sm text-slate-500">
               Данные свободны для публикации со ссылкой на источник. Ссылка для цитирования:{" "}
               <code className="bg-slate-100 px-1.5 py-0.5 rounded text-xs">
-                https://freelancecalc-one.vercel.app/otchet-2026
+                https://freelancecalc.ru/otchet-2026
               </code>
             </p>
           </div>
@@ -339,10 +339,10 @@ export default function Otchet2026() {
               Данные полезны коллегам? Поделитесь ссылкой в Telegram или скопируйте для статьи:
             </p>
             <code className="block bg-slate-100 rounded-lg px-4 py-2 text-xs text-slate-700 mb-3 break-all">
-              https://freelancecalc-one.vercel.app/otchet-2026
+              https://freelancecalc.ru/otchet-2026
             </code>
             <a
-              href={`https://t.me/share/url?url=${encodeURIComponent("https://freelancecalc-one.vercel.app/otchet-2026")}&text=${encodeURIComponent("📊 Бесплатный отчёт: ставки фрилансеров 2026 по 22 специальностям в Москве и СПб — открытые данные CC BY 4.0")}`}
+              href={`https://t.me/share/url?url=${encodeURIComponent("https://freelancecalc.ru/otchet-2026")}&text=${encodeURIComponent("📊 Бесплатный отчёт: ставки фрилансеров 2026 по 22 специальностям в Москве и СПб — открытые данные CC BY 4.0")}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#2AABEE] hover:bg-[#229ED9] text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors"

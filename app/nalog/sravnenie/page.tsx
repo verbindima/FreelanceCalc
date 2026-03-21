@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SravnenieCalc from "./SravnenieCalc";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 export const metadata: Metadata = {
   title: "Самозанятый или ИП УСН: что выгоднее фрилансеру в 2026 — сравнение",

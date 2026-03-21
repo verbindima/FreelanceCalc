@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 const SHOP_ID = process.env.YOOKASSA_SHOP_ID!;
 const SECRET_KEY = process.env.YOOKASSA_SECRET_KEY!;
 const RETURN_URL =
-  process.env.NEXT_PUBLIC_BASE_URL ?? "https://freelancecalc-one.vercel.app";
+  process.env.NEXT_PUBLIC_BASE_URL ?? "https://freelancecalc.ru";
 
 // Sync with FreelanceCalc.tsx: 249 ₽ before April 7, 349 ₽ after (loss aversion countdown)
 const PRICE_DEADLINE = new Date("2026-04-07T00:00:00+03:00"); // MSK midnight

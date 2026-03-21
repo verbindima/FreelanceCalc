@@ -6,7 +6,7 @@ import { CITY_PAIRS } from "./goroda/sravnenie/page";
 import { NAJEM_DATA } from "./frilanc-vs-najm/najem-data";
 
 // TODO: switch to custom domain once purchased & configured in Vercel
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const specialtyPages = SPECIALTY_DATA.map(({ slug }) => ({

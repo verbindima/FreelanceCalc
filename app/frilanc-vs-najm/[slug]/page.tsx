@@ -4,7 +4,7 @@ import Link from "next/link";
 import { SPECIALTIES, getSpecialty } from "../../stavka/[slug]/specialties";
 import { NAJEM_DATA } from "../najem-data";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 type Props = { params: Promise<{ slug: string }> };
 

@@ -390,10 +390,10 @@ export default function EmployeeCostCalc() {
               navigator.share({
                 title: "Реальная стоимость сотрудника — калькулятор",
                 text: `Штатный сотрудник за ${new Intl.NumberFormat("ru-RU").format(grossSalary)} ₽ gross стоит работодателю ${new Intl.NumberFormat("ru-RU").format(Math.round(results.totalMonthly))} ₽/мес — посчитайте сами:`,
-                url: "https://freelancecalc-one.vercel.app/instrumenty/kalkulator-stoimosti-sotrudnika",
+                url: "https://freelancecalc.ru/instrumenty/kalkulator-stoimosti-sotrudnika",
               }).catch(() => {});
             } else {
-              navigator.clipboard.writeText("https://freelancecalc-one.vercel.app/instrumenty/kalkulator-stoimosti-sotrudnika").then(() => {
+              navigator.clipboard.writeText("https://freelancecalc.ru/instrumenty/kalkulator-stoimosti-sotrudnika").then(() => {
                 alert("Ссылка скопирована!");
               });
             }

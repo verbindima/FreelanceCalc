@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import EmployeeCostCalc from "./EmployeeCostCalc";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 export const metadata: Metadata = {
   title: "Калькулятор реальной стоимости сотрудника 2026 — сколько стоит нанять работника",

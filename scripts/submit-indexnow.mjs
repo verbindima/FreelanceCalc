@@ -8,7 +8,7 @@
  */
 
 const KEY = "freelancecalc9a3f2b7e4c1d8a6b";
-const HOST = "freelancecalc-one.vercel.app";
+const HOST = "freelancecalc.ru";
 const BASE = `https://${HOST}`;
 
 // Priority URLs — top pages most likely to rank first

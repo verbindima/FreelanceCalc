@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { getCity } from "../../cities";
 import { CITY_PAIRS } from "../page";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 // Base median hourly rates (Middle level, national average)
 const SPECIALTIES = [

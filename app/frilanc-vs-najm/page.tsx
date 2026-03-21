@@ -3,7 +3,7 @@ import Link from "next/link";
 import { SPECIALTIES } from "../stavka/[slug]/specialties";
 import { NAJEM_DATA } from "./najem-data";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 export const metadata: Metadata = {
   title: "Фриланс vs найм 2026: сравнение доходов по специальностям",

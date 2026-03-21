@@ -4,7 +4,7 @@ import { useEffect, useCallback, useState } from "react";
 import Link from "next/link";
 import { ymGoal } from "../../components/YandexMetrica";
 
-const CALC_URL = "https://freelancecalc-one.vercel.app";
+const CALC_URL = "https://freelancecalc.ru";
 
 const TG_SHARE_TEXT =
   `💼 Купил бенчмарк ставок фрилансеров на Q1 2026 — очень полезно.\n\n` +

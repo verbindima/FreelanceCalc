@@ -3,7 +3,7 @@ import Link from "next/link";
 import BuyButton from "./BuyButton";
 import PriceCountdown from "./PriceCountdown";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 export const metadata: Metadata = {
   title: "Рыночные ставки фрилансеров по городам 2026 — PDF-бенчмарк",

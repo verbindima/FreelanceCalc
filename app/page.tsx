@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import FreelanceCalc from "./components/FreelanceCalc";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 /** Dynamic OG image: reflects the user's actual calculated rate when they share their URL */
 export async function generateMetadata({
@@ -82,42 +82,42 @@ const howToJsonLd = {
       position: 1,
       name: "Укажите желаемый доход на руки",
       text: "Введите сумму, которую хотите получать чистыми в месяц после уплаты налогов. Например: 150 000 ₽.",
-      url: "https://freelancecalc-one.vercel.app/#income",
+      url: "https://freelancecalc.ru/#income",
     },
     {
       "@type": "HowToStep",
       position: 2,
       name: "Выберите налоговый режим",
       text: "Выберите свою систему налогообложения: самозанятый (НПД 4% с физлиц или 6% с юрлиц), ИП на УСН 6% или ИП на УСН 15%.",
-      url: "https://freelancecalc-one.vercel.app/#tax",
+      url: "https://freelancecalc.ru/#tax",
     },
     {
       "@type": "HowToStep",
       position: 3,
       name: "Укажите рабочее время",
       text: "Задайте количество рабочих часов в день (обычно 6–8) и рабочих дней в неделю (чаще всего 5).",
-      url: "https://freelancecalc-one.vercel.app/#hours",
+      url: "https://freelancecalc.ru/#hours",
     },
     {
       "@type": "HowToStep",
       position: 4,
       name: "Задайте количество дней отпуска",
       text: "Укажите, сколько дней в году вы планируете отдыхать. Стандарт — 28 дней. Это уменьшит количество рабочих дней в году.",
-      url: "https://freelancecalc-one.vercel.app/#vacation",
+      url: "https://freelancecalc.ru/#vacation",
     },
     {
       "@type": "HowToStep",
       position: 5,
       name: "Укажите коэффициент загрузки",
       text: "Загрузка — процент времени на оплачиваемых заказах. У опытных фрилансеров 65–75%, у начинающих — 40–50%.",
-      url: "https://freelancecalc-one.vercel.app/#load",
+      url: "https://freelancecalc.ru/#load",
     },
     {
       "@type": "HowToStep",
       position: 6,
       name: "Получите вашу ставку",
       text: "Калькулятор мгновенно покажет вашу минимальную часовую и дневную ставку с учётом всех факторов, а также сравнение с рыночным уровнем.",
-      url: "https://freelancecalc-one.vercel.app/#result",
+      url: "https://freelancecalc.ru/#result",
     },
   ],
 };

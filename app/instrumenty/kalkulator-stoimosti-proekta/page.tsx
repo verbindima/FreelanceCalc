@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ProjectCalc from "./ProjectCalc";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 const CANONICAL = "/instrumenty/kalkulator-stoimosti-proekta";
 
 export const metadata: Metadata = {

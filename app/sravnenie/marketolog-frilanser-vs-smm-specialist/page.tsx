@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 export const metadata: Metadata = {
   title: "Маркетолог vs SMM-специалист: кто больше зарабатывает в 2026",
@@ -125,7 +125,7 @@ export default function MarketologVsSmmPage() {
               и сравнит её с рыночной медианой по специальности.
             </p>
             <a
-              href="https://freelancecalc-one.vercel.app/"
+              href="https://freelancecalc.ru/"
               className="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
             >
               Рассчитать свою ставку бесплатно →
@@ -321,7 +321,7 @@ export default function MarketologVsSmmPage() {
               и покажет минимальную и рыночную ставку.
             </p>
             <a
-              href="https://freelancecalc-one.vercel.app/"
+              href="https://freelancecalc.ru/"
               className="inline-block bg-white text-green-700 font-bold px-8 py-3 rounded-xl hover:bg-green-50 transition-colors"
             >
               Рассчитать свою ставку бесплатно →

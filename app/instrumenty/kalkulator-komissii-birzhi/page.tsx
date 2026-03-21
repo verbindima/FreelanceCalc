@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import CommissionCalc from "./CommissionCalc";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 
 export const metadata: Metadata = {
   title: "Калькулятор комиссии биржи фрилансеров — Kwork, FL.ru, Хабр 2026",

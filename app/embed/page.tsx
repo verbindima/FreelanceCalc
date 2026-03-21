@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import CopyButton from "./CopyButton";
 
-const BASE_URL = "https://freelancecalc-one.vercel.app";
+const BASE_URL = "https://freelancecalc.ru";
 const WIDGET_URL = `${BASE_URL}/widget`;
 
 export const metadata: Metadata = {

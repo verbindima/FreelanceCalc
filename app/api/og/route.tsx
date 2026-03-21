@@ -319,7 +319,7 @@ export async function GET(request: Request) {
               borderRadius: "10px",
             }}
           >
-            freelancecalc-one.vercel.app →
+            freelancecalc.ru →
           </div>
         </div>
       </div>
