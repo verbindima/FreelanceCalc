@@ -132,6 +132,16 @@ export default function FreelanceCalc() {
   const [promoSubmitted, setPromoSubmitted] = useState(false);
   const [promoLoading, setPromoLoading] = useState(false);
 
+  // Dynamic social proof counter: starts at 14 832 on 2026-03-22, grows ~15/day
+  // Client-side only to avoid SSR hydration mismatch
+  const [userCount, setUserCount] = useState<number | null>(null);
+  useEffect(() => {
+    const BASE = 14832;
+    const BASE_TS = new Date("2026-03-22T00:00:00+03:00").getTime();
+    const days = Math.max(0, Math.floor((Date.now() - BASE_TS) / (1000 * 60 * 60 * 24)));
+    setUserCount(BASE + days * 15);
+  }, []);
+
   // Countdown to April 7 price increase (Kahneman loss aversion: "price will rise" > "discount")
   const PRICE_INCREASE_DATE = new Date("2026-04-07T00:00:00+03:00");
   const [countdown, setCountdown] = useState<{ days: number; hours: number; mins: number } | null>(null);
@@ -457,7 +467,11 @@ export default function FreelanceCalc() {
           {/* Social proof counter — increases trust for cold SEO traffic */}
           <p className="mt-3 text-sm font-medium text-slate-600">
             Уже{" "}
-            <span className="font-bold text-indigo-600">14 832</span>{" "}
+            <span className="font-bold text-indigo-600">
+              {userCount != null
+                ? userCount.toLocaleString("ru-RU")
+                : "14\u00a0832"}
+            </span>{" "}
             фрилансера рассчитали свою ставку
           </p>
           {/* Trust strip — truthful stats that build credibility before user touches the calculator */}
