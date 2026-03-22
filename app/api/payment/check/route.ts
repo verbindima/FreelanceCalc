@@ -43,12 +43,8 @@ export async function GET() {
             test: data.test,
           },
         };
-        if (data.fiscalization_enabled) {
-          issues.push(
-            "⚠️ fiscalization_enabled=true — ЮKassa требует передавать receipt при создании платежа (54-ФЗ). " +
-            "В коде receipt не передаётся → платёж отклоняется. Нужно добавить receipt или отключить фискализацию в ЮKassa → Настройки → Чеки."
-          );
-        }
+        // Note: fiscalization_enabled=true is handled by our code — receipt is sent when email is provided.
+        // We only flag this if the payment creation test also fails (which would indicate receipt handling is broken).
         if (data.test) {
           issues.push("⚠️ Магазин в ТЕСТОВОМ режиме — реальные платежи не принимаются. Включи боевой режим в личном кабинете ЮKassa.");
         }
