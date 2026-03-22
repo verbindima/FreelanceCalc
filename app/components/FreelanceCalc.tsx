@@ -102,6 +102,11 @@ export default function FreelanceCalc() {
   const [daysPerWeek, setDaysPerWeek] = useState(() => Number(getParam("dpw")) || 5);
   const [vacationDays, setVacationDays] = useState(() => Number(getParam("vac")) || 28);
   const [billableRatio, setBillableRatio] = useState(() => Number(getParam("load")) || 70);
+  // Viral comparison: read colleague rate from shared link
+  const [sharedColleagueRate] = useState<number | null>(() => {
+    const v = Number(getParam("shared_rate"));
+    return v > 0 ? v : null;
+  });
   const [showUpsellModal, setShowUpsellModal] = useState(false);
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [paymentUnavailable, setPaymentUnavailable] = useState(false);
@@ -217,6 +222,22 @@ export default function FreelanceCalc() {
     ymGoal("calculator_used", { income: netMonthly, tax: taxRegime });
   }, [netMonthly, taxRegime, hoursPerDay, daysPerWeek, vacationDays, billableRatio]);
 
+  // Track when comparison link is opened (measures viral reach)
+  useEffect(() => {
+    if (sharedColleagueRate) {
+      ymGoal("comparison_link_opened", { colleague_rate: sharedColleagueRate });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  /** Build share URL with caller's rate encoded — enables viral rate comparison */
+  const getShareUrl = useCallback(() => {
+    if (typeof window === "undefined") return "";
+    const sp = new URLSearchParams(window.location.search);
+    sp.set("shared_rate", String(Math.round(results.hourlyRate)));
+    return `${window.location.origin}${window.location.pathname}?${sp.toString()}`;
+  }, [results.hourlyRate]);
+
   // Sync state to URL so the link stays shareable
   useEffect(() => {
     setParams({
@@ -243,20 +264,20 @@ export default function FreelanceCalc() {
 
   const handleShare = useCallback(async () => {
     ymGoal("share_click");
-    const url = window.location.href;
+    const url = getShareUrl();
     try {
       await navigator.clipboard.writeText(url);
       setShareCopied(true);
       setTimeout(() => setShareCopied(false), 2500);
     } catch {
       // fallback: prompt
-      window.prompt("Скопируйте ссылку на ваш расчёт:", url);
+      window.prompt("Скопируйте ссылку на ваш расчёт:", getShareUrl());
     }
   }, []);
 
   const handleShareTelegram = useCallback(() => {
     ymGoal("share_telegram_click");
-    const url = window.location.href;
+    const url = getShareUrl();
     const hourly = Math.round(results.hourlyRate);
     const daily = Math.round(results.dailyRate);
     const fmtNum = (n: number) => new Intl.NumberFormat("ru-RU").format(n);
@@ -277,7 +298,7 @@ export default function FreelanceCalc() {
 
   const handleShareVK = useCallback(() => {
     ymGoal("share_vk_click");
-    const url = window.location.href;
+    const url = getShareUrl();
     const hourly = Math.round(results.hourlyRate);
     const fmtNum = (n: number) => new Intl.NumberFormat("ru-RU").format(n);
     const title = `${marketCtx.emoji} Моя ставка фрилансера: ${fmtNum(hourly)} ₽/час — ${marketCtx.label.toLowerCase()}`;
@@ -287,7 +308,7 @@ export default function FreelanceCalc() {
 
   const handleShareWhatsApp = useCallback(() => {
     ymGoal("share_whatsapp_click");
-    const url = window.location.href;
+    const url = getShareUrl();
     const hourly = Math.round(results.hourlyRate);
     const daily = Math.round(results.dailyRate);
     const fmtNum = (n: number) => new Intl.NumberFormat("ru-RU").format(n);
@@ -457,6 +478,24 @@ export default function FreelanceCalc() {
             ))}
           </div>
         </header>
+
+        {/* Colleague comparison banner — shown when page opened via a shared link */}
+        {sharedColleagueRate && (
+          <div className="bg-indigo-50 border border-indigo-200 rounded-2xl px-5 py-4 flex items-start gap-3">
+            <span className="text-2xl leading-none mt-0.5">👤</span>
+            <div>
+              <p className="text-sm font-semibold text-indigo-900">
+                Коллега поделился своей ставкой:{" "}
+                <span className="text-indigo-600">
+                  {new Intl.NumberFormat("ru-RU").format(sharedColleagueRate)} ₽/час
+                </span>
+              </p>
+              <p className="text-xs text-indigo-700 mt-0.5">
+                Введите свои данные ниже — и сразу увидите, у кого ставка выше.
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Inputs */}
         <section className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
@@ -630,6 +669,49 @@ export default function FreelanceCalc() {
           <p className="mt-4 text-xs text-indigo-300">
             Расчёт основан на {Math.round(results.billableDays)} оплачиваемых рабочих днях в год
           </p>
+
+          {/* Comparison widget — shown when link was shared by a colleague */}
+          {sharedColleagueRate && (() => {
+            const myRate = Math.round(results.hourlyRate);
+            const diff = myRate - sharedColleagueRate;
+            const fmtR = (n: number) => new Intl.NumberFormat("ru-RU").format(n);
+            const isAhead = diff > 0;
+            const isTied = diff === 0;
+            return (
+              <div className="mt-4 bg-white/10 border border-white/20 rounded-xl p-4">
+                <p className="text-xs font-semibold text-indigo-200 uppercase tracking-wide mb-3">
+                  🆚 Сравнение со ставкой коллеги
+                </p>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="text-center bg-white/10 rounded-lg py-2 px-3">
+                    <p className="text-xs text-indigo-300 mb-0.5">Коллега</p>
+                    <p className="text-lg font-bold text-white">{fmtR(sharedColleagueRate)} ₽/ч</p>
+                  </div>
+                  <div className="text-center bg-white/20 rounded-lg py-2 px-3">
+                    <p className="text-xs text-indigo-200 mb-0.5">Вы</p>
+                    <p className={`text-lg font-bold ${isAhead ? "text-emerald-300" : isTied ? "text-white" : "text-red-300"}`}>
+                      {fmtR(myRate)} ₽/ч
+                    </p>
+                  </div>
+                </div>
+                <p className="text-xs mt-3 text-center text-indigo-200">
+                  {isTied
+                    ? "Одинаковые ставки — редкое совпадение!"
+                    : isAhead
+                    ? `Вы зарабатываете на ${fmtR(diff)} ₽/час больше коллеги 🎉`
+                    : `Вы зарабатываете на ${fmtR(Math.abs(diff))} ₽/час меньше коллеги — `}
+                  {!isAhead && !isTied && (
+                    <button
+                      onClick={handleOpenUpsell}
+                      className="underline font-semibold text-white hover:text-indigo-200"
+                    >
+                      узнайте, как поднять ставку
+                    </button>
+                  )}
+                </p>
+              </div>
+            );
+          })()}
         </section>
 
         {/* Market context badge — drives curiosity and upsell clicks */}
