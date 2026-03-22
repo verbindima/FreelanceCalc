@@ -116,6 +116,8 @@ export default function FreelanceCalc() {
   const [showNegotiationScript, setShowNegotiationScript] = useState(false);
   const [scriptCopied, setScriptCopied] = useState<string | null>(null);
   const [showAllSpecialties, setShowAllSpecialties] = useState(false);
+  const [showClientExplainer, setShowClientExplainer] = useState(false);
+  const [clientExplainerCopied, setClientExplainerCopied] = useState(false);
   const calcUsedTracked = useRef(false);
 
   // Sticky results bar — visible when user scrolls past the results section
@@ -388,6 +390,48 @@ export default function FreelanceCalc() {
       window.prompt("Скопируйте скрипт:", text);
     }
   }, []);
+
+  /** Generate a professional rate explanation for sending to clients */
+  const getClientExplainerText = useCallback(() => {
+    const hourly = Math.round(results.hourlyRate);
+    const daily = Math.round(results.dailyRate);
+    const fmtN = (n: number) => new Intl.NumberFormat("ru-RU").format(n);
+    const taxLabel =
+      taxRegime === "self_employed_fl" ? "Самозанятый, клиенты — физлица (НПД 4%)"
+      : taxRegime === "self_employed_ul" ? "Самозанятый, клиенты — юрлица (НПД 6%)"
+      : taxRegime === "ip_usn6" ? "ИП на УСН «Доходы» (6%)"
+      : taxRegime === "ip_usn15" ? "ИП на УСН «Доходы минус расходы» (15%)"
+      : "Без налогового режима";
+    const shareUrl = typeof window !== "undefined"
+      ? `${window.location.origin}${window.location.pathname}${window.location.search}`
+      : "https://freelancecalc.ru";
+
+    return `Моя ставка — ${fmtN(hourly)} ₽/час (${fmtN(daily)} ₽/день).
+
+Расчёт прозрачный:
+• Нужный доход на руки: ${fmtN(netMonthly)} ₽/мес
+• Налоговый режим: ${taxLabel}
+• Рабочих часов в день: ${hoursPerDay}, дней в неделю: ${daysPerWeek}
+• Отпуск: ${vacationDays} дней/год
+• Оплачиваемая загрузка: ${billableRatio}% (остальное — поиск клиентов, брифы, переговоры)
+
+Итого оплачиваемых дней в год: ~${Math.round(results.billableDays)}.
+Ставка для выхода на нужный доход: ${fmtN(hourly)} ₽/час.
+
+Расчёт можно проверить самостоятельно: ${shareUrl}`;
+  }, [results, netMonthly, taxRegime, hoursPerDay, daysPerWeek, vacationDays, billableRatio]);
+
+  const handleCopyClientExplainer = useCallback(async () => {
+    ymGoal("client_explainer_copy");
+    const text = getClientExplainerText();
+    try {
+      await navigator.clipboard.writeText(text);
+      setClientExplainerCopied(true);
+      setTimeout(() => setClientExplainerCopied(false), 2500);
+    } catch {
+      window.prompt("Скопируйте объяснение:", text);
+    }
+  }, [getClientExplainerText]);
 
   const handlePayment = useCallback(async () => {
     setPaymentLoading(true);
@@ -931,7 +975,38 @@ export default function FreelanceCalc() {
             >
               📱 WhatsApp
             </button>
+            <button
+              onClick={() => {
+                setShowClientExplainer((v) => !v);
+                ymGoal("client_explainer_open");
+              }}
+              className="flex items-center gap-1.5 text-xs bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-1.5 rounded-lg transition-colors font-medium"
+            >
+              📄 Объяснить клиенту
+            </button>
           </div>
+          {/* Client rate explainer — professional breakdown for sending to clients who question your rate */}
+          {showClientExplainer && (
+            <div className="mt-3 bg-white border border-slate-200 rounded-xl p-4">
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-xs font-semibold text-slate-700">
+                  Готовое объяснение для клиента — скопируйте и отправьте:
+                </p>
+                <button
+                  onClick={handleCopyClientExplainer}
+                  className="text-xs bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg transition-colors font-medium whitespace-nowrap ml-2"
+                >
+                  {clientExplainerCopied ? "✅ Скопировано!" : "Скопировать"}
+                </button>
+              </div>
+              <pre className="text-xs text-slate-600 whitespace-pre-wrap leading-relaxed font-sans bg-slate-50 rounded-lg p-3">
+                {getClientExplainerText()}
+              </pre>
+              <p className="text-xs text-slate-400 mt-2">
+                💡 Клиент сможет самостоятельно проверить расчёт по ссылке внутри письма.
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Lead magnet — captures email BEFORE the paywall; works even when ЮKassa is broken */}
