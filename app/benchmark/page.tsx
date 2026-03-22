@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import BuyButton from "./BuyButton";
@@ -183,7 +184,13 @@ export default function BenchmarkPage() {
           </div>
 
           {/* Personalized specialty preview — interactive, 26 specialties */}
-          <SpecialtyPreview />
+          <Suspense fallback={
+            <div className="bg-gray-50 rounded-2xl border border-dashed border-gray-200 px-6 py-8 text-center text-gray-400 text-sm">
+              Загрузка...
+            </div>
+          }>
+            <SpecialtyPreview />
+          </Suspense>
 
           {/* Matrix table — general preview for all specialties */}
           <section className="mb-10">

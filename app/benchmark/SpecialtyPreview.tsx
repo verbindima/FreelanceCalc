@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import BuyButton from "./BuyButton";
 
 // ─── Data (mirrors report/page.tsx so it stays in sync) ─────────────────────
@@ -93,10 +94,58 @@ function fakeLocked(midMsk: number, cityMult: number, idx: number): string {
 // Group specialties by category for the select
 const CATEGORIES = ["Разработка", "Аналитика", "Дизайн", "Маркетинг", "Тексты", "Управление"];
 
+// Slug → specialty index mapping for deep-linking (?spec=python)
+const SPEC_SLUGS: Record<string, number> = {
+  // Разработка
+  "ml": 0, "ai": 0, "ml-ai": 0,
+  "devops": 1,
+  "golang": 2, "go": 2,
+  "java": 3,
+  "mobile": 4, "ios": 4, "android": 4,
+  "fullstack": 5,
+  "python": 6,
+  "backend": 7,
+  "dotnet": 8, "net": 8, "csharp": 8,
+  "frontend": 9,
+  "php": 10,
+  "1c": 11, "1s": 11,
+  "qa": 12, "testing": 12, "tester": 12,
+  // Аналитика
+  "data": 13, "analyst": 13, "analytics": 13,
+  "ba": 14, "business-analyst": 14,
+  // Дизайн
+  "ux": 15, "ui": 15, "uxui": 15, "design": 15,
+  "motion": 16,
+  "graphic": 17,
+  "webdesign": 18, "webdesigner": 18,
+  // Маркетинг
+  "marketing": 19, "marketolog": 19,
+  "target": 20, "targeting": 20,
+  "seo": 21,
+  "smm": 22,
+  // Тексты
+  "copywriter": 23, "copy": 23,
+  "translator": 24, "perevod": 24,
+  // Управление
+  "pm": 25, "manager": 25, "project": 25,
+};
+
 // ─── Component ───────────────────────────────────────────────────────────────
 
 export default function SpecialtyPreview() {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
+  const searchParams = useSearchParams();
+
+  // Auto-select specialty from URL: /benchmark?spec=python
+  useEffect(() => {
+    const slug = searchParams.get("spec")?.toLowerCase().trim();
+    if (slug && selectedIdx === null) {
+      const idx = SPEC_SLUGS[slug] ?? null;
+      if (idx !== null) setSelectedIdx(idx);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
   const spec = selectedIdx !== null ? SPECIALTIES[selectedIdx] : null;
 
   return (
