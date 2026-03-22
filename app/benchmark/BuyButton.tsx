@@ -1,13 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-function ymGoal(name: string) {
-  if (typeof window !== "undefined" && typeof (window as unknown as Record<string, unknown>).ym === "function") {
-    const id = process.env.NEXT_PUBLIC_YANDEX_METRICA_ID;
-    (window as unknown as Record<string, (...args: unknown[]) => void>).ym?.(id, "reachGoal", name);
-  }
-}
+import { ymGoal } from "@/app/components/YandexMetrica";
 
 const PRICE_INCREASE_DATE = new Date("2026-04-07T00:00:00+03:00");
 const currentPrice = Date.now() < PRICE_INCREASE_DATE.getTime() ? 249 : 349;
