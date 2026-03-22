@@ -21,11 +21,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const spec = getSpecialty(slug);
   if (!spec) return {};
   return {
-    title: `${spec.shortTitle} — FreelanceCalc`,
+    title: `${spec.shortTitle} 2026: ${spec.medianHourly} — FreelanceCalc`,
     description: spec.description,
     alternates: { canonical: `/stavka/${slug}` },
     openGraph: {
-      title: `${spec.shortTitle} — FreelanceCalc`,
+      title: `${spec.shortTitle} 2026: ${spec.medianHourly} — FreelanceCalc`,
       description: spec.description,
       url: `${BASE_URL}/stavka/${slug}`,
       type: "website",

@@ -63,11 +63,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const rate = adjustRate(spec.medianHourly, combinedMultiplier);
 
   return {
-    title: `Ставка ${lvl.name} ${role} ${city.nameIn} 2026 — FreelanceCalc`,
+    title: `Ставка ${lvl.name} ${role} ${city.nameIn} 2026: ${rate} — FreelanceCalc`,
     description: `Рассчитайте ставку ${lvl.nameRu} ${role.toLowerCase()} ${city.nameIn}. Медианная ставка: ${rate}. Учёт НПД, отпуска и загрузки — калькулятор онлайн.`,
     alternates: { canonical: `/stavka/${slug}/opyt/${levelSlug}/${citySlug}` },
     openGraph: {
-      title: `${lvl.name} ${role} ${city.nameIn} — ставка 2026`,
+      title: `${lvl.name} ${role} ${city.nameIn} 2026: ${rate}`,
       description: `Медианная ставка ${lvl.nameRu} ${role.toLowerCase()} ${city.nameIn}: ${rate}. Калькулятор с учётом налогов, отпуска и загрузки.`,
       url: `${BASE_URL}/stavka/${slug}/opyt/${levelSlug}/${citySlug}`,
       type: "website",
