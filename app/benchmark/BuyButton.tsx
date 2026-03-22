@@ -3,6 +3,10 @@
 import { useState } from "react";
 import { ymGoal } from "@/app/components/YandexMetrica";
 
+// СБП manual payment: set NEXT_PUBLIC_SBP_PHONE in Vercel to instantly enable payments.
+// Format: "+79991234567" (with country code). No credentials, no API — just phone number.
+const SBP_PHONE = process.env.NEXT_PUBLIC_SBP_PHONE;
+
 const VIRAL_SHARE_URL = "https://freelancecalc.ru/benchmark?utm_source=share&utm_medium=buy_viral&utm_campaign=price_lock";
 const VIRAL_SHARE_TEXT = "Зафиксировал цену 249 ₽ на бенчмарк ставок фрилансеров — с 7 апреля будет 349 ₽. Успей тоже 👇";
 
@@ -60,11 +64,36 @@ export default function BuyButton({ label = `Купить полный PDF — $
   const [leadEmail, setLeadEmail] = useState("");
   const [leadLoading, setLeadLoading] = useState(false);
   const [leadSubmitted, setLeadSubmitted] = useState(false);
+  // СБП manual payment state
+  const [sbpOpen, setSbpOpen] = useState(false);
+  const [sbpEmail, setSbpEmail] = useState("");
+  const [sbpLoading, setSbpLoading] = useState(false);
+  const [sbpDone, setSbpDone] = useState(false);
+
+  const handleSbpConfirm = async () => {
+    if (!sbpEmail.includes("@")) return;
+    setSbpLoading(true);
+    ymGoal("sbp_payment_confirmed");
+    try {
+      await fetch("/api/notify-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: sbpEmail, source: "sbp_manual" }),
+      });
+    } catch { /* silent */ }
+    setSbpDone(true);
+    setSbpLoading(false);
+  };
 
   const handlePayment = async () => {
+    ymGoal("upsell_click");
+    // Fast path: СБП manual payment (no API call needed)
+    if (SBP_PHONE) {
+      setSbpOpen(true);
+      return;
+    }
     setLoading(true);
     setUnavailable(false);
-    ymGoal("upsell_click");
     try {
       const res = await fetch("/api/payment", { method: "POST" });
       const data = await res.json();
@@ -143,6 +172,63 @@ export default function BuyButton({ label = `Купить полный PDF — $
             className="text-xs text-indigo-600 hover:underline"
           >
             Попробовать ещё раз
+          </button>
+        )}
+      </div>
+    );
+  }
+
+  // СБП manual payment modal
+  if (sbpOpen && SBP_PHONE) {
+    return (
+      <div className="text-left w-full max-w-sm">
+        <div className="bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-4">
+          <p className="text-sm font-bold text-indigo-900 mb-1">
+            💳 Оплата через СБП — {currentPrice} ₽
+          </p>
+          {sbpDone ? (
+            <div>
+              <p className="text-sm font-semibold text-green-700 mb-1">
+                ✅ Спасибо! Проверим оплату и вышлем PDF в течение нескольких часов.
+              </p>
+              <LeadSuccessViralBlock />
+            </div>
+          ) : (
+            <>
+              <div className="bg-white rounded-lg border border-indigo-200 px-3 py-2 mb-3">
+                <p className="text-xs text-gray-500 mb-0.5">Перевести по СБП:</p>
+                <p className="text-lg font-bold text-indigo-700 tracking-wide">{SBP_PHONE}</p>
+                <p className="text-xs text-gray-500 mt-0.5">Сумма: <strong>{currentPrice} ₽</strong> · Любой банк (Тинькофф, Сбер, СБП)</p>
+              </div>
+              <p className="text-xs text-gray-600 mb-2">
+                После перевода укажи email — вышлем PDF сразу после проверки:
+              </p>
+              <div className="flex gap-2">
+                <input
+                  type="email"
+                  value={sbpEmail}
+                  onChange={(e) => setSbpEmail(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSbpConfirm()}
+                  placeholder="твой@email.ru"
+                  className="flex-1 text-sm border border-indigo-300 rounded-lg px-3 py-2 bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 min-w-0"
+                />
+                <button
+                  onClick={handleSbpConfirm}
+                  disabled={sbpLoading || !sbpEmail.includes("@")}
+                  className="text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 text-white px-3 py-2 rounded-lg transition-colors whitespace-nowrap"
+                >
+                  {sbpLoading ? "…" : "Оплатил →"}
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+        {!sbpDone && (
+          <button
+            onClick={() => setSbpOpen(false)}
+            className="text-xs text-gray-400 hover:text-gray-600 mt-2 hover:underline"
+          >
+            ← Назад
           </button>
         )}
       </div>

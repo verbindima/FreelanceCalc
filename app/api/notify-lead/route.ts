@@ -12,9 +12,11 @@ const getLockedPrice = () => (new Date() < PRICE_DEADLINE ? 249 : 349);
 
 export async function POST(req: NextRequest) {
   let email = "";
+  let source = "lead"; // "lead" | "sbp_manual"
   try {
     const body = await req.json();
     email = (body.email ?? "").toString().trim().toLowerCase();
+    source = (body.source ?? "lead").toString();
   } catch {
     return NextResponse.json({ error: "invalid json" }, { status: 400 });
   }
@@ -24,9 +26,10 @@ export async function POST(req: NextRequest) {
   }
 
   const lockedPrice = getLockedPrice();
+  const isSbp = source === "sbp_manual";
 
   // Always log for Vercel log drain fallback
-  console.log(`[LEAD] email=${email} price=${lockedPrice} ts=${new Date().toISOString()}`);
+  console.log(`[${isSbp ? "SBP_PAYMENT" : "LEAD"}] email=${email} price=${lockedPrice} ts=${new Date().toISOString()}`);
 
   // Non-blocking push to ntfy.sh
   try {
@@ -34,11 +37,13 @@ export async function POST(req: NextRequest) {
       method: "POST",
       headers: {
         "Content-Type": "text/plain; charset=utf-8",
-        Title: "FreelanceCalc: новый лид",
-        Tags: "money_with_wings,email",
-        Priority: "default",
+        Title: isSbp ? "💰 ОПЛАТА через СБП — проверь и вышли PDF!" : "FreelanceCalc: новый лид",
+        Tags: isSbp ? "money_with_wings,white_check_mark" : "money_with_wings,email",
+        Priority: isSbp ? "high" : "default",
       },
-      body: `Email: ${email}\nЗафиксированная цена: ${lockedPrice} ₽\nВремя: ${new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })}\n\nПользователь оставил email — оплата ${lockedPrice} ₽ пока недоступна. Напиши ему как только ЮKassa подключена.`,
+      body: isSbp
+        ? `Email покупателя: ${email}\nСумма: ${lockedPrice} ₽ (СБП)\nВремя: ${new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })}\n\n✅ Проверь входящий перевод на ${lockedPrice} ₽\n📎 Вышли PDF на: ${email}`
+        : `Email: ${email}\nЗафиксированная цена: ${lockedPrice} ₽\nВремя: ${new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })}\n\nПользователь оставил email — оплата ${lockedPrice} ₽ пока недоступна. Напиши ему как только ЮKassa подключена.`,
     });
   } catch (err) {
     // Fail silently — email already logged to Vercel logs above
