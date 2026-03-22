@@ -4,6 +4,7 @@ import BuyButton from "./BuyButton";
 import PriceCountdown from "./PriceCountdown";
 import ShareButtons from "./ShareButtons";
 import BenchmarkLeadForm from "./BenchmarkLeadForm";
+import SpecialtyPreview from "./SpecialtyPreview";
 
 const BASE_URL = "https://freelancecalc.ru";
 
@@ -181,7 +182,10 @@ export default function BenchmarkPage() {
             ))}
           </div>
 
-          {/* Matrix table */}
+          {/* Personalized specialty preview — interactive, 26 specialties */}
+          <SpecialtyPreview />
+
+          {/* Matrix table — general preview for all specialties */}
           <section className="mb-10">
             <h2 className="text-xl font-bold text-gray-900 mb-2">
               Предпросмотр: медианные ставки по городам
