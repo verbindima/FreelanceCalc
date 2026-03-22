@@ -298,6 +298,9 @@ export default function BenchmarkPage() {
             </div>
           </section>
 
+          {/* Price lock lead form — primary conversion when YooKassa is unavailable */}
+          <BenchmarkLeadForm />
+
           {/* Social proof + urgency strip */}
           <div className="mb-6 grid sm:grid-cols-3 gap-3">
             <div className="bg-white border border-gray-200 rounded-xl p-4 flex items-center gap-3">
@@ -401,9 +404,6 @@ export default function BenchmarkPage() {
               После оплаты — мгновенный доступ к скачиванию · Без подписки · Без регистрации
             </p>
           </section>
-
-          {/* Fallback lead form — captures users who can't pay (no RU card / payment system down) */}
-          <BenchmarkLeadForm />
 
           {/* FAQ */}
           <section className="mb-10">
