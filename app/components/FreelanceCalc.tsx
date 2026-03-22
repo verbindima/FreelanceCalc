@@ -339,9 +339,18 @@ export default function FreelanceCalc() {
     window.open(waUrl, "_blank", "noopener,noreferrer");
   }, [results, marketCtx]);
 
-  const handleOpenUpsell = useCallback(() => {
+  const handleOpenUpsell = useCallback(async () => {
     setShowUpsellModal(true);
     ymGoal("upsell_click");
+    // Proactively check payment availability so we show lead-capture immediately
+    // if payment is not configured — no failed click → better lead conversion.
+    try {
+      const res = await fetch("/api/payment/status");
+      const data = await res.json();
+      if (!data.available) setPaymentUnavailable(true);
+    } catch {
+      // Fail silently — user will discover unavailability on click as before
+    }
   }, []);
 
   const handleLeadSubmit = useCallback(async () => {
