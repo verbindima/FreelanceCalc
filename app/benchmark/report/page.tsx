@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
+import PrintButton from "./PrintButton";
 
 // Simple token-based access — Dmitry sends buyers:
 // https://freelancecalc.ru/benchmark/report?key=2026q1
@@ -152,12 +153,7 @@ export default async function ReportPage({
             <span className="font-bold text-lg">FreelanceCalc</span>
             <span className="ml-2 text-indigo-200 text-sm">Бенчмарк ставок Q1 2026</span>
           </div>
-          <button
-            onClick={() => window.print()}
-            className="bg-white text-indigo-700 font-semibold px-4 py-2 rounded-lg text-sm hover:bg-indigo-50 transition-colors"
-          >
-            🖨️ Сохранить PDF (Ctrl+P)
-          </button>
+          <PrintButton />
         </header>
 
         <main className="max-w-7xl mx-auto px-4 py-8">
