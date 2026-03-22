@@ -3,6 +3,7 @@ import Link from "next/link";
 import BuyButton from "./BuyButton";
 import PriceCountdown from "./PriceCountdown";
 import ShareButtons from "./ShareButtons";
+import BenchmarkLeadForm from "./BenchmarkLeadForm";
 
 const BASE_URL = "https://freelancecalc.ru";
 
@@ -400,6 +401,9 @@ export default function BenchmarkPage() {
               После оплаты — мгновенный доступ к скачиванию · Без подписки · Без регистрации
             </p>
           </section>
+
+          {/* Fallback lead form — captures users who can't pay (no RU card / payment system down) */}
+          <BenchmarkLeadForm />
 
           {/* FAQ */}
           <section className="mb-10">
