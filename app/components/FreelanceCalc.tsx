@@ -294,29 +294,34 @@ export default function FreelanceCalc() {
     const daily = Math.round(results.dailyRate);
     const fmtNum = (n: number) => new Intl.NumberFormat("ru-RU").format(n);
     const isBelow = hourly < 1200;
+    const spec = selectedSpecialty ? QUICK_SPECIALTIES.find((s) => s.slug === selectedSpecialty) : null;
+    const specLabel = spec ? ` ${spec.title.toLowerCase()}а` : "";
     const hook = isBelow
-      ? `Посчитал ставку — калькулятор говорит, что я занижаю цену. Неприятно, но полезно знать.`
+      ? `Посчитал ставку${specLabel} — калькулятор говорит, что я занижаю цену. Неприятно, но полезно знать.`
       : marketCtx.label === "Выше медианы" || marketCtx.label === "Топ рынка"
-      ? `Посчитал ставку — оказывается, я в топе рынка. Проверь свою, интересно сравнить.`
-      : `Посчитал свою ставку фрилансера. В большинстве чатов никто не называет реальные цифры — вот мои:`;
+      ? `Посчитал ставку${specLabel} — оказывается, я в топе рынка. Проверь свою, интересно сравнить.`
+      : `Посчитал свою ставку${specLabel}. В большинстве чатов никто не называет реальные цифры — вот мои:`;
     const text =
       `${hook}\n\n` +
       `${marketCtx.emoji} ${fmtNum(hourly)} ₽/час · ${fmtNum(daily)} ₽/день — ${marketCtx.label.toLowerCase()}\n` +
+      (spec ? `Рыночный диапазон: ${spec.median} ₽/час\n` : ``) +
       `(с налогами, отпуском и реальной загрузкой)\n\n` +
       `Сколько берёшь ты? → ${url}`;
     const tgUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
     window.open(tgUrl, "_blank", "noopener,noreferrer");
-  }, [results, netMonthly, marketCtx]);
+  }, [results, netMonthly, marketCtx, selectedSpecialty]);
 
   const handleShareVK = useCallback(() => {
     ymGoal("share_vk_click");
     const url = getShareUrl();
     const hourly = Math.round(results.hourlyRate);
     const fmtNum = (n: number) => new Intl.NumberFormat("ru-RU").format(n);
-    const title = `${marketCtx.emoji} Моя ставка фрилансера: ${fmtNum(hourly)} ₽/час — ${marketCtx.label.toLowerCase()}`;
+    const spec = selectedSpecialty ? QUICK_SPECIALTIES.find((s) => s.slug === selectedSpecialty) : null;
+    const specPart = spec ? ` ${spec.title.toLowerCase()}а` : " фрилансера";
+    const title = `${marketCtx.emoji} Ставка${specPart}: ${fmtNum(hourly)} ₽/час — ${marketCtx.label.toLowerCase()}`;
     const vkUrl = `https://vk.com/share.php?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&noparse=true`;
     window.open(vkUrl, "_blank", "noopener,noreferrer");
-  }, [results, marketCtx]);
+  }, [results, marketCtx, selectedSpecialty]);
 
   const handleShareWhatsApp = useCallback(() => {
     ymGoal("share_whatsapp_click");
@@ -325,19 +330,22 @@ export default function FreelanceCalc() {
     const daily = Math.round(results.dailyRate);
     const fmtNum = (n: number) => new Intl.NumberFormat("ru-RU").format(n);
     const isBelow = hourly < 1200;
+    const spec = selectedSpecialty ? QUICK_SPECIALTIES.find((s) => s.slug === selectedSpecialty) : null;
+    const specLabel = spec ? ` ${spec.title.toLowerCase()}а` : "";
     const hook = isBelow
-      ? `Посчитал ставку — оказывается, занижаю цену. Вот мои реальные цифры с налогами и загрузкой:`
+      ? `Посчитал ставку${specLabel} — оказывается, занижаю цену. Вот мои реальные цифры с налогами и загрузкой:`
       : marketCtx.label === "Выше медианы" || marketCtx.label === "Топ рынка"
-      ? `Посчитал ставку — я в топе рынка 🎉 Проверь свою, интересно сравнить:`
-      : `Посчитал свою ставку фрилансера. В чатах никто не называет реальные цифры — вот мои:`;
+      ? `Посчитал ставку${specLabel} — я в топе рынка 🎉 Проверь свою, интересно сравнить:`
+      : `Посчитал свою ставку${specLabel}. В чатах никто не называет реальные цифры — вот мои:`;
     const text =
       `${hook}\n\n` +
       `${marketCtx.emoji} ${fmtNum(hourly)} ₽/час · ${fmtNum(daily)} ₽/день — ${marketCtx.label.toLowerCase()}\n` +
+      (spec ? `Диапазон по рынку: ${spec.median} ₽/час\n` : ``) +
       `(учёт налогов, отпуска и загрузки)\n\n` +
       `Рассчитай свою → ${url}`;
     const waUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
     window.open(waUrl, "_blank", "noopener,noreferrer");
-  }, [results, marketCtx]);
+  }, [results, marketCtx, selectedSpecialty]);
 
   const handleOpenUpsell = useCallback(async () => {
     setShowUpsellModal(true);
