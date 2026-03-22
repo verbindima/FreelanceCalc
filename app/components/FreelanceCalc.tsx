@@ -167,6 +167,17 @@ export default function FreelanceCalc() {
 
   const marketCtx = useMemo(() => getMarketContext(results.hourlyRate), [results.hourlyRate]);
 
+  /** Personalized annual gap for upsell modal — when specialty selected & user is below market */
+  const specGapData = useMemo(() => {
+    if (!selectedSpecialty) return null;
+    const spec = QUICK_SPECIALTIES.find((s) => s.slug === selectedSpecialty);
+    if (!spec) return null;
+    const diff = results.hourlyRate - spec.mid;
+    if (diff >= 0) return null; // only show loss framing for below-market users
+    const annualGap = Math.abs(diff) * results.billableDays * hoursPerDay;
+    return { spec, annualGap, diffPct: Math.round((Math.abs(diff) / spec.mid) * 100) };
+  }, [selectedSpecialty, results, hoursPerDay]);
+
   /** Pick 3 articles contextually: below-market users get rate-raise content; self-employed get tax content; default is foundational */
   const contextualArticles = useMemo(() => {
     const isBelowMarket =
@@ -1135,7 +1146,7 @@ export default function FreelanceCalc() {
             className="mt-3 inline-block text-xs text-indigo-600 hover:underline"
             onClick={() => ymGoal("all_articles_click")}
           >
-            Все 33 статьи →
+            Все 40 статей →
           </Link>
         </section>
 
@@ -1177,15 +1188,31 @@ export default function FreelanceCalc() {
             className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-4">
-              <p className="text-xs text-amber-700 font-medium mb-0.5">Ваша рассчитанная ставка</p>
-              <p className="text-2xl font-bold text-amber-800">{fmt(Math.round(results.hourlyRate))} / час</p>
-            </div>
+            {specGapData ? (
+              <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 mb-4">
+                <p className="text-xs text-red-700 font-medium mb-0.5">
+                  Вы теряете по специальности «{specGapData.spec.title}»
+                </p>
+                <p className="text-2xl font-bold text-red-700">~{fmt(Math.round(specGapData.annualGap))} ₽/год</p>
+                <p className="text-xs text-red-600 mt-0.5">
+                  Ваша ставка ниже медианы на {specGapData.diffPct}% — PDF покажет как исправить
+                </p>
+              </div>
+            ) : (
+              <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-4">
+                <p className="text-xs text-amber-700 font-medium mb-0.5">Ваша рассчитанная ставка</p>
+                <p className="text-2xl font-bold text-amber-800">{fmt(Math.round(results.hourlyRate))} / час</p>
+              </div>
+            )}
             <h2 className="text-xl font-bold text-slate-900 mb-2">
-              Ваша ставка vs рынок Q1 2026
+              {specGapData
+                ? `Сколько платят ${specGapData.spec.title.toLowerCase()}ам в реальности`
+                : "Ваша ставка vs рынок Q1 2026"}
             </h2>
             <p className="text-slate-600 text-sm mb-4">
-              Точные медианные ставки по 22 специальностям × 10 городам × 3 уровня опыта. Узнайте, занижаете ли вы цену — и на сколько.
+              {specGapData
+                ? `Медианные ставки по вашей специальности по городам и уровню опыта — и конкретные шаги чтобы поднять свою. 22 специальности × 10 городов × 3 уровня.`
+                : "Точные медианные ставки по 22 специальностям × 10 городам × 3 уровня опыта. Узнайте, занижаете ли вы цену — и на сколько."}
             </p>
             <ul className="text-sm text-slate-700 space-y-1 mb-4">
               <li>✅ Frontend-разработчик в Москве: <strong>1 700–3 200 ₽/час</strong></li>
