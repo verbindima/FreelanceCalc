@@ -162,7 +162,7 @@ export default function BenchmarkPage() {
             </h1>
             <p className="text-lg text-gray-600 leading-relaxed max-w-2xl">
               Если ты не знаешь медианную ставку в своём городе — ты, скорее всего, <strong>уже работаешь дешевле рынка</strong>.
-              Реальные ставки по <strong>22+ специальностям</strong> в <strong>10 городах</strong> России. Джун / мид / сеньор.
+              Реальные ставки по <strong>26 специальностям</strong> в <strong>10 городах</strong> России. Джун / мид / сеньор.
             </p>
           </div>
 
