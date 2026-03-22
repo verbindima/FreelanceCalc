@@ -80,7 +80,7 @@ function getMarketContext(hourlyRate: number): {
     return {
       emoji: "🚀",
       label: "Выше медианы",
-      description: "Сопоставимо с mid/senior разработчиками. Посмотрите точные данные по 22 специальностям и 10 городам —",
+      description: "Сопоставимо с mid/senior разработчиками. Посмотрите точные данные по 26 специальностям и 26 городам —",
       color: "text-indigo-600 bg-indigo-50 border-indigo-200",
     };
   }
@@ -521,7 +521,7 @@ export default function FreelanceCalc() {
           {/* Trust strip — truthful stats that build credibility before user touches the calculator */}
           <div className="mt-3 flex flex-wrap justify-center gap-2 text-xs">
             {[
-              { icon: "🎯", text: "36 специальностей" },
+              { icon: "🎯", text: "26 специальностей" },
               { icon: "🏙️", text: "26 городов" },
               { icon: "🧾", text: "Самозанятый и ИП" },
               { icon: "📅", text: "Данные Q1 2026" },
@@ -1098,7 +1098,7 @@ export default function FreelanceCalc() {
                   : "Вы в топ-10% рынка. Посмотрите, с кем конкурируете по цене."}
               </h3>
               <p className="text-sm text-slate-600 mt-1">
-                Медианные ставки по 22+ специальностям × 10 городам. Каждый день без этих данных — потенциально потерянные деньги.
+                Медианные ставки по 26 специальностям × 26 городам. Каждый день без этих данных — потенциально потерянные деньги.
               </p>
             </div>
             <button
@@ -1122,7 +1122,7 @@ export default function FreelanceCalc() {
                 ⚡ Цена — 349 ₽
               </span>
             )}
-            <span className="text-xs text-amber-700/70">22+ специальностей · 10 городов · Junior / Mid / Senior</span>
+            <span className="text-xs text-amber-700/70">26 специальностей · 26 городов · Junior / Mid / Senior</span>
           </div>
         </section>
 
@@ -1388,15 +1388,15 @@ export default function FreelanceCalc() {
             </h2>
             <p className="text-slate-600 text-sm mb-4">
               {specGapData
-                ? `Медианные ставки по вашей специальности по городам и уровню опыта — и конкретные шаги чтобы поднять свою. 22 специальности × 10 городов × 3 уровня.`
-                : "Точные медианные ставки по 22 специальностям × 10 городам × 3 уровня опыта. Узнайте, занижаете ли вы цену — и на сколько."}
+                ? `Медианные ставки по вашей специальности по городам и уровню опыта — и конкретные шаги чтобы поднять свою. 26 специальностей × 26 городов × 3 уровня.`
+                : "Точные медианные ставки по 26 специальностям × 26 городам × 3 уровня опыта. Узнайте, занижаете ли вы цену — и на сколько."}
             </p>
             <ul className="text-sm text-slate-700 space-y-1 mb-4">
               <li>✅ Frontend-разработчик в Москве: <strong>1 700–3 200 ₽/час</strong></li>
               <li>✅ UI/UX дизайнер: <strong>1 300–2 800 ₽/час</strong></li>
               <li>✅ Копирайтер: <strong>700–1 700 ₽/час</strong></li>
               <li>✅ SEO-специалист: <strong>1 100–2 200 ₽/час</strong></li>
-              <li className="text-slate-400 text-xs pt-1">+ 18 других специальностей и разбивка по городам</li>
+              <li className="text-slate-400 text-xs pt-1">+ 22 других специальности и разбивка по 26 городам</li>
             </ul>
 
             {/* Info block */}
