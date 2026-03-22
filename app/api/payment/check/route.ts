@@ -3,6 +3,9 @@ import { NextResponse } from "next/server";
 /**
  * Diagnostic endpoint — shows payment configuration status (no credentials exposed).
  * GET https://freelancecalc.ru/api/payment/check
+ *
+ * Now also tests actual payment *creation* to catch receipt/fiscalization errors
+ * that don't surface in the /v3/me credentials check.
  */
 export async function GET() {
   const shopId = process.env.YOOKASSA_SHOP_ID;
@@ -16,24 +19,39 @@ export async function GET() {
   if (!shopId) issues.push("YOOKASSA_SHOP_ID не установлен в Vercel");
   if (!secretKey) issues.push("YOOKASSA_SECRET_KEY не установлен в Vercel");
 
-  // If credentials are present, do a live test call
-  let yookassaLiveTest: { ok: boolean; status?: number; error?: string } | null = null;
-  if (shopId && secretKey) {
+  const auth =
+    shopId && secretKey
+      ? "Basic " + Buffer.from(`${shopId}:${secretKey}`).toString("base64")
+      : null;
+
+  // Step 1: credentials check via /v3/me
+  let yookassaLiveTest: { ok: boolean; status?: number; error?: string; shopInfo?: unknown } | null = null;
+  if (auth) {
     try {
       const res = await fetch("https://api.yookassa.ru/v3/me", {
-        headers: {
-          Authorization:
-            "Basic " +
-            Buffer.from(`${shopId}:${secretKey}`).toString("base64"),
-        },
+        headers: { Authorization: auth },
       });
       if (res.ok) {
         const data = await res.json();
         yookassaLiveTest = {
           ok: true,
           status: res.status,
-          error: data.account_id ? undefined : "account_id missing in response",
+          shopInfo: {
+            account_id: data.account_id,
+            status: data.status,
+            fiscalization_enabled: data.fiscalization_enabled,
+            test: data.test,
+          },
         };
+        if (data.fiscalization_enabled) {
+          issues.push(
+            "⚠️ fiscalization_enabled=true — ЮKassa требует передавать receipt при создании платежа (54-ФЗ). " +
+            "В коде receipt не передаётся → платёж отклоняется. Нужно добавить receipt или отключить фискализацию в ЮKassa → Настройки → Чеки."
+          );
+        }
+        if (data.test) {
+          issues.push("⚠️ Магазин в ТЕСТОВОМ режиме — реальные платежи не принимаются. Включи боевой режим в личном кабинете ЮKassa.");
+        }
       } else {
         const errText = await res.text();
         yookassaLiveTest = { ok: false, status: res.status, error: errText.slice(0, 200) };
@@ -45,19 +63,80 @@ export async function GET() {
     }
   }
 
+  // Step 2: test actual payment creation (fixed idempotency key = same result for 24h, no duplicate payments)
+  let paymentCreationTest: {
+    ok: boolean;
+    status?: number;
+    paymentId?: string;
+    confirmationUrl?: string;
+    error?: string;
+    rawError?: string;
+  } | null = null;
+
+  if (auth && yookassaLiveTest?.ok) {
+    try {
+      const testRes = await fetch("https://api.yookassa.ru/v3/payments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Idempotence-Key": "freelancecalc-diagnostic-check-v1",
+          Authorization: auth,
+        },
+        body: JSON.stringify({
+          amount: { value: "1.00", currency: "RUB" },
+          capture: false,
+          confirmation: {
+            type: "redirect",
+            return_url: "https://freelancecalc.ru/payment/success",
+          },
+          description: "Диагностический тест (не настоящий платёж)",
+          metadata: { diagnostic: true },
+        }),
+      });
+
+      if (testRes.ok) {
+        const testData = await testRes.json();
+        paymentCreationTest = {
+          ok: true,
+          status: testRes.status,
+          paymentId: testData.id,
+          confirmationUrl: testData.confirmation?.confirmation_url,
+        };
+      } else {
+        const errText = await testRes.text();
+        let parsedError: string = errText.slice(0, 600);
+        try {
+          const parsed = JSON.parse(errText);
+          parsedError = parsed.description ?? parsed.message ?? errText.slice(0, 600);
+          if (parsed.parameter) parsedError += ` (параметр: ${parsed.parameter})`;
+        } catch { /* not JSON */ }
+
+        paymentCreationTest = { ok: false, status: testRes.status, error: parsedError, rawError: errText.slice(0, 600) };
+        issues.push(`❌ Создание платежа провалилось (${testRes.status}): ${parsedError}`);
+      }
+    } catch (e) {
+      paymentCreationTest = { ok: false, error: String(e) };
+      issues.push(`Сетевая ошибка при создании тестового платежа: ${String(e)}`);
+    }
+  }
+
+  const overallStatus = issues.length === 0 ? "OK" : "ERROR";
+
   return NextResponse.json({
-    status: issues.length === 0 ? "OK" : "ERROR",
+    status: overallStatus,
     issues,
     config: {
       YOOKASSA_SHOP_ID: shopId ? `✅ установлен (${shopId.length} символов)` : "❌ НЕ установлен",
       YOOKASSA_SECRET_KEY: secretKey ? `✅ установлен (${secretKey.length} символов)` : "❌ НЕ установлен",
-      FALLBACK_PAYMENT_URL: fallbackUrl ? `✅ ${fallbackUrl}` : "не установлен (не нужен если ЮKassa работает)",
+      FALLBACK_PAYMENT_URL: fallbackUrl ? `✅ ${fallbackUrl}` : "не установлен",
       NEXT_PUBLIC_SBP_PHONE: sbpPhone ? `✅ ${sbpPhone}` : "не установлен",
-      NEXT_PUBLIC_BASE_URL: baseUrl ?? "не установлен (используется https://freelancecalc.ru)",
+      NEXT_PUBLIC_BASE_URL: baseUrl ?? "не установлен (дефолт: https://freelancecalc.ru)",
     },
     yookassaLiveTest,
-    hint: issues.length > 0
-      ? "Добавь переменные в Vercel: Settings → Environment Variables. Имена ТОЧНО как указано выше."
-      : "Всё настроено! Попробуй оплату ещё раз на /benchmark",
+    paymentCreationTest,
+    hint:
+      overallStatus === "OK"
+        ? "✅ Всё работает! Попробуй оплату на /benchmark"
+        : "❌ Есть проблемы. Смотри поле issues выше — там точная причина и как починить.",
   });
 }
