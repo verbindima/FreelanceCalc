@@ -58,7 +58,8 @@ export default function PaymentSuccess() {
             </p>
             <ul className="text-sm text-indigo-600 space-y-1">
               <li>• Медианные ставки по 26 специальностям</li>
-              <li>• Разбивка по 26 городам России</li>
+              <li>• Разбивка по 10 городам России</li>
+              <li>• 3 уровня опыта: джун / мид / сеньор</li>
               <li>• Актуальные данные за Q1 2026</li>
             </ul>
           </div>
