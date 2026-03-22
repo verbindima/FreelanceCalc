@@ -68,6 +68,9 @@ export default function BuyButton({ label = `Купить полный PDF — $
   const [leadEmail, setLeadEmail] = useState("");
   const [leadLoading, setLeadLoading] = useState(false);
   const [leadSubmitted, setLeadSubmitted] = useState(false);
+  // Email collection step before YooKassa redirect (needed for receipt/fiscalization)
+  const [emailStep, setEmailStep] = useState(false);
+  const [payEmail, setPayEmail] = useState("");
   // СБП manual payment state
   const [sbpOpen, setSbpOpen] = useState(false);
   const [sbpEmail, setSbpEmail] = useState("");
@@ -89,17 +92,29 @@ export default function BuyButton({ label = `Купить полный PDF — $
     setSbpLoading(false);
   };
 
-  const handlePayment = async () => {
+  const handlePayment = () => {
     ymGoal("upsell_click");
     // Fast path: СБП manual payment (no API call needed)
     if (SBP_PHONE) {
       setSbpOpen(true);
       return;
     }
+    // Show email collection step (email needed for receipt in YooKassa)
+    setEmailStep(true);
+  };
+
+  const handleEmailPay = async () => {
+    if (!payEmail.includes("@")) return;
     setLoading(true);
+    setEmailStep(false);
     setUnavailable(false);
+    ymGoal("payment_email_submitted");
     try {
-      const res = await fetch("/api/payment", { method: "POST" });
+      const res = await fetch("/api/payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: payEmail }),
+      });
       const data = await res.json();
       if (data.url) {
         ymGoal("payment_started");
@@ -248,6 +263,46 @@ export default function BuyButton({ label = `Купить полный PDF — $
             ← Назад
           </button>
         )}
+      </div>
+    );
+  }
+
+  // Email collection step before YooKassa redirect
+  if (emailStep) {
+    return (
+      <div className="text-left w-full max-w-sm">
+        <div className="bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-4">
+          <p className="text-sm font-bold text-indigo-900 mb-1">
+            📧 Введи email для чека — {currentPrice} ₽
+          </p>
+          <p className="text-xs text-gray-600 mb-3">
+            ЮKassa пришлёт электронный чек. Туда же отправим PDF если что-то пойдёт не так.
+          </p>
+          <div className="flex gap-2">
+            <input
+              type="email"
+              value={payEmail}
+              onChange={(e) => setPayEmail(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleEmailPay()}
+              placeholder="твой@email.ru"
+              autoFocus
+              className="flex-1 text-sm border border-indigo-300 rounded-lg px-3 py-2 bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 min-w-0"
+            />
+            <button
+              onClick={handleEmailPay}
+              disabled={!payEmail.includes("@")}
+              className="text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 text-white px-3 py-2 rounded-lg transition-colors whitespace-nowrap"
+            >
+              Оплатить →
+            </button>
+          </div>
+        </div>
+        <button
+          onClick={() => setEmailStep(false)}
+          className="text-xs text-gray-400 hover:text-gray-600 mt-2 hover:underline"
+        >
+          ← Назад
+        </button>
       </div>
     );
   }

@@ -17,7 +17,7 @@ function getCurrentPrice(): number {
   return new Date() < PRICE_DEADLINE ? 249 : 349;
 }
 
-export async function POST() {
+export async function POST(request: Request) {
   // Fast-path: if a fallback payment URL is configured, use it immediately.
   // This allows Tribute.tinkoff.ru / Boosty / any payment link to work
   // while YooKassa credentials are pending.
@@ -32,8 +32,34 @@ export async function POST() {
     );
   }
 
+  // Parse optional email from request body (used for receipt / fiscalization)
+  let customerEmail: string | undefined;
+  try {
+    const body = await request.json();
+    if (typeof body?.email === "string" && body.email.includes("@")) {
+      customerEmail = body.email.trim().toLowerCase();
+    }
+  } catch { /* body is optional */ }
+
   const price = getCurrentPrice();
   const idempotenceKey = crypto.randomUUID();
+
+  // Build receipt if email is provided (required when fiscalization_enabled=true in YooKassa)
+  const receipt = customerEmail
+    ? {
+        customer: { email: customerEmail },
+        items: [
+          {
+            description: `PDF «Рыночные ставки фрилансеров» Q1 2026`,
+            quantity: "1.00",
+            amount: { value: `${price}.00`, currency: "RUB" },
+            vat_code: 1, // 1 = без НДС (НДС не облагается)
+            payment_mode: "full_payment",
+            payment_subject: "service",
+          },
+        ],
+      }
+    : undefined;
 
   try {
     const res = await fetch("https://api.yookassa.ru/v3/payments", {
@@ -54,6 +80,7 @@ export async function POST() {
         },
         description: `PDF «Рыночные ставки фрилансеров» Q1 2026 — ${price} ₽`,
         metadata: { product: "market_rates_pdf", price_rub: price },
+        ...(receipt && { receipt }),
       }),
     });
 
