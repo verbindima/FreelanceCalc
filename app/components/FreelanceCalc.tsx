@@ -640,6 +640,24 @@ export default function FreelanceCalc() {
                 </option>
               ))}
             </select>
+
+            {/* Contextual self-employed onboarding nudge — appears only for НПД regimes */}
+            {(taxRegime === "self_employed_fl" || taxRegime === "self_employed_ul") && (
+              <div className="mt-2 flex items-center justify-between gap-2 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2">
+                <span className="text-xs text-emerald-800">
+                  💡 Ещё не оформили самозанятость? Это бесплатно и занимает 5 минут
+                </span>
+                <a
+                  href="https://npd.nalog.ru/app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 text-xs font-semibold text-emerald-700 underline hover:no-underline whitespace-nowrap"
+                  onClick={() => ymGoal("moj_nalog_cta_click")}
+                >
+                  Мой налог →
+                </a>
+              </div>
+            )}
           </div>
 
           {/* Рабочий график */}
