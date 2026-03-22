@@ -1092,7 +1092,7 @@ export default function FreelanceCalc() {
                   : "Вы в топ-10% рынка. Посмотрите, с кем конкурируете по цене."}
               </h3>
               <p className="text-sm text-slate-600 mt-1">
-                Медианные ставки по 36 специальностям × 26 городам. Каждый день без этих данных — потенциально потерянные деньги.
+                Медианные ставки по 22+ специальностям × 10 городам. Каждый день без этих данных — потенциально потерянные деньги.
               </p>
             </div>
             <button
@@ -1116,7 +1116,7 @@ export default function FreelanceCalc() {
                 ⚡ Цена — 349 ₽
               </span>
             )}
-            <span className="text-xs text-amber-700/70">36 специальностей · 26 городов · Junior / Mid / Senior</span>
+            <span className="text-xs text-amber-700/70">22+ специальностей · 10 городов · Junior / Mid / Senior</span>
           </div>
         </section>
 
