@@ -5,6 +5,9 @@ import { NextRequest, NextResponse } from "next/server";
 // Webhook URL: https://freelancecalc.ru/api/payment/webhook
 
 const NTFY_TOPIC = process.env.NTFY_TOPIC || "freelancecalc-leads-xk9m2p";
+const REPORT_ACCESS_KEY = process.env.REPORT_ACCESS_KEY || "2026q1";
+const BASE_URL = (process.env.NEXT_PUBLIC_BASE_URL || "https://freelancecalc.ru").replace(/\/$/, "");
+const REPORT_URL = `${BASE_URL}/benchmark/report?key=${REPORT_ACCESS_KEY}`;
 
 interface YookassaWebhook {
   type: string;
@@ -63,8 +66,10 @@ export async function POST(req: NextRequest) {
         `ID платежа: ${paymentId}`,
         `Время: ${moscowTime}`,
         ``,
+        `✅ Покупатель получил ссылку автоматически на странице оплаты.`,
+        `📊 Ссылка на отчёт: ${REPORT_URL}`,
+        ``,
         `📋 Данные покупателя → ЮKassa: https://yookassa.ru/my/payments/${paymentId}`,
-        `📎 Найди email покупателя и вышли PDF`,
       ].join("\n"),
     });
   } catch (err) {

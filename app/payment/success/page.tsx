@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ymGoal } from "../../components/YandexMetrica";
 
 const CALC_URL = "https://freelancecalc.ru";
+const REPORT_URL = "https://freelancecalc.ru/benchmark/report?key=2026q1";
 
 const TG_SHARE_TEXT =
   `💼 Купил бенчмарк ставок фрилансеров на Q1 2026 — очень полезно.\n\n` +
@@ -15,10 +16,22 @@ const TG_SHARE_TEXT =
 
 export default function PaymentSuccess() {
   const [copied, setCopied] = useState(false);
+  const [reportCopied, setReportCopied] = useState(false);
 
   // Fire conversion goal once on mount — tracked in Яндекс.Метрика
   useEffect(() => {
     ymGoal("payment_complete", { product: "pdf_market_rates", price: 249 });
+  }, []);
+
+  const handleCopyReport = useCallback(async () => {
+    ymGoal("post_purchase_copy_report_link");
+    try {
+      await navigator.clipboard.writeText(REPORT_URL);
+      setReportCopied(true);
+      setTimeout(() => setReportCopied(false), 2500);
+    } catch {
+      window.prompt("Скопируйте ссылку на отчёт:", REPORT_URL);
+    }
   }, []);
 
   const handleTelegramShare = useCallback(() => {
@@ -47,10 +60,25 @@ export default function PaymentSuccess() {
           <h1 className="text-2xl font-bold text-slate-900 mb-2">
             Спасибо за покупку!
           </h1>
-          <p className="text-slate-600 text-sm mb-6">
-            PDF «Рыночные ставки фрилансеров» отправлен на вашу почту, указанную
-            при оплате. Если письмо не пришло — проверьте папку «Спам».
+          <p className="text-slate-600 text-sm mb-4">
+            Оплата подтверждена. Ваш отчёт готов — откройте прямо сейчас:
           </p>
+
+          {/* Primary CTA — instant report access */}
+          <a
+            href={REPORT_URL}
+            onClick={() => ymGoal("post_purchase_open_report")}
+            className="inline-flex items-center justify-center gap-2 w-full bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold px-6 py-3.5 rounded-xl text-base transition-colors mb-3"
+          >
+            📊 Открыть отчёт
+          </a>
+
+          <button
+            onClick={handleCopyReport}
+            className="inline-flex items-center justify-center gap-2 w-full bg-white hover:bg-slate-50 border border-slate-200 text-slate-600 font-medium px-6 py-2.5 rounded-xl text-sm transition-colors mb-6"
+          >
+            {reportCopied ? "✅ Ссылка скопирована!" : "🔗 Скопировать ссылку на отчёт"}
+          </button>
 
           <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-4 mb-6 text-left">
             <p className="text-sm text-indigo-700 font-medium mb-2">
@@ -64,9 +92,13 @@ export default function PaymentSuccess() {
             </ul>
           </div>
 
+          <p className="text-xs text-slate-400 mb-4">
+            Сохрани ссылку — она всегда доступна для повторного просмотра
+          </p>
+
           <Link
             href="/"
-            className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition-colors"
+            className="inline-block text-slate-500 hover:text-slate-700 text-sm transition-colors"
           >
             ← Вернуться к калькулятору
           </Link>
