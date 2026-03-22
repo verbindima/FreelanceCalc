@@ -122,7 +122,7 @@ export default function EmbedPage() {
       <section className="bg-slate-800 text-white rounded-2xl p-6 text-center">
         <h2 className="font-bold text-lg mb-2">Нужен полный калькулятор?</h2>
         <p className="text-slate-300 text-sm mb-4">
-          На FreelanceCalc — калькуляторы по 22 специальностям, 16 городам и сравнение с рынком.
+          На FreelanceCalc — калькуляторы по 26 специальностям, 26 городам и сравнение с рынком.
         </p>
         <Link
           href="/"
