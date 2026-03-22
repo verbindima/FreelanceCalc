@@ -40,7 +40,7 @@ export default function PriceCountdown() {
             Актуальная цена — <span className="text-lg">349 ₽</span>
           </div>
           <div className="text-xs mt-0.5 text-slate-500">
-            Q1 2026 · 22 специальности · 10 городов · Junior / Mid / Senior
+            Q1 2026 · 26 специальностей · 10 городов · Junior / Mid / Senior
           </div>
         </div>
       </div>
