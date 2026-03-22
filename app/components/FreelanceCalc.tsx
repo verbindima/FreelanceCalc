@@ -976,6 +976,12 @@ export default function FreelanceCalc() {
               📱 WhatsApp
             </button>
             <button
+              onClick={() => { handleShareVK(); ymGoal("viral_nudge_vk_click"); }}
+              className="flex items-center gap-1.5 text-xs bg-[#2787F5] hover:bg-[#1d6ed4] text-white px-3 py-1.5 rounded-lg transition-colors font-medium"
+            >
+              ВКонтакте
+            </button>
+            <button
               onClick={() => {
                 setShowClientExplainer((v) => !v);
                 ymGoal("client_explainer_open");
