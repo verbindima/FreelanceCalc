@@ -7,6 +7,10 @@ import { ymGoal } from "@/app/components/YandexMetrica";
 // Format: "+79991234567" (with country code). No credentials, no API — just phone number.
 const SBP_PHONE = process.env.NEXT_PUBLIC_SBP_PHONE;
 
+// Report access — buyer gets this link immediately after confirming SBP payment.
+// Key matches REPORT_ACCESS_KEY in /benchmark/report/page.tsx (default "2026q1").
+const REPORT_URL = "/benchmark/report?key=2026q1";
+
 const VIRAL_SHARE_URL = "https://freelancecalc.ru/benchmark?utm_source=share&utm_medium=buy_viral&utm_campaign=price_lock";
 const VIRAL_SHARE_TEXT = "Зафиксировал цену 249 ₽ на бенчмарк ставок фрилансеров — с 7 апреля будет 349 ₽. Успей тоже 👇";
 
@@ -188,8 +192,21 @@ export default function BuyButton({ label = `Купить полный PDF — $
           </p>
           {sbpDone ? (
             <div>
-              <p className="text-sm font-semibold text-green-700 mb-1">
-                ✅ Спасибо! Проверим оплату и вышлем PDF в течение нескольких часов.
+              <p className="text-sm font-semibold text-green-700 mb-2">
+                ✅ Спасибо за оплату! Ваш бенчмарк готов:
+              </p>
+              <a
+                href={REPORT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2.5 rounded-xl transition-colors text-sm shadow-sm mb-2"
+                onClick={() => ymGoal("report_opened_after_sbp")}
+              >
+                📊 Открыть бенчмарк ставок →
+              </a>
+              <p className="text-xs text-gray-500 mb-3">
+                Сохраните ссылку — она открывает полный отчёт в любое время.
+                Для сохранения в PDF нажмите <kbd className="bg-gray-100 px-1 rounded font-mono">Ctrl+P</kbd> на странице отчёта.
               </p>
               <LeadSuccessViralBlock />
             </div>
