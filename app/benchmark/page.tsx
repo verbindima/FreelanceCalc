@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import BuyButton from "./BuyButton";
 import PriceCountdown from "./PriceCountdown";
+import ShareButtons from "./ShareButtons";
 
 const BASE_URL = "https://freelancecalc.ru";
 
@@ -429,6 +430,14 @@ export default function BenchmarkPage() {
               ))}
             </div>
           </section>
+
+          {/* Share block — viral loop: send to colleagues who undercharge */}
+          <div className="mb-8 bg-white rounded-xl border border-gray-200 p-5">
+            <p className="text-sm font-semibold text-gray-700 mb-3">
+              Знаете коллегу, который занижает ставку? Отправьте ему ссылку:
+            </p>
+            <ShareButtons />
+          </div>
 
           {/* Bottom nav */}
           <div className="border-t border-gray-200 pt-6 flex flex-wrap gap-4">
