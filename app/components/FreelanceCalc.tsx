@@ -243,10 +243,15 @@ export default function FreelanceCalc() {
   }, []);
 
   /** Build share URL with caller's rate encoded — enables viral rate comparison */
-  const getShareUrl = useCallback(() => {
+  const getShareUrl = useCallback((utmSource?: string) => {
     if (typeof window === "undefined") return "";
     const sp = new URLSearchParams(window.location.search);
     sp.set("shared_rate", String(Math.round(results.hourlyRate)));
+    if (utmSource) {
+      sp.set("utm_source", utmSource);
+      sp.set("utm_medium", "social");
+      sp.set("utm_campaign", "user_share");
+    }
     return `${window.location.origin}${window.location.pathname}?${sp.toString()}`;
   }, [results.hourlyRate]);
 
@@ -289,7 +294,7 @@ export default function FreelanceCalc() {
 
   const handleShareTelegram = useCallback(() => {
     ymGoal("share_telegram_click");
-    const url = getShareUrl();
+    const url = getShareUrl("telegram");
     const hourly = Math.round(results.hourlyRate);
     const daily = Math.round(results.dailyRate);
     const fmtNum = (n: number) => new Intl.NumberFormat("ru-RU").format(n);
@@ -313,7 +318,7 @@ export default function FreelanceCalc() {
 
   const handleShareVK = useCallback(() => {
     ymGoal("share_vk_click");
-    const url = getShareUrl();
+    const url = getShareUrl("vk");
     const hourly = Math.round(results.hourlyRate);
     const fmtNum = (n: number) => new Intl.NumberFormat("ru-RU").format(n);
     const spec = selectedSpecialty ? QUICK_SPECIALTIES.find((s) => s.slug === selectedSpecialty) : null;
@@ -325,7 +330,7 @@ export default function FreelanceCalc() {
 
   const handleShareWhatsApp = useCallback(() => {
     ymGoal("share_whatsapp_click");
-    const url = getShareUrl();
+    const url = getShareUrl("whatsapp");
     const hourly = Math.round(results.hourlyRate);
     const daily = Math.round(results.dailyRate);
     const fmtNum = (n: number) => new Intl.NumberFormat("ru-RU").format(n);
