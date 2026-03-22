@@ -2,8 +2,9 @@ import { NextResponse } from "next/server";
 
 const SHOP_ID = process.env.YOOKASSA_SHOP_ID!;
 const SECRET_KEY = process.env.YOOKASSA_SECRET_KEY!;
-const RETURN_URL =
-  process.env.NEXT_PUBLIC_BASE_URL ?? "https://freelancecalc.ru";
+const RETURN_URL = (
+  process.env.NEXT_PUBLIC_BASE_URL ?? "https://freelancecalc.ru"
+).replace(/\/$/, ""); // strip trailing slash to prevent double-slash in return_url
 
 // Fallback: any external payment page URL (Tribute, Boosty, Tinkoff QR, etc.)
 // Set FALLBACK_PAYMENT_URL in Vercel env vars to instantly unblock payments
