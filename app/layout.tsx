@@ -39,11 +39,20 @@ export const metadata: Metadata = {
     locale: "ru_RU",
     url: BASE_URL,
     siteName: "FreelanceCalc",
+    images: [
+      {
+        url: `${BASE_URL}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "FreelanceCalc — калькулятор ставки фрилансера",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "FreelanceCalc — калькулятор ставки фрилансера",
     description: "Занижаете ставку? Рассчитайте точную почасовую ставку с налогами, отпуском и загрузкой — за 30 секунд.",
+    images: [`${BASE_URL}/opengraph-image`],
   },
 };
 
