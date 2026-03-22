@@ -5,6 +5,11 @@ const SECRET_KEY = process.env.YOOKASSA_SECRET_KEY!;
 const RETURN_URL =
   process.env.NEXT_PUBLIC_BASE_URL ?? "https://freelancecalc.ru";
 
+// Fallback: any external payment page URL (Tribute, Boosty, Tinkoff QR, etc.)
+// Set FALLBACK_PAYMENT_URL in Vercel env vars to instantly unblock payments
+// without needing YooKassa credentials.
+const FALLBACK_PAYMENT_URL = process.env.FALLBACK_PAYMENT_URL;
+
 // Sync with FreelanceCalc.tsx: 249 ₽ before April 7, 349 ₽ after (loss aversion countdown)
 const PRICE_DEADLINE = new Date("2026-04-07T00:00:00+03:00"); // MSK midnight
 function getCurrentPrice(): number {
@@ -12,6 +17,13 @@ function getCurrentPrice(): number {
 }
 
 export async function POST() {
+  // Fast-path: if a fallback payment URL is configured, use it immediately.
+  // This allows Tribute.tinkoff.ru / Boosty / any payment link to work
+  // while YooKassa credentials are pending.
+  if (FALLBACK_PAYMENT_URL) {
+    return NextResponse.json({ url: FALLBACK_PAYMENT_URL, price: getCurrentPrice(), source: "fallback" });
+  }
+
   if (!SHOP_ID || !SECRET_KEY) {
     return NextResponse.json(
       { error: "Payment system is not configured" },
