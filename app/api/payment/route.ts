@@ -55,7 +55,7 @@ export async function POST(request: Request) {
             amount: { value: `${price}.00`, currency: "RUB" },
             vat_code: 1, // 1 = без НДС (НДС не облагается)
             payment_mode: "full_payment",
-            payment_subject: "service",
+            payment_subject: "intellectual_activity", // PDF = результат интеллектуальной деятельности (54-ФЗ)
           },
         ],
       }
@@ -85,10 +85,17 @@ export async function POST(request: Request) {
     });
 
     if (!res.ok) {
-      const err = await res.text();
-      console.error("YooKassa error:", err);
+      const errText = await res.text();
+      console.error("YooKassa error:", errText);
+      let yookassaCode: string | undefined;
+      let yookassaDescription: string | undefined;
+      try {
+        const parsed = JSON.parse(errText);
+        yookassaCode = parsed.code;
+        yookassaDescription = parsed.description;
+      } catch { /* not JSON */ }
       return NextResponse.json(
-        { error: "Payment creation failed" },
+        { error: "Payment creation failed", yookassaCode, yookassaDescription },
         { status: 502 },
       );
     }

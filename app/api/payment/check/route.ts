@@ -63,7 +63,9 @@ export async function GET() {
     }
   }
 
-  // Step 2: test actual payment creation (fixed idempotency key = same result for 24h, no duplicate payments)
+  // Step 2: test actual payment creation with hourly-rotating key (avoids 24h cache masking real errors)
+  // Also sends receipt to simulate real payment conditions (fiscalization check).
+  const hourlyKey = `freelancecalc-diag-${new Date().toISOString().slice(0, 13)}`; // changes every hour
   let paymentCreationTest: {
     ok: boolean;
     status?: number;
@@ -71,6 +73,7 @@ export async function GET() {
     confirmationUrl?: string;
     error?: string;
     rawError?: string;
+    yookassaCode?: string;
   } | null = null;
 
   if (auth && yookassaLiveTest?.ok) {
@@ -79,7 +82,7 @@ export async function GET() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Idempotence-Key": "freelancecalc-diagnostic-check-v1",
+          "Idempotence-Key": hourlyKey,
           Authorization: auth,
         },
         body: JSON.stringify({
@@ -91,6 +94,20 @@ export async function GET() {
           },
           description: "Диагностический тест (не настоящий платёж)",
           metadata: { diagnostic: true },
+          // Include receipt to test fiscalization (mirrors real payment flow)
+          receipt: {
+            customer: { email: "diagnostic@freelancecalc.ru" },
+            items: [
+              {
+                description: "PDF «Рыночные ставки фрилансеров» Q1 2026",
+                quantity: "1.00",
+                amount: { value: "1.00", currency: "RUB" },
+                vat_code: 1,
+                payment_mode: "full_payment",
+                payment_subject: "intellectual_activity",
+              },
+            ],
+          },
         }),
       });
 
@@ -105,14 +122,16 @@ export async function GET() {
       } else {
         const errText = await testRes.text();
         let parsedError: string = errText.slice(0, 600);
+        let yookassaCode: string | undefined;
         try {
           const parsed = JSON.parse(errText);
           parsedError = parsed.description ?? parsed.message ?? errText.slice(0, 600);
           if (parsed.parameter) parsedError += ` (параметр: ${parsed.parameter})`;
+          if (parsed.code) yookassaCode = parsed.code;
         } catch { /* not JSON */ }
 
-        paymentCreationTest = { ok: false, status: testRes.status, error: parsedError, rawError: errText.slice(0, 600) };
-        issues.push(`❌ Создание платежа провалилось (${testRes.status}): ${parsedError}`);
+        paymentCreationTest = { ok: false, status: testRes.status, error: parsedError, rawError: errText.slice(0, 600), yookassaCode };
+        issues.push(`❌ Создание платежа провалилось (${testRes.status}) code=${yookassaCode ?? "?"}: ${parsedError}`);
       }
     } catch (e) {
       paymentCreationTest = { ok: false, error: String(e) };
