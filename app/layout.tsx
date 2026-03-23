@@ -159,6 +159,8 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${inter.variable} h-full`}>
       <head>
+        {/* Yandex Webmaster verification — direct tag (metadata API suppressed by manual <head>) */}
+        <meta name="yandex-verification" content="f9c725460a6219d1" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
