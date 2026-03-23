@@ -397,7 +397,7 @@ export default function BenchmarkPage() {
             </h2>
             <p className="text-indigo-100 mb-2 max-w-lg mx-auto text-sm md:text-base leading-relaxed">
               Сейчас бенчмарк стоит <strong>249 ₽</strong>. С 7 апреля — <strong>349 ₽</strong>.
-              Единоразовый платёж — доступ к отчёту мгновенно после оплаты через СБП.
+              Единоразовый платёж — доступ к отчёту мгновенно после оплаты через ЮKassa.
             </p>
             <p className="text-indigo-200 text-xs mb-6">
               ⏳ Успей до повышения цены — с 7 апреля будет на 40% дороже.
