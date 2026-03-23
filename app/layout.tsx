@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/", types: { "application/rss+xml": `${BASE_URL}/rss.xml` } },
   verification: {
     google: process.env.GSC_VERIFICATION ?? undefined,
-    yandex: process.env.YANDEX_WEBMASTER_VERIFICATION ?? undefined,
+    yandex: "f9c725460a6219d1",
   },
   openGraph: {
     title: "FreelanceCalc — калькулятор ставки фрилансера",
