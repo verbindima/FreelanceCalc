@@ -279,10 +279,10 @@ export default function BuyButton({ label = `Купить полный PDF — $
       <div className="text-left w-full max-w-sm">
         <div className="bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-4">
           <p className="text-sm font-bold text-indigo-900 mb-1">
-            📧 Куда прислать PDF-бенчмарк?
+            📧 Email для чека — отчёт откроется сразу
           </p>
           <p className="text-xs text-gray-600 mb-3">
-            Отчёт придёт на этот email — сможешь открыть в любое время с любого устройства.
+            Email нужен для электронного чека (54-ФЗ). Ссылка на бенчмарк появится прямо в браузере сразу после оплаты — без ожидания письма.
           </p>
           <div className="flex gap-2">
             <input
