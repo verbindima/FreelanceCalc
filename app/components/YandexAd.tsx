@@ -35,14 +35,7 @@ export default function YandexAd({ blockId, width, height }: YandexAdProps) {
   }, [blockId, isEnabled]);
 
   if (!isEnabled) {
-    return (
-      <div
-        className="bg-slate-200 flex items-center justify-center text-slate-400 text-xs rounded"
-        style={{ width: `${width}px`, height: `${height}px`, maxWidth: "100%" }}
-      >
-        Реклама (РСЯ {width}×{height})
-      </div>
-    );
+    return null;
   }
 
   const containerId = `yandex_rtb_${blockId}`;
