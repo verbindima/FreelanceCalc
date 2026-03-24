@@ -11,8 +11,17 @@ const SBP_PHONE = process.env.NEXT_PUBLIC_SBP_PHONE;
 // Key matches REPORT_ACCESS_KEY in /benchmark/report/page.tsx (default "2026q1").
 const REPORT_URL = "/benchmark/report?key=2026q1";
 
-const VIRAL_SHARE_URL = "https://freelancecalc.ru/benchmark?utm_source=share&utm_medium=buy_viral&utm_campaign=price_lock";
-const VIRAL_SHARE_TEXT = "Зафиксировал цену 249 ₽ на бенчмарк ставок фрилансеров — с 7 апреля будет 349 ₽. Успей тоже 👇";
+const PRICE_INCREASE_DATE = new Date("2026-04-07T00:00:00+03:00");
+const currentPrice = Date.now() < PRICE_INCREASE_DATE.getTime() ? 249 : 349;
+
+const VIRAL_SHARE_URL =
+  currentPrice === 249
+    ? "https://freelancecalc.ru/benchmark?utm_source=share&utm_medium=buy_viral&utm_campaign=price_lock"
+    : "https://freelancecalc.ru/benchmark?utm_source=share&utm_medium=buy_viral&utm_campaign=post_launch";
+const VIRAL_SHARE_TEXT =
+  currentPrice === 249
+    ? "Зафиксировал цену 249 ₽ на бенчмарк ставок фрилансеров — с 7 апреля будет 349 ₽. Успей тоже 👇"
+    : "Нашёл нормальный бенчмарк ставок фрилансеров — реальные данные по 26 специальностям и 10 городам России 👇";
 
 function LeadSuccessViralBlock() {
   const [copied, setCopied] = useState(false);
@@ -58,9 +67,6 @@ function LeadSuccessViralBlock() {
     </div>
   );
 }
-
-const PRICE_INCREASE_DATE = new Date("2026-04-07T00:00:00+03:00");
-const currentPrice = Date.now() < PRICE_INCREASE_DATE.getTime() ? 249 : 349;
 
 export default function BuyButton({ label = `Купить полный PDF — ${currentPrice} ₽` }: { label?: string }) {
   const [loading, setLoading] = useState(false);
