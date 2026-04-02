@@ -45,27 +45,25 @@ function adjustRate(median: string, multiplier: number): string {
   return `${adjLow.toLocaleString("ru-RU")} – ${adjHigh.toLocaleString("ru-RU")} ₽/час`;
 }
 
-const TOP_SPECIALTY_SLUGS = [
-  "frontend-razrabotchik",
-  "backend-razrabotchik",
-  "mobilnyj-razrabotchik",
-  "dizajner-ui-ux",
-  "python-razrabotchik",
-  "devops-inzhener",
-  "data-analyst",
-  "seo-specialist",
-  "smm-specialist",
-  "kopirayter",
-];
+/** Extract the lower hourly number from strings like "1 500–3 000 ₽/час" */
+function extractLowRate(median: string): number {
+  const nums = [...median.matchAll(/(\d[\d ]*\d|\d+)/g)]
+    .map((m) => parseInt(m[0].replace(/ /g, ""), 10))
+    .filter((n) => n >= 100);
+  return nums[0] ?? 0;
+}
 
 export default async function CityPage({ params }: Props) {
   const { city: citySlug } = await params;
   const city = getCity(citySlug);
   if (!city) notFound();
 
-  const topSpecs = TOP_SPECIALTY_SLUGS.map((slug) =>
-    SPECIALTIES.find((s) => s.slug === slug)
-  ).filter(Boolean) as typeof SPECIALTIES;
+  // All specialties sorted by city-adjusted rate (highest first)
+  const sortedSpecs = [...SPECIALTIES].sort(
+    (a, b) =>
+      extractLowRate(b.medianHourly) * city.multiplier -
+      extractLowRate(a.medianHourly) * city.multiplier
+  );
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -210,9 +208,12 @@ export default async function CityPage({ params }: Props) {
 
         {/* Rates Table */}
         <section className="mt-10">
-          <h2 className="text-lg font-bold text-slate-800 mb-4">
-            Медианные ставки по специальностям {city.nameIn}
+          <h2 className="text-lg font-bold text-slate-800 mb-1">
+            Ставки всех специальностей {city.nameIn}
           </h2>
+          <p className="text-xs text-slate-500 mb-4">
+            {sortedSpecs.length} специальностей · отсортировано по убыванию ставки
+          </p>
           <div className="overflow-hidden rounded-xl border border-slate-200">
             <table className="w-full text-sm">
               <thead>
@@ -226,17 +227,17 @@ export default async function CityPage({ params }: Props) {
                 </tr>
               </thead>
               <tbody>
-                {topSpecs.map((spec, i) => (
+                {sortedSpecs.map((spec, i) => (
                   <tr
                     key={spec.slug}
                     className={i % 2 === 0 ? "bg-white" : "bg-slate-50/50"}
                   >
                     <td className="px-4 py-3">
                       <Link
-                        href={`/stavka/${spec.slug}`}
+                        href={`/stavka/${spec.slug}/${citySlug}`}
                         className="text-indigo-600 hover:text-indigo-800 hover:underline"
                       >
-                        {spec.shortTitle}
+                        {spec.shortTitle.replace(/^Ставка\s+/i, "")}
                       </Link>
                     </td>
                     <td className="px-4 py-3 text-right text-slate-700 font-medium tabular-nums">
@@ -248,8 +249,8 @@ export default async function CityPage({ params }: Props) {
             </table>
           </div>
           <p className="mt-2 text-xs text-slate-400">
-            * Рассчитано на основе медианных данных по России с поправкой на
-            региональный рынок {city.nameOf}. Данные обновлены в марте 2026.
+            * Медианные ставки по России с поправкой на региональный рынок {city.nameOf}. Данные обновлены в марте 2026.
+            Нажмите на специальность, чтобы открыть калькулятор с городскими настройками.
           </p>
         </section>
 
