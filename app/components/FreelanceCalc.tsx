@@ -515,7 +515,7 @@ export default function FreelanceCalc() {
       {/* РСЯ Banner — top (only when ads are actually enabled; no placeholder above the fold) */}
       {adsEnabled && (
         <div className="w-full flex justify-center py-2 bg-slate-100 border-b border-slate-200">
-          <YandexAd blockId={topAdBlockId} type="adaptive" minHeight={90} />
+          <YandexAd blockId={topAdBlockId} type="adaptive" minHeight={90} label="top (под шапкой, ~90px)" />
         </div>
       )}
 
@@ -1238,7 +1238,7 @@ export default function FreelanceCalc() {
         {/* РСЯ Banner — bottom (only when ads enabled, no placeholder) */}
         {adsEnabled && (
           <div className="mt-8 flex justify-center">
-            <YandexAd blockId={bottomAdBlockId} type="adaptive" minHeight={250} />
+            <YandexAd blockId={bottomAdBlockId} type="adaptive" minHeight={250} label="bottom (под калькулятором, ~250px)" />
           </div>
         )}
 
