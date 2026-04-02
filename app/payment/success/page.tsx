@@ -6,6 +6,7 @@ import { ymGoal } from "../../components/YandexMetrica";
 
 const CALC_URL = "https://freelancecalc.ru";
 const REPORT_URL = "https://freelancecalc.ru/benchmark/report?key=2026q1";
+const NEXT_QUARTER = "Q3 2026 (сентябрь)";
 
 const TG_SHARE_TEXT =
   `💼 Купил бенчмарк ставок фрилансеров на Q2 2026 — очень полезно.\n\n` +
@@ -17,6 +18,9 @@ const TG_SHARE_TEXT =
 export default function PaymentSuccess() {
   const [copied, setCopied] = useState(false);
   const [reportCopied, setReportCopied] = useState(false);
+  const [q3Email, setQ3Email] = useState("");
+  const [q3Sent, setQ3Sent] = useState(false);
+  const [q3Loading, setQ3Loading] = useState(false);
 
   // Fire conversion goal once on mount — tracked in Яндекс.Метрика
   useEffect(() => {
@@ -39,6 +43,25 @@ export default function PaymentSuccess() {
     const tgUrl = `https://t.me/share/url?url=${encodeURIComponent(CALC_URL)}&text=${encodeURIComponent(TG_SHARE_TEXT)}`;
     window.open(tgUrl, "_blank", "noopener,noreferrer");
   }, []);
+
+  const handleQ3Subscribe = useCallback(async () => {
+    if (!q3Email.trim()) return;
+    setQ3Loading(true);
+    ymGoal("q3_update_subscribe");
+    try {
+      await fetch("/api/notify-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: q3Email.trim(), source: "q3_update_buyer" }),
+      });
+      setQ3Sent(true);
+    } catch {
+      // silent fail — goal is already tracked
+      setQ3Sent(true);
+    } finally {
+      setQ3Loading(false);
+    }
+  }, [q3Email]);
 
   const handleCopyLink = useCallback(async () => {
     ymGoal("post_purchase_copy_link");
@@ -85,10 +108,10 @@ export default function PaymentSuccess() {
               📊 Отчёт включает:
             </p>
             <ul className="text-sm text-indigo-600 space-y-1">
-              <li>• Медианные ставки по 26 специальностям</li>
+              <li>• Медианные ставки по <strong>32 специальностям</strong></li>
               <li>• Разбивка по 10 городам России</li>
               <li>• 3 уровня опыта: джун / мид / сеньор</li>
-              <li>• Актуальные данные за Q1 2026</li>
+              <li>• Актуальные данные <strong>Q2 2026</strong> · <span className="text-cyan-600">новое: AI/ИИ специалисты</span></li>
             </ul>
           </div>
 
@@ -102,6 +125,39 @@ export default function PaymentSuccess() {
           >
             ← Вернуться к калькулятору
           </Link>
+        </div>
+
+        {/* Q3 update subscription */}
+        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6">
+          <p className="text-sm font-bold text-emerald-800 mb-1">
+            🔔 Получить {NEXT_QUARTER} бесплатно
+          </p>
+          <p className="text-xs text-emerald-700 mb-4 leading-relaxed">
+            Как покупатель Q2 — ты получишь следующее обновление бесплатно. Оставь email, чтобы мы выслали ссылку в сентябре.
+          </p>
+          {q3Sent ? (
+            <div className="text-sm font-semibold text-emerald-700 text-center py-2">
+              ✅ Отлично! Пришлём Q3 в сентябре 2026
+            </div>
+          ) : (
+            <div className="flex gap-2">
+              <input
+                type="email"
+                value={q3Email}
+                onChange={(e) => setQ3Email(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleQ3Subscribe()}
+                placeholder="твой@email.ru"
+                className="flex-1 text-sm border border-emerald-200 rounded-xl px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              />
+              <button
+                onClick={handleQ3Subscribe}
+                disabled={q3Loading || !q3Email.trim()}
+                className="bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors whitespace-nowrap"
+              >
+                {q3Loading ? "…" : "Напомни →"}
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Virality block */}
