@@ -5,6 +5,16 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname),
   },
+  async redirects() {
+    return [
+      // /setup/rsa had a stale 404 at Vercel CDN edge — permanently forward to /rsa
+      {
+        source: "/setup/rsa",
+        destination: "/rsa",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
