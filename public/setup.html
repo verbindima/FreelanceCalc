@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Setup — FreelanceCalc</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; padding: 32px 16px; }
+    .wrap { max-width: 700px; margin: 0 auto; }
+    .logo { font-size: 13px; font-weight: 700; color: #64748b; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+    h1 { font-size: 26px; font-weight: 800; color: #f1f5f9; margin-bottom: 4px; }
+    .subtitle { font-size: 14px; color: #64748b; margin-bottom: 32px; }
+
+    .section { margin-bottom: 12px; }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #475569; margin-bottom: 8px; padding-left: 4px; }
+
+    .card { background: #1e293b; border: 1px solid #334155; border-radius: 14px; overflow: hidden; margin-bottom: 10px; }
+    .card-done { border-color: #166534; }
+    .card-warn { border-color: #854d0e; }
+    .card-action { border-color: #1d4ed8; }
+
+    .card-row { display: flex; align-items: flex-start; gap: 14px; padding: 16px 18px; }
+    .card-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+    .card-body { flex: 1; min-width: 0; }
+    .card-title { font-weight: 700; font-size: 15px; color: #f1f5f9; margin-bottom: 3px; }
+    .card-desc { font-size: 13px; color: #94a3b8; line-height: 1.55; }
+    .card-footer { border-top: 1px solid #334155; padding: 12px 18px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+    .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 9999px; white-space: nowrap; }
+    .badge-green { background: #14532d; color: #86efac; }
+    .badge-yellow { background: #78350f; color: #fcd34d; }
+    .badge-blue { background: #1e3a8a; color: #93c5fd; }
+    .badge-red { background: #7f1d1d; color: #fca5a5; }
+
+    .btn { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 8px; text-decoration: none; cursor: pointer; border: none; transition: opacity 0.15s; white-space: nowrap; }
+    .btn:hover { opacity: 0.85; }
+    .btn-primary { background: #3b82f6; color: #fff; }
+    .btn-ghost { background: #334155; color: #cbd5e1; }
+    .btn-green { background: #15803d; color: #fff; }
+
+    .code-row { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 10px 14px; font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #34d399; margin-top: 8px; word-break: break-all; }
+    .code-label { font-size: 11px; color: #64748b; margin-bottom: 4px; }
+
+    .steps { padding: 14px 18px; border-top: 1px solid #334155; }
+    .step-item { display: flex; gap: 12px; margin-bottom: 10px; }
+    .step-item:last-child { margin-bottom: 0; }
+    .step-num { width: 22px; height: 22px; border-radius: 50%; background: #3b82f6; color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .step-text { font-size: 13px; color: #cbd5e1; line-height: 1.5; }
+    .step-text a { color: #60a5fa; }
+    .step-text strong { color: #f1f5f9; }
+
+    .info-box { background: #172554; border: 1px solid #1e40af; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #93c5fd; margin-top: 8px; line-height: 1.5; }
+    .warn-box { background: #431407; border: 1px solid #9a3412; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #fdba74; margin-top: 8px; line-height: 1.5; }
+
+    .divider { height: 1px; background: #1e293b; margin: 24px 0; }
+
+    @media (max-width: 500px) {
+      .card-row { gap: 10px; }
+      .btn { font-size: 12px; padding: 7px 12px; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="logo">FreelanceCalc</div>
+  <h1>⚙️ Центр настройки</h1>
+  <p class="subtitle">Все интеграции в одном месте · Обновляется автоматически после деплоя</p>
+
+  <!-- ===== SECTION: VERIFIED ===== -->
+  <div class="section">
+    <div class="section-label">✅ Уже работает</div>
+
+    <!-- Metrika -->
+    <div class="card card-done">
+      <div class="card-row">
+        <div class="card-icon">📊</div>
+        <div class="card-body">
+          <div class="card-title">Яндекс.Метрика</div>
+          <div class="card-desc">Счётчик подключён и работает. Цели настроены через дашборд.</div>
+          <div class="code-label" style="margin-top:8px">Counter ID:</div>
+          <div class="code-row">108183107</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="badge badge-green">✓ Активна</span>
+        <a href="https://metrika.yandex.ru/dashboard?id=108183107" target="_blank" class="btn btn-ghost">Открыть дашборд →</a>
+      </div>
+    </div>
+
+    <!-- YuKassa -->
+    <div class="card card-done">
+      <div class="card-row">
+        <div class="card-icon">💳</div>
+        <div class="card-body">
+          <div class="card-title">ЮKassa — оплата PDF (249₽ → 349₽ с 7 апреля)</div>
+          <div class="card-desc">Кнопка «Купить» открывает ЮKassa. Платёж проходит, редирект на /payment/success работает.</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="badge badge-green">✓ Работает</span>
+        <a href="https://yookassa.ru/my/" target="_blank" class="btn btn-ghost">Кабинет ЮKassa →</a>
+      </div>
+    </div>
+
+    <!-- Yandex verification tag -->
+    <div class="card card-done">
+      <div class="card-row">
+        <div class="card-icon">🔖</div>
+        <div class="card-body">
+          <div class="card-title">Яндекс Webmaster — мета-тег в коде</div>
+          <div class="card-desc">Тег верификации <strong>уже добавлен</strong> в layout.tsx (строка 162). Он виден в HTML каждой страницы.</div>
+          <div class="code-label" style="margin-top:8px">Тег в коде (app/layout.tsx строка 162):</div>
+          <div class="code-row">&lt;meta name="yandex-verification" content="f9c725460a6219d1" /&gt;</div>
+          <div class="info-box" style="margin-top:10px">
+            <strong>Как убедиться:</strong> открой <a href="https://freelancecalc.ru" target="_blank">freelancecalc.ru</a>, нажми Ctrl+U (просмотр кода), найди <code>yandex-verification</code> — тег будет там.
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="badge badge-green">✓ Тег в коде</span>
+        <span class="badge badge-yellow">⏳ Нужно нажать «Проверить»</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION: NEED ACTION ===== -->
+  <div class="section">
+    <div class="section-label">🔴 Требует действия (2 шага)</div>
+
+    <!-- Webmaster verify -->
+    <div class="card card-action">
+      <div class="card-row">
+        <div class="card-icon">🔍</div>
+        <div class="card-body">
+          <div class="card-title">Подтверди владение в Яндекс.Вебмастере</div>
+          <div class="card-desc">Тег уже в коде — осталось нажать одну кнопку. Это ускорит индексацию 4741 страницы.</div>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-text">Открой <a href="https://webmaster.yandex.ru/site/https:freelancecalc.ru:443/dashboard/" target="_blank"><strong>Яндекс.Вебмастер → freelancecalc.ru</strong></a></div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-text">Нажми <strong>«Подтвердить владение»</strong> → выбери <strong>«HTML-тег»</strong></div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-text">Нажми кнопку <strong>«Проверить»</strong> — всё готово</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-text">В разделе <strong>«Индексирование» → «Sitemap»</strong> добавь:<br><code>https://freelancecalc.ru/sitemap-index.xml</code></div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://webmaster.yandex.ru/site/https:freelancecalc.ru:443/dashboard/" target="_blank" class="btn btn-primary">Открыть Вебмастер →</a>
+        <span class="badge badge-yellow">⏳ Ожидает</span>
+      </div>
+    </div>
+
+    <!-- RSA -->
+    <div class="card card-warn">
+      <div class="card-row">
+        <div class="card-icon">💰</div>
+        <div class="card-body">
+          <div class="card-title">РСЯ — рекламные баннеры (доход)</div>
+          <div class="card-desc">Код рекламы в сайте готов. Нужно зарегистрироваться в партнёрке и добавить ID блоков.</div>
+          <div class="warn-box">
+            <strong>Баннеры адаптивные</strong> — размеры указывать не нужно. Яндекс сам показывает нужный формат на каждом устройстве.
+          </div>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-text">Зарегистрируйся на <a href="https://partner.yandex.ru" target="_blank"><strong>partner.yandex.ru</strong></a> → «Стать партнёром» → «Сайт» → укажи <strong>freelancecalc.ru</strong>. Модерация 1–3 дня.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-text">Создай <strong>2 блока</strong> тип <strong>«Адаптивный»</strong>. Имена: <code>FreelanceCalc Top</code> и <code>FreelanceCalc Bottom</code>.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-text">Из кода вставки скопируй оба ID вида <code>R-A-XXXXXXX-1</code></div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-text">Добавь в <a href="https://vercel.com/dmitryverbin/freelancecalc/settings/environment-variables" target="_blank">Vercel → Environment Variables</a>:<br>
+            <code>NEXT_PUBLIC_YANDEX_AD_ENABLED</code> = <strong>true</strong><br>
+            <code>NEXT_PUBLIC_AD_BLOCK_ID_TOP</code> = <strong>R-A-XXXXXXX-1</strong><br>
+            <code>NEXT_PUBLIC_AD_BLOCK_ID_BOTTOM</code> = <strong>R-A-XXXXXXX-2</strong><br>
+            Затем Redeploy.
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://partner.yandex.ru" target="_blank" class="btn btn-primary">Открыть partner.yandex.ru →</a>
+        <a href="/rsa-setup.html" target="_blank" class="btn btn-ghost">Подробная инструкция →</a>
+        <span class="badge badge-red">❌ Не подключено</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ===== SECTION: UPCOMING ===== -->
+  <div class="section">
+    <div class="section-label">📅 Авто-событие</div>
+
+    <div class="card">
+      <div class="card-row">
+        <div class="card-icon">⏰</div>
+        <div class="card-body">
+          <div class="card-title">7 апреля — цена вырастет 249₽ → 349₽</div>
+          <div class="card-desc">Автоматически. Счётчик обратного отсчёта в калькуляторе работает. Никаких действий не нужно.</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="badge badge-blue">🤖 Авто</span>
+        <a href="https://freelancecalc.ru" target="_blank" class="btn btn-ghost">Проверить таймер →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ===== SECTION: SITE LINKS ===== -->
+  <div class="section">
+    <div class="section-label">🔗 Быстрые ссылки</div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px;">
+      <a href="https://freelancecalc.ru" target="_blank" class="btn btn-ghost" style="justify-content:center">🌐 Сайт</a>
+      <a href="https://metrika.yandex.ru/dashboard?id=108183107" target="_blank" class="btn btn-ghost" style="justify-content:center">📊 Метрика</a>
+      <a href="https://webmaster.yandex.ru" target="_blank" class="btn btn-ghost" style="justify-content:center">🔍 Вебмастер</a>
+      <a href="https://partner.yandex.ru" target="_blank" class="btn btn-ghost" style="justify-content:center">💰 Партнёрка РСЯ</a>
+      <a href="https://yookassa.ru/my/" target="_blank" class="btn btn-ghost" style="justify-content:center">💳 ЮKassa</a>
+      <a href="https://vercel.com/dmitryverbin/freelancecalc" target="_blank" class="btn btn-ghost" style="justify-content:center">☁️ Vercel</a>
+    </div>
+  </div>
+
+  <p style="text-align:center; font-size:11px; color:#334155; margin-top:32px">Эта страница не индексируется поисковиками (noindex)</p>
+
+</div>
+</body>
+</html>
