@@ -68,6 +68,8 @@ function getAllUrls(): string[] {
     `${BASE_URL}/nalog/sravnenie`,
     // Embed
     `${BASE_URL}/embed`,
+    // Developer API docs
+    `${BASE_URL}/for-developers`,
     // Sravnenie specialty hub + all comparison pages
     `${BASE_URL}/sravnenie`,
     `${BASE_URL}/sravnenie/frontend-vs-backend`,

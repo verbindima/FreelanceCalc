@@ -414,6 +414,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.75,
     })),
+    // Developer API docs page — backlink bait for developer communities
+    {
+      url: `${BASE_URL}/for-developers`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    },
     // Monetization page — benchmark PDF
     {
       url: `${BASE_URL}/benchmark`,
