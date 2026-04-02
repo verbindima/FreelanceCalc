@@ -75,7 +75,7 @@ export default function SpecialtyCalc({ defaultIncome, defaultHours, defaultLoad
 
   const handleUpsell = useCallback(() => {
     ymGoal("upsell_click", { specialty });
-    window.location.href = "/?utm_source=specialty&utm_medium=upsell#pdf";
+    window.location.href = "/benchmark?utm_source=specialty&utm_medium=upsell";
   }, [specialty]);
 
   return (
