@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Подключение РСЯ — FreelanceCalc Setup</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; color: #111827; min-height: 100vh; padding: 40px 16px; }
+    .wrap { max-width: 672px; margin: 0 auto; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; background: #fef9c3; color: #92400e; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 9999px; margin-bottom: 16px; }
+    h1 { font-size: 28px; font-weight: 800; color: #111827; margin-bottom: 8px; }
+    .subtitle { color: #6b7280; font-size: 15px; margin-bottom: 32px; }
+    .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; margin-bottom: 24px; }
+    .card-blue { border-color: #bfdbfe; }
+    .status-row { display: flex; align-items: center; gap: 8px; font-size: 14px; margin-bottom: 8px; }
+    .status-row:last-child { margin-bottom: 0; }
+    .section-title { font-weight: 700; font-size: 14px; color: #374151; margin-bottom: 12px; }
+    h2 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    p { font-size: 14px; color: #374151; line-height: 1.6; margin-bottom: 12px; }
+    code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-family: 'SF Mono', Monaco, monospace; }
+
+    /* Devices grid */
+    .devices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+    .device-col { text-align: center; }
+    .device-icon { font-size: 24px; margin-bottom: 4px; }
+    .device-label { font-weight: 700; font-size: 11px; color: #374151; margin-bottom: 8px; }
+    .device-box-blue { border: 2px solid #93c5fd; border-radius: 8px; background: #eff6ff; padding: 8px; }
+    .device-box-purple { border: 2px solid #c4b5fd; border-radius: 8px; background: #f5f3ff; padding: 8px; }
+    .device-box-green { border: 2px solid #86efac; border-radius: 8px; background: #f0fdf4; padding: 8px; }
+    .device-px { border-radius: 4px; text-align: center; padding: 4px; font-size: 11px; font-family: monospace; }
+    .device-px-blue { background: #bfdbfe; color: #1d4ed8; }
+    .device-px-purple { background: #ddd6fe; color: #6d28d9; }
+    .device-px-green { background: #bbf7d0; color: #15803d; }
+    .device-height { font-size: 11px; text-align: center; margin-top: 4px; }
+    .device-caption { font-size: 11px; color: #6b7280; margin-top: 4px; }
+
+    /* Mockup */
+    .mockup { border: 1px solid #d1d5db; border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+    .mockup-bar { background: #374151; color: #fff; font-size: 11px; padding: 6px 12px; font-family: monospace; }
+    .mockup-body { background: #fff; padding: 12px; }
+    .mockup-block { border-radius: 6px; padding: 10px; text-align: center; margin-bottom: 8px; font-size: 11px; }
+    .mockup-block:last-child { margin-bottom: 0; }
+    .mockup-gray { background: #f1f5f9; border: 1px solid #e2e8f0; color: #64748b; }
+    .mockup-blue { border: 2px dashed #60a5fa; background: #eff6ff; color: #2563eb; }
+    .mockup-purple { border: 2px dashed #a78bfa; background: #f5f3ff; color: #7c3aed; }
+
+    /* Table */
+    table { width: 100%; font-size: 12px; border-collapse: collapse; }
+    th { background: #f3f4f6; color: #4b5563; padding: 8px 12px; text-align: left; }
+    td { padding: 8px 12px; border-top: 1px solid #e5e7eb; color: #374151; }
+    .td-center { text-align: center; font-family: monospace; font-weight: 700; }
+    .td-green { color: #15803d; font-weight: 700; }
+    .note { font-size: 11px; color: #6b7280; margin-top: 8px; }
+
+    /* Steps */
+    .step { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
+    .step-header { display: flex; align-items: center; gap: 16px; padding: 14px 16px; border-bottom: 1px solid #f3f4f6; background: #f9fafb; }
+    .step-num { width: 32px; height: 32px; border-radius: 50%; background: #2563eb; color: #fff; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-title { font-weight: 600; font-size: 15px; color: #111827; flex: 1; }
+    .step-time { font-size: 11px; color: #9ca3af; background: #fff; border: 1px solid #e5e7eb; padding: 3px 8px; border-radius: 9999px; white-space: nowrap; }
+    .step-body { padding: 16px; }
+    a { color: #2563eb; text-decoration: underline; }
+
+    /* Code blocks */
+    .code-dark { background: #111827; border-radius: 10px; padding: 16px; font-family: monospace; font-size: 13px; margin-bottom: 16px; }
+    .code-comment { color: #6b7280; }
+    .code-value { color: #fbbf24; font-weight: 700; }
+    .code-green { color: #34d399; }
+    .code-red { color: #f87171; text-decoration: line-through; }
+    .code-yellow { color: #fcd34d; }
+    .code-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .code-row:last-child { margin-bottom: 0; }
+    .tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: auto; white-space: nowrap; }
+    .tag-green { background: #064e3b; color: #6ee7b7; }
+    .tag-red { background: #7f1d1d; color: #fca5a5; }
+    .tag-yellow { background: #78350f; color: #fcd34d; }
+
+    /* Two-col blocks */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 500px) { .two-col { grid-template-columns: 1fr; } .devices { grid-template-columns: 1fr 1fr 1fr; } }
+    .block-card { border-radius: 12px; padding: 16px; }
+    .block-card-blue { border: 2px solid #bfdbfe; background: #eff6ff; }
+    .block-card-purple { border: 2px solid #ddd6fe; background: #f5f3ff; }
+    .block-card-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .block-card-label-blue { color: #2563eb; }
+    .block-card-label-purple { color: #7c3aed; }
+    .block-row { font-size: 13px; margin-bottom: 6px; }
+    .block-row span.label { color: #6b7280; }
+    .badge-green { background: #dcfce7; color: #15803d; font-weight: 700; font-size: 11px; padding: 2px 8px; border-radius: 4px; }
+    .block-hint { font-size: 11px; border-radius: 6px; padding: 6px 8px; margin-top: 6px; }
+    .block-hint-blue { background: #bfdbfe; color: #1d4ed8; }
+    .block-hint-purple { background: #ddd6fe; color: #6d28d9; }
+
+    /* Warning box */
+    .warn { background: #fffbeb; border: 2px solid #fcd34d; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+    .warn-title { font-weight: 700; color: #78350f; margin-bottom: 8px; }
+    .warn p { color: #92400e; }
+
+    /* Env vars */
+    .env-row { background: #111827; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 13px; margin-bottom: 10px; }
+    .env-name { color: #60a5fa; }
+    .env-val { color: #34d399; }
+    .env-desc { color: #6b7280; font-size: 11px; text-align: right; max-width: 160px; }
+    .env-inner { display: flex; align-items: flex-start; gap: 10px; }
+
+    /* Info box */
+    .info { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px; font-size: 13px; color: #1e40af; margin-top: 12px; }
+
+    /* Footer */
+    .footer-ok { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 16px; margin-top: 32px; font-size: 14px; color: #15803d; }
+    .footer-note { text-align: center; font-size: 11px; color: #9ca3af; margin-top: 16px; }
+
+    /* ID placeholders */
+    .id-box { border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; background: #f9fafb; }
+    .id-label { font-size: 11px; color: #6b7280; margin-bottom: 4px; }
+    .id-value { font-family: monospace; font-size: 13px; font-weight: 700; color: #1f2937; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- Header -->
+    <div class="badge">🔧 ADMIN SETUP — не индексируется</div>
+    <h1>Подключение РСЯ к FreelanceCalc</h1>
+    <p class="subtitle">4 шага · ~12 минут · после этого реклама появится на сайте</p>
+
+    <!-- Status -->
+    <div class="card">
+      <div class="section-title">Текущий статус:</div>
+      <div class="status-row"><span>✅</span><span>Код рекламы встроен в сайт (YandexAd.tsx)</span></div>
+      <div class="status-row"><span>✅</span><span>Два позиции готовы: под шапкой + под калькулятором</span></div>
+      <div class="status-row"><span>❌</span><span><code>NEXT_PUBLIC_YANDEX_AD_ENABLED</code> не выставлен → реклама скрыта</span></div>
+      <div class="status-row"><span>❌</span><span>Block ID не добавлены в Vercel</span></div>
+    </div>
+
+    <!-- Banner sizes explainer -->
+    <div class="card card-blue">
+      <h2>📐 Про размеры баннеров</h2>
+      <p>Выбираем <strong>адаптивный</strong> формат — Яндекс сам подбирает размер. Тебе не нужно вводить никакие пиксели. Вот что получится:</p>
+
+      <div class="devices">
+        <div class="device-col">
+          <div class="device-icon">📱</div>
+          <div class="device-label">Телефон</div>
+          <div class="device-box-blue">
+            <div class="device-px device-px-blue">320px</div>
+            <div class="device-height" style="color:#2563eb">↕ 50–100px</div>
+          </div>
+          <div class="device-caption">баннер или плитки</div>
+        </div>
+        <div class="device-col">
+          <div class="device-icon">💻</div>
+          <div class="device-label">Планшет</div>
+          <div class="device-box-purple">
+            <div class="device-px device-px-purple">600–900px</div>
+            <div class="device-height" style="color:#6d28d9">↕ 90–250px</div>
+          </div>
+          <div class="device-caption">горизонтальный баннер</div>
+        </div>
+        <div class="device-col">
+          <div class="device-icon">🖥️</div>
+          <div class="device-label">Десктоп</div>
+          <div class="device-box-green">
+            <div class="device-px device-px-green">100% ширина</div>
+            <div class="device-height" style="color:#15803d">↕ 90–250px</div>
+          </div>
+          <div class="device-caption">лидерборд / биллборд</div>
+        </div>
+      </div>
+
+      <div class="mockup">
+        <div class="mockup-bar">freelancecalc.ru — схема расположения баннеров</div>
+        <div class="mockup-body">
+          <div class="mockup-block mockup-gray">🔝 Шапка сайта (логотип + навигация)</div>
+          <div class="mockup-block mockup-blue">
+            <div style="font-weight:700">📢 БАННЕР №1 (верхний)</div>
+            <div>min-height: 90px · 100% ширины</div>
+            <div style="color:#93c5fd">↑ Первый что видит пользователь</div>
+          </div>
+          <div class="mockup-block mockup-gray">🧮 Калькулятор ставки (основной контент)</div>
+          <div class="mockup-block mockup-purple">
+            <div style="font-weight:700">📢 БАННЕР №2 (нижний)</div>
+            <div>min-height: 250px · 100% ширины</div>
+            <div style="color:#c4b5fd">↑ После того как посчитал ставку</div>
+          </div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Позиция</th><th class="td-center">Мин. высота</th><th class="td-center">Ширина</th><th>Тип</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Верхний (Top)</td><td class="td-center">90px</td><td class="td-center">100%</td><td class="td-green">Адаптивный</td></tr>
+          <tr><td>Нижний (Bottom)</td><td class="td-center">250px</td><td class="td-center">100%</td><td class="td-green">Адаптивный</td></tr>
+        </tbody>
+      </table>
+      <p class="note">* Минимальная высота — только для предотвращения прыжков страницы. Реальный размер Яндекс определяет сам.</p>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div class="step-title">Зарегистрируй сайт в РСЯ</div>
+        <div class="step-time">5 мин</div>
+      </div>
+      <div class="step-body">
+        <p>Перейди на <a href="https://partner.yandex.ru" target="_blank" rel="noopener noreferrer">partner.yandex.ru</a> → нажми <strong>«Стать партнёром»</strong> → выбери <strong>«Сайт»</strong>.</p>
+        <div class="code-dark">
+          <div class="code-comment">// Добавь сайт:</div>
+          <div style="color:#34d399;font-weight:700;margin-top:6px">freelancecalc.ru</div>
+        </div>
+        <p style="color:#6b7280">⏳ Модерация занимает <strong>1–3 рабочих дня</strong>. После одобрения переходи к шагу 2.</p>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div class="step-title">Создай ДВА блока — тип «Адаптивный»</div>
+        <div class="step-time">3 мин</div>
+      </div>
+      <div class="step-body">
+        <p>В кабинете партнёра: <strong>«Мои блоки»</strong> → <strong>«Новый блок»</strong>. Создай <strong>два</strong> блока с такими настройками:</p>
+
+        <div class="warn">
+          <div class="warn-title">❓ Нужно ли вводить размеры?</div>
+          <p><strong>НЕТ.</strong> При выборе типа <strong>«Адаптивный»</strong> — поля размеров не появятся вообще. Это нормально.</p>
+          <p style="margin-top:8px">Яндекс сам показывает нужный размер: 320×50px на телефоне, 728×90px на десктопе, 300×250px в ленте — в зависимости от контекста.</p>
+          <p style="margin-top:8px;font-weight:700;color:#78350f">Если видишь поле для ширины/высоты — значит ты выбрал «Фиксированный», а не «Адаптивный».</p>
+        </div>
+
+        <div class="code-dark">
+          <div class="code-comment">// Что выбрать в интерфейсе Яндекса:</div>
+          <div class="code-row" style="margin-top:10px">
+            <span style="color:#34d399;font-size:18px">✓</span>
+            <span class="code-green">Тип блока: Адаптивный</span>
+            <span class="tag tag-green">ВЫБЕРИ ЭТО</span>
+          </div>
+          <div class="code-row">
+            <span style="color:#f87171;font-size:18px">✗</span>
+            <span class="code-red">Тип блока: Фиксированный</span>
+            <span class="tag tag-red">НЕ НАДО</span>
+          </div>
+          <div class="code-row">
+            <span style="color:#fbbf24;font-size:18px">—</span>
+            <span class="code-yellow">Размеры (ш × в): не заполняй</span>
+            <span class="tag tag-yellow">ПРОПУСТИ</span>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="block-card block-card-blue">
+            <div class="block-card-label block-card-label-blue">Блок 1 — верхний</div>
+            <div class="block-row"><span class="label">Название: </span><code>FreelanceCalc Top</code></div>
+            <div class="block-row"><span class="label">Тип: </span><span class="badge-green">✅ Адаптивный</span></div>
+            <div style="font-size:11px;color:#6b7280;margin-bottom:6px">Размеры — не трогай</div>
+            <div class="block-hint block-hint-blue">📐 Будет: 90–100px высота под шапкой</div>
+          </div>
+          <div class="block-card block-card-purple">
+            <div class="block-card-label block-card-label-purple">Блок 2 — нижний</div>
+            <div class="block-row"><span class="label">Название: </span><code>FreelanceCalc Bottom</code></div>
+            <div class="block-row"><span class="label">Тип: </span><span class="badge-green">✅ Адаптивный</span></div>
+            <div style="font-size:11px;color:#6b7280;margin-bottom:6px">Размеры — не трогай</div>
+            <div class="block-hint block-hint-purple">📐 Будет: 250px высота под калькулятором</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div class="step-title">Скопируй ID двух блоков</div>
+        <div class="step-time">1 мин</div>
+      </div>
+      <div class="step-body">
+        <p>После создания блоков Яндекс покажет код для вставки. В этом коде есть <strong>ID блока</strong> вида:</p>
+        <div class="code-dark">
+          <div class="code-comment">// В коде вставки ищи строку:</div>
+          <div style="margin-top:6px;color:#e5e7eb">blockId: <span class="code-value">"R-A-XXXXXXX-1"</span></div>
+        </div>
+        <div class="two-col">
+          <div class="id-box">
+            <div class="id-label">Блок 1 (верхний) — ID:</div>
+            <div class="id-value">R-A-XXXXXXX-1</div>
+          </div>
+          <div class="id-box">
+            <div class="id-label">Блок 2 (нижний) — ID:</div>
+            <div class="id-value">R-A-XXXXXXX-2</div>
+          </div>
+        </div>
+        <p class="note" style="margin-top:12px">Запиши оба ID — они нужны на следующем шаге.</p>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div class="step-title">Добавь три переменные в Vercel</div>
+        <div class="step-time">3 мин</div>
+      </div>
+      <div class="step-body">
+        <p>Перейди в <a href="https://vercel.com/dmitryverbin/freelancecalc/settings/environment-variables" target="_blank" rel="noopener noreferrer">Vercel → Settings → Environment Variables</a> и добавь три переменные:</p>
+
+        <div class="env-row">
+          <div class="env-inner">
+            <div style="flex:1">
+              <div class="env-name">NEXT_PUBLIC_YANDEX_AD_ENABLED</div>
+              <div class="env-val">true</div>
+            </div>
+            <div class="env-desc">Включает показ рекламы</div>
+          </div>
+        </div>
+        <div class="env-row">
+          <div class="env-inner">
+            <div style="flex:1">
+              <div class="env-name">NEXT_PUBLIC_AD_BLOCK_ID_TOP</div>
+              <div class="env-val">R-A-XXXXXXX-1</div>
+            </div>
+            <div class="env-desc">ID верхнего блока из шага 3</div>
+          </div>
+        </div>
+        <div class="env-row">
+          <div class="env-inner">
+            <div style="flex:1">
+              <div class="env-name">NEXT_PUBLIC_AD_BLOCK_ID_BOTTOM</div>
+              <div class="env-val">R-A-XXXXXXX-2</div>
+            </div>
+            <div class="env-desc">ID нижнего блока из шага 3</div>
+          </div>
+        </div>
+
+        <div class="info">
+          <strong>После сохранения:</strong> нажми <strong>«Redeploy»</strong> на вкладке Deployments (или сделай любой пустой git commit). Реклама появится через 5–10 минут. Первые часы блок может быть пустым — это нормально, Яндекс начнёт показывать рекламу после накопления статистики.
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-ok">
+      <strong>Готово?</strong> После Redeploy открой <a href="https://freelancecalc.ru" target="_blank" rel="noopener noreferrer">freelancecalc.ru</a> — реклама должна появиться в течение нескольких минут. Если в первые сутки блок пустой — норма. Яндекс начнёт показывать рекламу после накопления статистики.
+    </div>
+
+    <div class="footer-note">Эта страница не индексируется поисковиками (noindex). Только для внутреннего использования.</div>
+  </div>
+</body>
+</html>
