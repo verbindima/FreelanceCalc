@@ -16,8 +16,12 @@ type Period = "month" | "project" | "year";
 const ANNUAL_LIMIT = 2_400_000;
 const FIRST_YEAR_BONUS = 10_000;
 
-export default function TaxCalc() {
-  const [income, setIncome] = useState(80000);
+interface TaxCalcProps {
+  initialIncome?: number;
+}
+
+export default function TaxCalc({ initialIncome = 80000 }: TaxCalcProps) {
+  const [income, setIncome] = useState(initialIncome);
   const [period, setPeriod] = useState<Period>("month");
   const [clientType, setClientType] = useState<ClientType>("business");
   const [hasBonus, setHasBonus] = useState(true);
