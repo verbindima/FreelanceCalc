@@ -112,6 +112,7 @@ export default function FreelanceCalc() {
   const [paymentUnavailable, setPaymentUnavailable] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
   const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
+  const [selectedCity, setSelectedCity] = useState<string>("Москва");
   const [yearsFreelancing, setYearsFreelancing] = useState(3);
   const [showNegotiationScript, setShowNegotiationScript] = useState(false);
   const [scriptCopied, setScriptCopied] = useState<string | null>(null);
@@ -189,11 +190,13 @@ export default function FreelanceCalc() {
     if (!selectedSpecialty) return null;
     const spec = QUICK_SPECIALTIES.find((s) => s.slug === selectedSpecialty);
     if (!spec) return null;
-    const diff = results.hourlyRate - spec.mid;
+    const cityData = CITY_BENCHMARK_DATA.find((c) => c.name === selectedCity) ?? CITY_BENCHMARK_DATA[0];
+    const cityAdjustedMid = Math.round(spec.mid * cityData.mskMult / 50) * 50;
+    const diff = results.hourlyRate - cityAdjustedMid;
     if (diff >= 0) return null; // only show loss framing for below-market users
     const annualGap = Math.abs(diff) * results.billableDays * hoursPerDay;
-    return { spec, annualGap, diffPct: Math.round((Math.abs(diff) / spec.mid) * 100) };
-  }, [selectedSpecialty, results, hoursPerDay]);
+    return { spec, annualGap, diffPct: Math.round((Math.abs(diff) / cityAdjustedMid) * 100), cityData };
+  }, [selectedSpecialty, selectedCity, results, hoursPerDay]);
 
   /** Pick 3 articles contextually: below-market users get rate-raise content; self-employed get tax content; default is foundational */
   const contextualArticles = useMemo(() => {
@@ -863,23 +866,44 @@ export default function FreelanceCalc() {
               {showAllSpecialties ? "Свернуть ↑" : `Ещё ${QUICK_SPECIALTIES.length - QUICK_SPECIALTIES_VISIBLE_DEFAULT} →`}
             </button>
           </div>
+          {/* City selector — shown only when specialty is picked, adjusts median for local market */}
+          {selectedSpecialty && (
+            <div className="mt-2 flex items-center gap-2">
+              <span className="text-xs text-slate-400 shrink-0">Город:</span>
+              <select
+                value={selectedCity}
+                onChange={(e) => {
+                  setSelectedCity(e.target.value);
+                  ymGoal("city_benchmark_select", { city: e.target.value });
+                }}
+                className="text-xs border border-slate-200 rounded-lg px-2 py-1 text-slate-700 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400 cursor-pointer"
+              >
+                {CITY_BENCHMARK_DATA.map((c) => (
+                  <option key={c.slug} value={c.name}>{c.name}</option>
+                ))}
+              </select>
+            </div>
+          )}
           {selectedSpecialty && (() => {
             const spec = QUICK_SPECIALTIES.find((s) => s.slug === selectedSpecialty);
             if (!spec) return null;
+            const cityData = CITY_BENCHMARK_DATA.find((c) => c.name === selectedCity) ?? CITY_BENCHMARK_DATA[0];
+            // Adjust Moscow median by city multiplier for accurate local comparison
+            const cityAdjustedMid = Math.round(spec.mid * cityData.mskMult / 50) * 50;
             const myRate = results.hourlyRate;
-            const diff = myRate - spec.mid;
-            const diffPct = Math.round((Math.abs(diff) / spec.mid) * 100);
+            const diff = myRate - cityAdjustedMid;
+            const diffPct = Math.round((Math.abs(diff) / cityAdjustedMid) * 100);
             const annualGap = Math.abs(diff) * results.billableDays * hoursPerDay;
             const isBelow = diff < 0;
             return (
               <div className={`mt-3 rounded-xl px-4 py-3 ${isBelow ? "bg-red-50 border border-red-200" : "bg-emerald-50 border border-emerald-200"}`}>
                 <p className="text-sm font-semibold text-slate-800">
-                  {spec.title}: медиана {spec.median} ₽/час
+                  {spec.title} {selectedCity !== "Москва" ? `в ${selectedCity}` : "в Москве"}: медиана ~{cityAdjustedMid.toLocaleString("ru-RU")} ₽/час
                 </p>
                 <p className={`text-xs mt-1 ${isBelow ? "text-red-700" : "text-emerald-700"}`}>
                   {isBelow
                     ? `Ваша ставка ниже медианы на ${diffPct}% — это ~${fmt(annualGap)} недополученного дохода в год`
-                    : `Ваша ставка выше медианы на ${diffPct}% — вы в числе лидеров по специальности! 🎉`}
+                    : `Ваша ставка выше медианы на ${diffPct}% — вы в числе лидеров по рынку ${selectedCity}! 🎉`}
                 </p>
                 {isBelow && (
                 <>
@@ -984,12 +1008,21 @@ export default function FreelanceCalc() {
                     })()}
                   </div>
 
-                  <button
-                    onClick={() => { handleOpenUpsell(); ymGoal("upsell_gap_click", { slug: selectedSpecialty }); }}
-                    className="mt-2 text-xs font-semibold text-red-700 underline hover:text-red-900"
-                  >
-                    Посмотреть точные данные по {spec.title} по городам → Бенчмарк PDF {currentPrice} ₽
-                  </button>
+                  <div className="mt-2 flex flex-wrap gap-2 items-center">
+                    <Link
+                      href={`/stavka/${spec.slug}/${cityData.slug}`}
+                      className="text-xs font-semibold text-indigo-600 underline hover:text-indigo-900"
+                      onClick={() => ymGoal("specialty_city_page_click", { slug: spec.slug, city: cityData.slug })}
+                    >
+                      Ставки {spec.title} в {selectedCity} →
+                    </Link>
+                    <button
+                      onClick={() => { handleOpenUpsell(); ymGoal("upsell_gap_click", { slug: selectedSpecialty, city: cityData.slug }); }}
+                      className="text-xs font-semibold text-red-700 underline hover:text-red-900"
+                    >
+                      Полный бенчмарк по всем городам → PDF {currentPrice} ₽
+                    </button>
+                  </div>
                 </>
                 )}
               </div>
@@ -1580,6 +1613,20 @@ function ResultCard({
     </div>
   );
 }
+
+/** City benchmark multipliers relative to Moscow — from Q1 2026 research data */
+const CITY_BENCHMARK_DATA: Array<{ name: string; slug: string; mskMult: number }> = [
+  { name: "Москва",           slug: "moskva",           mskMult: 1.00 },
+  { name: "Санкт-Петербург",  slug: "sankt-peterburg",  mskMult: 0.83 },
+  { name: "Екатеринбург",     slug: "ekaterinburg",     mskMult: 0.76 },
+  { name: "Новосибирск",      slug: "novosibirsk",      mskMult: 0.73 },
+  { name: "Казань",           slug: "kazan",            mskMult: 0.71 },
+  { name: "Нижний Новгород",  slug: "nizhnij-novgorod", mskMult: 0.70 },
+  { name: "Самара",           slug: "samara",           mskMult: 0.68 },
+  { name: "Краснодар",        slug: "krasnodar",        mskMult: 0.69 },
+  { name: "Ростов-на-Дону",   slug: "rostov-na-donu",   mskMult: 0.67 },
+  { name: "Уфа",              slug: "ufa",              mskMult: 0.65 },
+];
 
 /** Quick specialty market benchmarks — mid = midpoint of rate range from /reyting data */
 const QUICK_SPECIALTIES = [
