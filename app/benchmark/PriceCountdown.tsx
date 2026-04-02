@@ -30,17 +30,17 @@ export default function PriceCountdown() {
 
   if (daysLeft === null) return null;
 
-  // After deadline: show current price info instead of countdown
+  // After deadline: show Q2 update urgency to drive conversion ("buy now with fresh Q1 data")
   if (daysLeft === 0) {
     return (
-      <div className="rounded-xl p-4 flex items-center gap-3 border bg-slate-50 border-slate-200">
-        <span className="text-2xl">📊</span>
+      <div className="rounded-xl p-4 flex items-center gap-3 border bg-amber-50 border-amber-200">
+        <span className="text-2xl">📅</span>
         <div>
-          <div className="font-bold text-sm text-slate-800">
-            Актуальная цена — <span className="text-lg">349 ₽</span>
+          <div className="font-bold text-sm text-amber-800">
+            Q2 2026 выйдет в июле
           </div>
-          <div className="text-xs mt-0.5 text-slate-500">
-            Q1 2026 · 26 специальностей · 10 городов · Junior / Mid / Senior
+          <div className="text-xs mt-0.5 text-amber-600">
+            Q1 2026 — самые актуальные данные прямо сейчас
           </div>
         </div>
       </div>

@@ -45,7 +45,9 @@ function LeadSuccessViralBlock() {
   return (
     <div className="mt-3 pt-3 border-t border-green-200">
       <p className="text-xs font-semibold text-green-800 mb-2">
-        📢 Помоги коллеге тоже зафиксировать 249 ₽:
+        {currentPrice === 249
+          ? "📢 Помоги коллеге тоже зафиксировать 249 ₽:"
+          : "📢 Поделись с коллегой — может, тоже занижает ставку:"}
       </p>
       <div className="flex gap-2 flex-wrap">
         <button

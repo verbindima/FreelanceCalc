@@ -267,7 +267,7 @@ export default function BenchmarkPage() {
                   <p className="text-xs text-gray-500 mb-3">
                     Без данных по своему городу — не узнаете. Новосибирск, Казань, Краснодар и ещё 5 городов — в PDF
                   </p>
-                  <BuyButton label="Проверить за 249 ₽" />
+                  <BuyButton />
                 </div>
               </div>
             </div>

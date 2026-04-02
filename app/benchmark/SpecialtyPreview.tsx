@@ -258,7 +258,7 @@ export default function SpecialtyPreview() {
                 {spec.name} · ещё 8 городов России · Джун / Мид / Сеньор
               </p>
             </div>
-            <BuyButton label="Открыть полный отчёт — 249 ₽" />
+            <BuyButton />
           </div>
         </div>
       )}
