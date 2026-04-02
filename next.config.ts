@@ -36,6 +36,24 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        // /rsa-connect — fresh URL for RSA setup, never cached, no-store from day 1
+        source: "/rsa-connect",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "no-store, must-revalidate",
+          },
+          {
+            key: "CDN-Cache-Control",
+            value: "no-store",
+          },
+          {
+            key: "Vercel-CDN-Cache-Control",
+            value: "no-store",
+          },
+        ],
+      },
+      {
         // Allow /widget to be embedded in iframes from any domain
         source: "/widget",
         headers: [
