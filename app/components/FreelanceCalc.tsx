@@ -522,6 +522,26 @@ export default function FreelanceCalc() {
         </div>
       )}
 
+      {/* Price urgency announcement bar — visible above the fold, disappears after April 7 */}
+      {countdown && (
+        <div className="w-full bg-red-600 text-white">
+          <div className="max-w-2xl mx-auto px-4 py-2 flex items-center justify-between gap-3">
+            <span className="text-sm flex items-center gap-1.5 min-w-0">
+              <span>⏳</span>
+              <span className="truncate">
+                Бенчмарк ставок <strong>249 ₽</strong> → <strong>349 ₽</strong> через {countdown.days}д {countdown.hours}ч {countdown.mins}м
+              </span>
+            </span>
+            <button
+              onClick={() => { handleOpenUpsell(); ymGoal("announcement_bar_click"); }}
+              className="shrink-0 bg-white text-red-700 font-semibold text-xs px-3 py-1.5 rounded-lg hover:bg-red-50 transition-colors whitespace-nowrap"
+            >
+              Успеть →
+            </button>
+          </div>
+        </div>
+      )}
+
       <main className="max-w-2xl mx-auto px-4 py-10">
         <header className="mb-8 text-center">
           <p className="text-sm font-semibold text-indigo-500 mb-1 tracking-wide uppercase">
