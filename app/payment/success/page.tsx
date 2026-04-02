@@ -8,11 +8,11 @@ const CALC_URL = "https://freelancecalc.ru";
 const REPORT_URL = "https://freelancecalc.ru/benchmark/report?key=2026q1";
 
 const TG_SHARE_TEXT =
-  `💼 Купил бенчмарк ставок фрилансеров на Q1 2026 — очень полезно.\n\n` +
-  `ML/AI-инженер в Москве: 4 000–6 500 ₽/ч\n` +
-  `Frontend: 1 700–3 200 ₽/ч\n` +
-  `Копирайтер: 700–1 700 ₽/ч\n\n` +
-  `Бесплатный калькулятор ставки (+ PDF-бенчмарк по всем городам) →\n${CALC_URL}`;
+  `💼 Купил бенчмарк ставок фрилансеров на Q2 2026 — очень полезно.\n\n` +
+  `Prompt-инженер в Москве: 1 900–3 100 ₽/ч\n` +
+  `ML/AI-инженер: 4 000–6 500 ₽/ч\n` +
+  `Frontend: 1 700–3 200 ₽/ч\n\n` +
+  `Бесплатный калькулятор ставки (+ PDF-бенчмарк 32 специальности × 10 городов) →\n${CALC_URL}`;
 
 export default function PaymentSuccess() {
   const [copied, setCopied] = useState(false);

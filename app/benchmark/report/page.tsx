@@ -9,7 +9,7 @@ import PrintButton from "./PrintButton";
 const ACCESS_KEY = process.env.REPORT_ACCESS_KEY ?? "2026q1";
 
 export const metadata: Metadata = {
-  title: "Бенчмарк ставок фрилансеров Q1 2026 — FreelanceCalc",
+  title: "Бенчмарк ставок фрилансеров Q2 2026 — FreelanceCalc",
   robots: { index: false, follow: false }, // don't index — paid product
 };
 
@@ -49,16 +49,23 @@ interface Specialty {
 }
 
 const SPECIALTIES: Specialty[] = [
+  // AI / ИИ — новая категория Q2 2026
+  { name: "AI-агент разработчик",     category: "AI/ИИ",       midMsk: 4500 },
+  { name: "LLM fine-tuning инженер",  category: "AI/ИИ",       midMsk: 4000 },
+  { name: "Prompt-инженер",           category: "AI/ИИ",       midMsk: 2500 },
+  { name: "AI-интегратор",            category: "AI/ИИ",       midMsk: 2800 },
   // Разработка
   { name: "ML/AI-инженер",            category: "Разработка",  midMsk: 5000 },
   { name: "DevOps-инженер",           category: "Разработка",  midMsk: 4200 },
   { name: "Golang-разработчик",       category: "Разработка",  midMsk: 3600 },
   { name: "Java-разработчик",         category: "Разработка",  midMsk: 3400 },
   { name: "Мобильный разработчик",    category: "Разработка",  midMsk: 3200 },
+  { name: "Data Engineer",            category: "Разработка",  midMsk: 3100 },
   { name: "Fullstack-разработчик",    category: "Разработка",  midMsk: 3000 },
   { name: "Python-разработчик",       category: "Разработка",  midMsk: 2800 },
   { name: "Backend-разработчик",      category: "Разработка",  midMsk: 2700 },
   { name: ".NET-разработчик",         category: "Разработка",  midMsk: 2600 },
+  { name: "Unity-разработчик",        category: "Разработка",  midMsk: 2400 },
   { name: "PHP-разработчик",          category: "Разработка",  midMsk: 2100 },
   { name: "Frontend-разработчик",     category: "Разработка",  midMsk: 2250 },
   { name: "1С-разработчик",           category: "Разработка",  midMsk: 1900 },
@@ -84,6 +91,7 @@ const SPECIALTIES: Specialty[] = [
 ];
 
 const CATEGORY_COLORS: Record<string, { bg: string; text: string; print: string }> = {
+  "AI/ИИ":      { bg: "bg-cyan-50",   text: "text-cyan-700",   print: "#cffafe" },
   "Разработка": { bg: "bg-blue-50",   text: "text-blue-700",   print: "#dbeafe" },
   "Аналитика":  { bg: "bg-purple-50", text: "text-purple-700", print: "#ede9fe" },
   "Дизайн":     { bg: "bg-pink-50",   text: "text-pink-700",   print: "#fce7f3" },
@@ -151,7 +159,7 @@ export default async function ReportPage({
         <header className="no-print bg-indigo-600 text-white py-4 px-6 flex items-center justify-between">
           <div>
             <span className="font-bold text-lg">FreelanceCalc</span>
-            <span className="ml-2 text-indigo-200 text-sm">Бенчмарк ставок Q1 2026</span>
+            <span className="ml-2 text-indigo-200 text-sm">Бенчмарк ставок Q2 2026</span>
           </div>
           <PrintButton />
         </header>
@@ -167,7 +175,7 @@ export default async function ReportPage({
               </div>
               <div className="text-right">
                 <div className="font-bold text-gray-800">Рыночные ставки фрилансеров</div>
-                <div className="text-sm text-gray-600">Q1 2026 · Сформировано: {today}</div>
+                <div className="text-sm text-gray-600">Q2 2026 · Сформировано: {today}</div>
               </div>
             </div>
           </div>
@@ -175,10 +183,10 @@ export default async function ReportPage({
           {/* Hero */}
           <div className="mb-8 no-print">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              📊 Рыночные ставки фрилансеров — Q1 2026
+              📊 Рыночные ставки фрилансеров — Q2 2026
             </h1>
             <p className="text-gray-600">
-              26 специальностей · 10 городов России · Джун / Мид / Сеньор
+              32 специальности · 10 городов России · Джун / Мид / Сеньор · <span className="text-cyan-600 font-semibold">новое: AI/ИИ специалисты</span>
             </p>
             <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-sm text-amber-800">
               <strong>💡 Как сохранить как PDF:</strong> нажмите <kbd className="bg-amber-100 px-1.5 py-0.5 rounded font-mono text-xs">Ctrl+P</kbd> (Win/Linux) или <kbd className="bg-amber-100 px-1.5 py-0.5 rounded font-mono text-xs">⌘P</kbd> (Mac) → «Сохранить как PDF» → масштаб «По ширине страницы».
@@ -188,10 +196,10 @@ export default async function ReportPage({
           {/* Summary stats */}
           <div className="grid grid-cols-4 gap-3 mb-8 no-print">
             {[
-              { value: "26", label: "специальностей" },
+              { value: "32", label: "специальностей" },
               { value: "10", label: "городов" },
               { value: "3", label: "уровня опыта" },
-              { value: "Q1 2026", label: "актуальность" },
+              { value: "Q2 2026", label: "актуальность" },
             ].map((s) => (
               <div key={s.label} className="bg-indigo-50 border border-indigo-100 rounded-xl p-4 text-center">
                 <div className="text-2xl font-bold text-indigo-600">{s.value}</div>
@@ -202,7 +210,7 @@ export default async function ReportPage({
 
           {/* Methodology note */}
           <div className="mb-6 bg-gray-50 border border-gray-200 rounded-xl p-4 text-sm text-gray-600">
-            <strong className="text-gray-800">Методология:</strong> Данные собраны за январь–март 2026 г. из публичных источников: FL.ru, Habr Freelance, Kwork, Telegram-сообщества фрилансеров, HeadHunter (фриланс-ставки). Показаны медианные ставки сегмента Мид (1–3 года опыта). Джун — 0–1 год, Сеньор — 3+ лет. Все ставки — в рублях за час. Географические коэффициенты рассчитаны на основе региональных данных платформ.
+            <strong className="text-gray-800">Методология:</strong> Данные собраны за январь–апрель 2026 г. из публичных источников: FL.ru, Habr Freelance, Kwork, Telegram-сообщества фрилансеров, HeadHunter (фриланс-ставки). <strong className="text-gray-700">Новое в Q2:</strong> добавлена категория «AI/ИИ» — ставки для Prompt-инженера, AI-агент разработчика, LLM fine-tuning инженера и AI-интегратора на основе анализа актуальных предложений на профильных платформах. Показаны медианные ставки сегмента Мид (1–3 года опыта). Джун — 0–1 год, Сеньор — 3+ лет. Все ставки — в рублях за час.
           </div>
 
           {/* Tables by category */}
@@ -324,7 +332,7 @@ export default async function ReportPage({
           <footer className="border-t border-gray-200 pt-6 text-xs text-gray-500">
             <div className="flex flex-wrap gap-4 justify-between items-center">
               <div>
-                <strong>FreelanceCalc</strong> · freelancecalc.ru · Q1 2026 · Дата формирования: {today}
+                <strong>FreelanceCalc</strong> · freelancecalc.ru · Q2 2026 · Дата формирования: {today}
               </div>
               <div className="no-print">
                 <Link href="/" className="text-indigo-600 hover:underline">← Калькулятор ставки</Link>
@@ -333,7 +341,7 @@ export default async function ReportPage({
               </div>
             </div>
             <p className="mt-2 text-gray-400">
-              Данные носят ориентировочный характер и основаны на публичных источниках. Реальные ставки могут отличаться в зависимости от конкретного проекта, клиента и индивидуального опыта. Обновление: Q2 2026 — июнь 2026.
+              Данные носят ориентировочный характер и основаны на публичных источниках. Реальные ставки могут отличаться в зависимости от конкретного проекта, клиента и индивидуального опыта. Следующее обновление: Q3 2026 — сентябрь 2026.
             </p>
           </footer>
 

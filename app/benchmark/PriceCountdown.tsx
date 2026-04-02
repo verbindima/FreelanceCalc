@@ -37,10 +37,10 @@ export default function PriceCountdown() {
         <span className="text-2xl">📅</span>
         <div>
           <div className="font-bold text-sm text-amber-800">
-            Q2 2026 выйдет в июле
+            Q3 2026 выйдет в сентябре
           </div>
           <div className="text-xs mt-0.5 text-amber-600">
-            Q1 2026 — самые актуальные данные прямо сейчас
+            Q2 2026 — самые актуальные данные прямо сейчас
           </div>
         </div>
       </div>
