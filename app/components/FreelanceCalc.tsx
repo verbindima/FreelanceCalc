@@ -582,10 +582,10 @@ export default function FreelanceCalc() {
           {/* Trust strip — truthful stats that build credibility before user touches the calculator */}
           <div className="mt-3 flex flex-wrap justify-center gap-2 text-xs">
             {[
-              { icon: "🎯", text: "26 специальностей" },
-              { icon: "🏙️", text: "26 городов" },
+              { icon: "🎯", text: "44 специальности" },
+              { icon: "🏙️", text: "25 городов" },
               { icon: "🧾", text: "Самозанятый и ИП" },
-              { icon: "📅", text: "Данные Q1 2026" },
+              { icon: "📅", text: "Данные Q2 2026" },
               { icon: "✅", text: "Бесплатно" },
             ].map(({ icon, text }) => (
               <span
@@ -1231,7 +1231,7 @@ export default function FreelanceCalc() {
                 ⚡ Цена — 349 ₽
               </span>
             )}
-            <span className="text-xs text-amber-700/70">26 специальностей · 10 городов · Junior / Mid / Senior</span>
+            <span className="text-xs text-amber-700/70">44 специальности · 25 городов · Junior / Mid / Senior</span>
           </div>
         </section>
 
