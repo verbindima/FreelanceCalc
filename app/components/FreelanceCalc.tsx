@@ -1471,9 +1471,16 @@ export default function FreelanceCalc() {
           onClick={() => setShowUpsellModal(false)}
         >
           <div
-            className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8"
+            className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8 relative"
             onClick={(e) => e.stopPropagation()}
           >
+            <button
+              onClick={() => setShowUpsellModal(false)}
+              className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors text-lg leading-none"
+              aria-label="Закрыть"
+            >
+              ×
+            </button>
             {specGapData ? (
               <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 mb-4">
                 <p className="text-xs text-red-700 font-medium mb-0.5">
@@ -1600,20 +1607,25 @@ export default function FreelanceCalc() {
                 </button>
               </div>
             ) : (
-              <div className="flex gap-3">
+              <div>
                 <button
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors"
+                  className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-semibold py-3 rounded-xl text-sm transition-colors"
                   onClick={handlePayment}
                   disabled={paymentLoading}
                 >
                   {paymentLoading ? "Переход к оплате…" : `Скачать PDF — ${currentPrice} ₽`}
                 </button>
-                <button
-                  className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-500 hover:bg-slate-50 transition-colors"
-                  onClick={() => setShowUpsellModal(false)}
-                >
-                  Закрыть
-                </button>
+                <p className="text-xs text-slate-400 mt-2 text-center">
+                  ✅ Безопасный платёж · ЮKassa · Моментальная выдача на email
+                </p>
+                <div className="text-center mt-1">
+                  <button
+                    className="text-xs text-slate-400 hover:text-slate-600 hover:underline"
+                    onClick={() => setShowUpsellModal(false)}
+                  >
+                    Не сейчас
+                  </button>
+                </div>
               </div>
             )}
           </div>
