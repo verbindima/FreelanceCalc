@@ -95,11 +95,11 @@ export default function BenchmarkLeadForm() {
         <div className="text-center">
           <div className="text-3xl mb-2">✅</div>
           <p className="font-semibold text-emerald-800 mb-1">
-            {isPriceActive ? "Цена 249 ₽ зафиксирована!" : "Записали!"}
+            {isPriceActive ? "Напомним!" : "Записали!"}
           </p>
           <p className="text-sm text-emerald-700">
             {isPriceActive
-              ? "Напишем как только откроется оплата — по вашей цене, без повышения."
+              ? "Пришлём ссылку на бенчмарк за 249 ₽ до 7 апреля — чтобы не забыть."
               : "Пришлём ссылку на Q2 бенчмарк (июнь 2026) первым делом."}
           </p>
         </div>
@@ -111,17 +111,17 @@ export default function BenchmarkLeadForm() {
   return (
     <div className={`mb-10 rounded-2xl p-6 border ${isPriceActive ? "bg-amber-50 border-amber-200" : "bg-slate-50 border-slate-200"}`}>
       <div className="flex items-start gap-3 mb-4">
-        <span className="text-2xl mt-0.5">{isPriceActive ? "⚡" : "📬"}</span>
+        <span className="text-2xl mt-0.5">{isPriceActive ? "📩" : "📬"}</span>
         <div>
           <p className={`font-bold text-sm ${isPriceActive ? "text-amber-900" : "text-slate-800"}`}>
             {isPriceActive && daysLeft !== null
-              ? `Зафиксируй цену 249 ₽ — осталось ${daysLeft} ${daysLeft === 1 ? "день" : daysLeft <= 4 ? "дня" : "дней"}`
+              ? `Не готов платить прямо сейчас? Пришлём напоминание`
               : "Получи Q2 бенчмарк первым"}
           </p>
           <p className={`text-sm mt-0.5 leading-relaxed ${isPriceActive ? "text-amber-800" : "text-slate-500"}`}>
             {isPriceActive
-              ? <>С 7 апреля цена вырастет до <strong>349 ₽</strong>. Оставь email — уведомим как откроется оплата, и цена&nbsp;249&nbsp;₽ будет зафиксирована для тебя.</>
-              : "Оставь email — пришлём Q2 бенчмарк (июнь 2026) и уведомление об оплате."}
+              ? <>Оставь email — пришлём ссылку на бенчмарк за <strong>249 ₽</strong> до 7 апреля. После — будет <strong>349 ₽</strong>.</>
+              : "Оставь email — пришлём Q2 бенчмарк (июнь 2026) как выйдет."}
           </p>
         </div>
       </div>
@@ -147,13 +147,13 @@ export default function BenchmarkLeadForm() {
               : "bg-slate-700 hover:bg-slate-800"
           }`}
         >
-          {loading ? "…" : isPriceActive ? "Зафиксировать 249 ₽ →" : "Уведомить →"}
+          {loading ? "…" : isPriceActive ? "Напомнить →" : "Уведомить →"}
         </button>
       </div>
       <p className={`text-xs mt-2 ${isPriceActive ? "text-amber-600" : "text-slate-400"}`}>
         {isPriceActive
-          ? "Без спама. Только уведомление об открытии оплаты по зафиксированной цене."
-          : "Без спама. Только Q2 бенчмарк + уведомление об оплате."}
+          ? "Без спама. Только ссылка на бенчмарк — купишь когда удобно, пока 249 ₽."
+          : "Без спама. Только Q2 бенчмарк как выйдет."}
       </p>
     </div>
   );
