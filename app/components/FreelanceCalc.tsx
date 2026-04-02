@@ -198,6 +198,22 @@ export default function FreelanceCalc() {
     return { spec, annualGap, diffPct: Math.round((Math.abs(diff) / cityAdjustedMid) * 100), cityData };
   }, [selectedSpecialty, selectedCity, results, hoursPerDay]);
 
+  /** Personalized J/M/S rate preview for upsell modal — shown regardless of market position */
+  const selectedSpecPreview = useMemo(() => {
+    if (!selectedSpecialty) return null;
+    const spec = QUICK_SPECIALTIES.find((s) => s.slug === selectedSpecialty);
+    if (!spec) return null;
+    const cityData = CITY_BENCHMARK_DATA.find((c) => c.name === selectedCity) ?? CITY_BENCHMARK_DATA[0];
+    const r = (v: number) => Math.round((v * cityData.mskMult) / 50) * 50;
+    return {
+      spec,
+      cityData,
+      junior: r(spec.mid * 0.65),
+      middle: r(spec.mid),
+      senior: r(spec.mid * 1.45),
+    };
+  }, [selectedSpecialty, selectedCity]);
+
   /** Pick 3 articles contextually: below-market users get rate-raise content; self-employed get tax content; default is foundational */
   const contextualArticles = useMemo(() => {
     const isBelowMarket =
@@ -1484,13 +1500,40 @@ export default function FreelanceCalc() {
                 ? `Медианные ставки по вашей специальности по городам и уровню опыта — и конкретные шаги чтобы поднять свою. 26 специальностей × 10 городов × 3 уровня.`
                 : "Точные медианные ставки по 26 специальностям × 10 городам × 3 уровня опыта. Узнайте, занижаете ли вы цену — и на сколько."}
             </p>
-            <ul className="text-sm text-slate-700 space-y-1 mb-4">
-              <li>✅ Frontend-разработчик в Москве: <strong>1 700–3 200 ₽/час</strong></li>
-              <li>✅ UI/UX дизайнер: <strong>1 300–2 800 ₽/час</strong></li>
-              <li>✅ Копирайтер: <strong>700–1 700 ₽/час</strong></li>
-              <li>✅ SEO-специалист: <strong>1 100–2 200 ₽/час</strong></li>
-              <li className="text-slate-400 text-xs pt-1">+ 22 других специальности и разбивка по 10 городам</li>
-            </ul>
+            {selectedSpecPreview ? (
+              /* Personalized: show J/M/S for user's exact specialty × city */
+              <div className="mb-4">
+                <div className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">
+                  {selectedSpecPreview.spec.title} · {selectedSpecPreview.cityData.name} · Q1 2026
+                </div>
+                <div className="space-y-1.5">
+                  {(
+                    [
+                      { level: "Junior", rate: selectedSpecPreview.junior },
+                      { level: "Middle", rate: selectedSpecPreview.middle },
+                      { level: "Senior", rate: selectedSpecPreview.senior },
+                    ] as const
+                  ).map(({ level, rate }) => (
+                    <div key={level} className="flex items-center justify-between text-sm">
+                      <span className="text-slate-600">✅ {level}</span>
+                      <strong className="text-slate-800 tabular-nums">{fmt(rate)}/час</strong>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-slate-400 text-xs pt-2 mt-2 border-t border-slate-100">
+                  + 25 других специальностей и {selectedSpecPreview.spec.title} в 9 других городах
+                </p>
+              </div>
+            ) : (
+              /* Generic list when no specialty selected */
+              <ul className="text-sm text-slate-700 space-y-1 mb-4">
+                <li>✅ Frontend-разработчик в Москве: <strong>1 700–3 200 ₽/час</strong></li>
+                <li>✅ UI/UX дизайнер: <strong>1 300–2 800 ₽/час</strong></li>
+                <li>✅ Копирайтер: <strong>700–1 700 ₽/час</strong></li>
+                <li>✅ SEO-специалист: <strong>1 100–2 200 ₽/час</strong></li>
+                <li className="text-slate-400 text-xs pt-1">+ 22 других специальности и разбивка по 10 городам</li>
+              </ul>
+            )}
 
             {/* Info block */}
             <div className="bg-slate-50 rounded-lg px-3 py-2 mb-4 text-xs text-slate-500">
