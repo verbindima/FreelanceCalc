@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import PrintButton from "./PrintButton";
+import Q2SubscribeForm from "./Q2SubscribeForm";
 
 // Simple token-based access — Dmitry sends buyers:
 // https://freelancecalc.ru/benchmark/report?key=2026q1
@@ -328,8 +329,10 @@ export default async function ReportPage({
             </div>
           </section>
 
+          <Q2SubscribeForm />
+
           {/* Footer */}
-          <footer className="border-t border-gray-200 pt-6 text-xs text-gray-500">
+          <footer className="border-t border-gray-200 pt-6 mt-10 text-xs text-gray-500">
             <div className="flex flex-wrap gap-4 justify-between items-center">
               <div>
                 <strong>FreelanceCalc</strong> · freelancecalc.ru · Q2 2026 · Дата формирования: {today}

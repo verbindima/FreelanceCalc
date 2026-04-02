@@ -27,23 +27,45 @@ export async function POST(req: NextRequest) {
 
   const lockedPrice = getLockedPrice();
   const isSbp = source === "sbp_manual";
+  const isQ2Sub = source === "q2_subscriber";
 
   // Always log for Vercel log drain fallback
-  console.log(`[${isSbp ? "SBP_PAYMENT" : "LEAD"}] email=${email} price=${lockedPrice} ts=${new Date().toISOString()}`);
+  const tag = isSbp ? "SBP_PAYMENT" : isQ2Sub ? "Q2_SUBSCRIBER" : "LEAD";
+  console.log(`[${tag}] email=${email} price=${lockedPrice} ts=${new Date().toISOString()}`);
 
   // Non-blocking push to ntfy.sh
   try {
+    let title: string;
+    let tags: string;
+    let priority: string;
+    let body: string;
+
+    if (isSbp) {
+      title = "💰 ОПЛАТА через СБП — проверь и вышли PDF!";
+      tags = "money_with_wings,white_check_mark";
+      priority = "high";
+      body = `Email покупателя: ${email}\nСумма: ${lockedPrice} ₽ (СБП)\nВремя: ${new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })}\n\n✅ Проверь входящий перевод на ${lockedPrice} ₽\n📎 Вышли PDF на: ${email}`;
+    } else if (isQ2Sub) {
+      title = "📧 Q2 подписчик — вышли Q3 в сентябре";
+      tags = "calendar,email";
+      priority = "default";
+      body = `Email Q2-покупателя для рассылки Q3:\n${email}\nВремя: ${new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })}\n\n📋 Добавь в список рассылки Q3 (сентябрь 2026).`;
+    } else {
+      title = "FreelanceCalc: новый лид";
+      tags = "money_with_wings,email";
+      priority = "default";
+      body = `Email: ${email}\nЗафиксированная цена: ${lockedPrice} ₽\nВремя: ${new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })}\n\nПользователь оставил email — оплата ${lockedPrice} ₽ пока недоступна. Напиши ему как только ЮKassa подключена.`;
+    }
+
     await fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
       method: "POST",
       headers: {
         "Content-Type": "text/plain; charset=utf-8",
-        Title: isSbp ? "💰 ОПЛАТА через СБП — проверь и вышли PDF!" : "FreelanceCalc: новый лид",
-        Tags: isSbp ? "money_with_wings,white_check_mark" : "money_with_wings,email",
-        Priority: isSbp ? "high" : "default",
+        Title: title,
+        Tags: tags,
+        Priority: priority,
       },
-      body: isSbp
-        ? `Email покупателя: ${email}\nСумма: ${lockedPrice} ₽ (СБП)\nВремя: ${new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })}\n\n✅ Проверь входящий перевод на ${lockedPrice} ₽\n📎 Вышли PDF на: ${email}`
-        : `Email: ${email}\nЗафиксированная цена: ${lockedPrice} ₽\nВремя: ${new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })}\n\nПользователь оставил email — оплата ${lockedPrice} ₽ пока недоступна. Напиши ему как только ЮKassa подключена.`,
+      body,
     });
   } catch (err) {
     // Fail silently — email already logged to Vercel logs above
