@@ -21,7 +21,7 @@ const VIRAL_SHARE_URL =
 const VIRAL_SHARE_TEXT =
   currentPrice === 249
     ? "Зафиксировал цену 249 ₽ на бенчмарк ставок фрилансеров — с 7 апреля будет 349 ₽. Успей тоже 👇"
-    : "Нашёл нормальный бенчмарк ставок фрилансеров — реальные данные по 26 специальностям и 10 городам России 👇";
+    : "Взял бенчмарк ставок фрилансеров по 26 специальностям и 10 городам — плюс Q2 2026 обновление в июле бесплатно 👇";
 
 function LeadSuccessViralBlock() {
   const [copied, setCopied] = useState(false);
@@ -47,7 +47,7 @@ function LeadSuccessViralBlock() {
       <p className="text-xs font-semibold text-green-800 mb-2">
         {currentPrice === 249
           ? "📢 Помоги коллеге тоже зафиксировать 249 ₽:"
-          : "📢 Поделись с коллегой — может, тоже занижает ставку:"}
+          : "📢 Поделись с коллегой — получит Q1 + Q2 за 349 ₽:"}
       </p>
       <div className="flex gap-2 flex-wrap">
         <button
@@ -159,17 +159,17 @@ export default function BuyButton({ label = `Купить полный PDF — $
       <div className="text-left w-full max-w-sm">
         <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-4 mb-2">
           <p className="text-sm font-semibold text-amber-800 mb-1">
-            {currentPrice === 249 ? "⚡ Зафиксируй цену 249 ₽ до 7 апреля" : "📬 Получи PDF первым"}
+            {currentPrice === 249 ? "⚡ Зафиксируй цену 249 ₽ до 7 апреля" : "🎁 Получи Q1 + Q2 за 349 ₽"}
           </p>
           <p className="text-xs text-amber-700 leading-relaxed mb-3">
             {currentPrice === 249
               ? <>С 7 апреля цена вырастет до <strong>349 ₽</strong> — потеряешь 100 ₽. Оставь почту, забронируем цену и пришлём PDF как только откроется оплата.</>
-              : "Оплата открывается скоро. Оставь почту — пришлём PDF как только будет готово."}
+              : <>Оставь почту — пришлём Q1 прямо сейчас и Q2 обновление <strong>бесплатно</strong> в июле.</>}
           </p>
           {leadSubmitted ? (
             <div>
               <p className="text-sm font-semibold text-green-700 mb-1">
-                {currentPrice === 249 ? "✅ Зафиксировали! Напишем как откроется оплата." : "✅ Отлично! Напишем, как только оплата заработает."}
+                {currentPrice === 249 ? "✅ Зафиксировали! Напишем как откроется оплата." : "✅ Готово! Пришлём Q1 и Q2 обновление (июль) бесплатно на этот email."}
               </p>
               <LeadSuccessViralBlock />
             </div>

@@ -11,19 +11,22 @@ export default function CTASection() {
   if (isPriceRaised) {
     return (
       <section className="mb-10 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-2xl p-6 md:p-10 text-white text-center">
+        <div className="inline-flex items-center gap-2 bg-white/15 text-white text-xs font-semibold px-3 py-1 rounded-full mb-4">
+          🎁 Бонус: Q2 2026 бесплатно всем покупателям Q1
+        </div>
         <div className="text-4xl mb-3">📊</div>
         <h2 className="text-2xl md:text-3xl font-bold mb-3">
-          Бенчмарк ставок фрилансеров — Q1 2026
+          Купи Q1 сейчас — получи Q2 в июле бесплатно
         </h2>
         <p className="text-indigo-100 mb-2 max-w-lg mx-auto text-sm md:text-base leading-relaxed">
           Медианные ставки <strong>26 специальностей</strong> в <strong>10 городах</strong> России.
-          Джун / мид / сеньор. Единоразовый платёж — доступ мгновенно.
+          Джун / мид / сеньор. Единоразовый платёж <strong>349 ₽</strong> — и Q1, и Q2 обновление бесплатно.
         </p>
         <p className="text-indigo-200 text-xs mb-6">
-          Обновляется ежеквартально · Q2 2026 выходит в июне
+          Q2 2026 выходит в июле · Все покупатели Q1 получат ссылку на email автоматически
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-          <BuyButton />
+          <BuyButton label="Купить Q1 + Q2 бесплатно — 349 ₽" />
           <Link
             href="/"
             className="text-sm text-indigo-200 hover:text-white underline underline-offset-2"
@@ -32,7 +35,7 @@ export default function CTASection() {
           </Link>
         </div>
         <p className="mt-4 text-xs text-indigo-300">
-          После оплаты — мгновенный доступ к скачиванию · Без подписки · Без регистрации
+          После оплаты — мгновенный доступ к Q1 · Q2 в июле придёт на email · Без подписки
         </p>
       </section>
     );

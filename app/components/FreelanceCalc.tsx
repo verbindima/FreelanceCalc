@@ -1504,15 +1504,15 @@ export default function FreelanceCalc() {
                   ⏳ Цена вырастет на 40% через {countdown.days}д {countdown.hours}ч {countdown.mins}мин
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">
-                  ⚡ Цена — 349 ₽
+                <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded-full">
+                  🎁 Q1 + Q2 в июле бесплатно
                 </span>
               )}
             </div>
             <p className="text-xs text-slate-400 mb-5">
               {countdown
                 ? "Единоразово · Без подписки · PDF сразу после оплаты · Цена 249 ₽ до 7 апреля"
-                : "Единоразово · Без подписки · PDF сразу после оплаты · Q1 2026, актуально"}
+                : "349 ₽ единоразово · Q2 2026 (июль) — всем покупателям Q1 бесплатно на email"}
             </p>
             {paymentUnavailable ? (
               <div className="mb-3">
