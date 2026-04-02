@@ -1,0 +1,19 @@
+{
+  "redirects": [
+    {
+      "source": "/setup/rsa",
+      "destination": "/rsa-setup.html",
+      "permanent": false
+    },
+    {
+      "source": "/rsa",
+      "destination": "/rsa-setup.html",
+      "permanent": false
+    },
+    {
+      "source": "/rsa-connect",
+      "destination": "/rsa-setup.html",
+      "permanent": false
+    }
+  ]
+}
