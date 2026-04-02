@@ -5,6 +5,7 @@ import { SPECIALTIES, getSpecialty } from "../../specialties";
 import SpecialtyCalc from "../../SpecialtyCalc";
 import { SPECIALTY_ARTICLES } from "../../related-articles";
 import { LEVELS, getLevel, ExperienceLevel } from "./levels";
+import { BENCHMARK_PRICE, showUrgency } from "@/lib/price";
 
 const BASE_URL = "https://freelancecalc.ru";
 
@@ -189,15 +190,14 @@ export default async function LevelPage({ params }: Props) {
               {role}: ставки по 10 городам и всем уровням опыта
             </p>
             <p className="text-xs text-slate-500 leading-relaxed">
-              22+ специальности × 10 городов России. Джун / мид / сеньор.{" "}
-              <span className="text-red-600 font-medium">С 7 апреля — 349 ₽.</span>
+              22+ специальности × 10 городов России. Джун / мид / сеньор.{showUrgency && <>{" "}<span className="text-red-600 font-medium">С 7 апреля — 349 ₽.</span></>}
             </p>
           </div>
           <Link
             href="/benchmark"
             className="flex-shrink-0 inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors whitespace-nowrap shadow-sm"
           >
-            Открыть за 249 ₽ →
+            Открыть за {BENCHMARK_PRICE} ₽ →
           </Link>
         </section>
 

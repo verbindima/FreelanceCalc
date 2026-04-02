@@ -3,6 +3,8 @@
 import { useState, useMemo, useCallback } from "react";
 import { ymGoal } from "../../components/YandexMetrica";
 
+const BENCHMARK_PRICE = Date.now() < new Date("2026-04-07T00:00:00+03:00").getTime() ? 249 : 349;
+
 type TaxRegime = "self_employed_fl" | "self_employed_ul" | "ip_usn6" | "ip_usn15" | "none";
 
 const TAX_RATES: Record<TaxRegime, number> = {
@@ -180,7 +182,7 @@ export default function SpecialtyCalc({ defaultIncome, defaultHours, defaultLoad
             onClick={handleUpsell}
             className="shrink-0 bg-amber-500 hover:bg-amber-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors"
           >
-            Купить PDF — 249 ₽
+            Купить PDF — {BENCHMARK_PRICE} ₽
           </button>
         </div>
       </section>

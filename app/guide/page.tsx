@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BENCHMARK_PRICE } from "@/lib/price";
 
 const BASE_URL = "https://freelancecalc.ru";
 
@@ -202,7 +203,7 @@ export default function GuidePage() {
             href="/benchmark"
             className="shrink-0 bg-amber-500 hover:bg-amber-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors"
           >
-            Посмотреть — 249 ₽
+            Посмотреть — {BENCHMARK_PRICE} ₽
           </Link>
         </section>
 

@@ -3,6 +3,8 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 
+const BENCHMARK_PRICE = Date.now() < new Date("2026-04-07T00:00:00+03:00").getTime() ? 249 : 349;
+
 type Platform = {
   id: string;
   name: string;
@@ -388,7 +390,7 @@ export default function CommissionCalc() {
           href="/benchmark"
           className="inline-block bg-white text-indigo-700 font-bold px-6 py-3 rounded-xl hover:bg-indigo-50 transition-colors"
         >
-          Проверить свою ставку — 249 ₽
+          Проверить свою ставку — {BENCHMARK_PRICE} ₽
         </Link>
         <p className="text-xs text-indigo-300 mt-3">
           Единоразово · PDF сразу после оплаты · 22+ специальности

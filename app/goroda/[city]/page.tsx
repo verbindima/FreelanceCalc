@@ -4,6 +4,7 @@ import Link from "next/link";
 import { CITIES, getCity } from "../cities";
 import { SPECIALTIES } from "../../stavka/[slug]/specialties";
 import SpecialtyCalc from "../../stavka/[slug]/SpecialtyCalc";
+import { BENCHMARK_PRICE, showUrgency } from "@/lib/price";
 
 const BASE_URL = "https://freelancecalc.ru";
 
@@ -196,15 +197,14 @@ export default async function CityPage({ params }: Props) {
               Ставки всех специальностей {city.nameIn} — таблица PDF
             </p>
             <p className="text-xs text-slate-500 leading-relaxed">
-              26 специальностей × 10 городов, включая {city.name}. Джун / мид / сеньор.{" "}
-              <span className="text-red-600 font-medium">С 7 апреля — 349 ₽.</span>
+              26 специальностей × 10 городов, включая {city.name}. Джун / мид / сеньор.{showUrgency && <>{" "}<span className="text-red-600 font-medium">С 7 апреля — 349 ₽.</span></>}
             </p>
           </div>
           <Link
             href="/benchmark"
             className="flex-shrink-0 inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors whitespace-nowrap shadow-sm"
           >
-            Открыть за 249 ₽ →
+            Открыть за {BENCHMARK_PRICE} ₽ →
           </Link>
         </section>
 

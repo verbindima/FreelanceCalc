@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BENCHMARK_PRICE } from "@/lib/price";
 
 const BASE_URL = "https://freelancecalc.ru";
 
@@ -394,7 +395,7 @@ export default function MojNalogAlternativePage() {
                 href="/benchmark"
                 className="shrink-0 bg-amber-500 hover:bg-amber-600 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors"
               >
-                Узнать — 249 ₽
+                Узнать — {BENCHMARK_PRICE} ₽
               </Link>
             </div>
           </section>

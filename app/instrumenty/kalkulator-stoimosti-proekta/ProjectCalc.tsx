@@ -3,6 +3,8 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 
+const BENCHMARK_PRICE = Date.now() < new Date("2026-04-07T00:00:00+03:00").getTime() ? 249 : 349;
+
 type Specialty = {
   label: string;
   minRate: number; // ₽/час, медиана «мид» Москва
@@ -286,7 +288,7 @@ export default function ProjectCalc() {
             href="/benchmark"
             className="shrink-0 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors"
           >
-            Смотреть PDF — 249 ₽
+            Смотреть PDF — {BENCHMARK_PRICE} ₽
           </Link>
         </div>
         <p className="mt-3 text-xs text-amber-700/70">
