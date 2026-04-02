@@ -7,11 +7,22 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // /setup/rsa had a stale 404 at Vercel CDN edge — permanently forward to /rsa
+      // /setup/rsa and /rsa fail on Russian Vercel PoPs (Next.js route 404)
+      // → redirect to static HTML file in /public/ which always works
       {
         source: "/setup/rsa",
-        destination: "/rsa",
-        permanent: true,
+        destination: "/rsa-setup.html",
+        permanent: false, // non-permanent: don't let browser cache this again
+      },
+      {
+        source: "/rsa",
+        destination: "/rsa-setup.html",
+        permanent: false,
+      },
+      {
+        source: "/rsa-connect",
+        destination: "/rsa-setup.html",
+        permanent: false,
       },
     ];
   },
