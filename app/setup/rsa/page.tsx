@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 
 // Static page — pre-rendered at build time, distributed to all CDN edge nodes incl. Russia
 // force-dynamic was wrong: SSR requires origin server, Russian Vercel PoPs can't reach origin → 404
-// Static generation makes the page available at every edge node like /rsa-setup.html
+// force-static ensures pre-rendered HTML is distributed to ALL edge nodes including Russia
+export const dynamic = "force-static";
 
 export const metadata: Metadata = {
   title: "Подключение РСЯ — FreelanceCalc Setup",
