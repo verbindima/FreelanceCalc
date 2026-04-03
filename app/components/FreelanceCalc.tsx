@@ -125,6 +125,28 @@ export default function FreelanceCalc() {
   const [showStickyBar, setShowStickyBar] = useState(false);
   const resultsRef = useRef<HTMLElement>(null);
 
+  // HH.ru live market data — fetched when specialty is selected
+  const [hhData, setHhData] = useState<{
+    total_found: number;
+    used: number;
+    monthly_gross: { p25: number; median: number; p75: number };
+    freelance_hourly_equiv: { p25: number; median: number; p75: number };
+  } | null>(null);
+  const [hhLoading, setHhLoading] = useState(false);
+
+  useEffect(() => {
+    if (!selectedSpecialty) { setHhData(null); return; }
+    let cancelled = false;
+    setHhLoading(true);
+    setHhData(null);
+    fetch(`/api/hh-market?specialty=${encodeURIComponent(selectedSpecialty)}&city=${encodeURIComponent(selectedCity)}`)
+      .then((r) => r.json())
+      .then((d) => { if (!cancelled && !d.error) setHhData(d); })
+      .catch(() => {})
+      .finally(() => { if (!cancelled) setHhLoading(false); });
+    return () => { cancelled = true; };
+  }, [selectedSpecialty, selectedCity]);
+
   // Lead capture for broken-payment state
   const [leadEmail, setLeadEmail] = useState("");
   const [leadSubmitted, setLeadSubmitted] = useState(false);
@@ -920,6 +942,37 @@ export default function FreelanceCalc() {
               </select>
             </div>
           )}
+          {/* HH.ru live badge — shown when specialty selected, data loaded */}
+          {selectedSpecialty && (hhLoading || hhData) && (
+            <div className="mt-2 flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2">
+              {hhLoading ? (
+                <p className="text-xs text-slate-400 animate-pulse">Загружаем данные hh.ru…</p>
+              ) : hhData ? (
+                <>
+                  <img src="/hh-logo.svg" alt="hh.ru" width={28} height={14} className="shrink-0 opacity-70" onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
+                  <div className="min-w-0">
+                    <p className="text-xs font-medium text-slate-700 leading-snug">
+                      Рынок найма{" "}
+                      <span className="text-slate-500 font-normal">({hhData.total_found.toLocaleString("ru-RU")} вакансий на hh.ru)</span>
+                      {" "}—{" "}
+                      <span className="font-semibold text-indigo-700">
+                        {Math.round(hhData.monthly_gross.median / 1000)}к ₽/мес
+                      </span>{" "}
+                      <span className="text-slate-400">медиана</span>
+                    </p>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Фриланс-эквивалент:{" "}
+                      <strong className="text-slate-700">
+                        {hhData.freelance_hourly_equiv.p25.toLocaleString("ru-RU")}–{hhData.freelance_hourly_equiv.p75.toLocaleString("ru-RU")} ₽/ч
+                      </strong>{" "}
+                      <span className="text-slate-400">(с учётом простоев и НПД)</span>
+                    </p>
+                  </div>
+                </>
+              ) : null}
+            </div>
+          )}
+
           {selectedSpecialty && (() => {
             const spec = QUICK_SPECIALTIES.find((s) => s.slug === selectedSpecialty);
             if (!spec) return null;
@@ -1060,6 +1113,38 @@ export default function FreelanceCalc() {
                     </button>
                   </div>
                 </>
+                )}
+                {!isBelow && (
+                  <div className="mt-3 flex flex-wrap gap-2 items-center">
+                    {(() => {
+                      const seniorRate = Math.round(cityAdjustedMid * 1.85 / 50) * 50;
+                      const toSenior = seniorRate - Math.round(myRate / 50) * 50;
+                      if (toSenior <= 0) {
+                        return (
+                          <p className="text-xs text-emerald-700 font-semibold w-full mb-1">
+                            🏆 Ты на Senior-уровне для {spec.title}! Сравни ставки по всем 32 специальностям:
+                          </p>
+                        );
+                      }
+                      return (
+                        <p className="text-xs text-emerald-700 font-semibold w-full mb-1">
+                          До Senior-уровня: ещё +{toSenior.toLocaleString("ru-RU")} ₽/ч — посмотри полный бенчмарк:
+                        </p>
+                      );
+                    })()}
+                    <button
+                      onClick={() => { handleOpenUpsell(); ymGoal("upsell_above_market_click", { slug: selectedSpecialty ?? "", city: cityData.slug }); }}
+                      className="text-xs font-semibold text-emerald-700 underline hover:text-emerald-900"
+                    >
+                      32 специальности × 10 городов → PDF {currentPrice} ₽
+                    </button>
+                    <button
+                      onClick={() => { handleShareTelegram(); ymGoal("viral_above_market_share", { slug: selectedSpecialty ?? "" }); }}
+                      className="flex items-center gap-1.5 text-xs bg-[#2AABEE] hover:bg-[#229ED9] text-white px-2.5 py-1 rounded-lg transition-colors font-medium"
+                    >
+                      ✈️ Поделиться
+                    </button>
+                  </div>
                 )}
               </div>
             );
