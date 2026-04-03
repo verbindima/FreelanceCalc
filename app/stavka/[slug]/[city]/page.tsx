@@ -244,7 +244,7 @@ export default async function SpecialtyCityPage({ params }: Props) {
         {/* Benchmark upsell — hot zone right after user sees their city rate */}
         <section className="mt-6 bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-100 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div className="flex-1">
-            <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wide mb-1">📊 Полный бенчмарк Q1 2026</p>
+            <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wide mb-1">📊 Полный бенчмарк Q2 2026</p>
             <p className="text-sm font-bold text-slate-900 mb-1">
               {spec.shortTitle}: ставки во всех 10 городах России
             </p>

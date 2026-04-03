@@ -185,12 +185,12 @@ export default async function LevelPage({ params }: Props) {
         {/* Benchmark upsell — hot zone right after level calculator */}
         <section className="mt-6 bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-100 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div className="flex-1">
-            <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wide mb-1">📊 Полный бенчмарк Q1 2026</p>
+            <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wide mb-1">📊 Полный бенчмарк Q2 2026</p>
             <p className="text-sm font-bold text-slate-900 mb-1">
               {role}: ставки по 10 городам и всем уровням опыта
             </p>
             <p className="text-xs text-slate-500 leading-relaxed">
-              22+ специальности × 10 городов России. Джун / мид / сеньор.{showUrgency && <>{" "}<span className="text-red-600 font-medium">С 7 апреля — 349 ₽.</span></>}
+              32 специальности × 10 городов России. Джун / мид / сеньор.{showUrgency && <>{" "}<span className="text-red-600 font-medium">С 7 апреля — 349 ₽.</span></>}
             </p>
           </div>
           <Link
