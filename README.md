@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FreelanceCalc — Калькулятор ставки фрилансера
 
-## Getting Started
+**[https://freelancecalc.ru](https://freelancecalc.ru)** — бесплатный инструмент для расчёта почасовой ставки фрилансера с учётом налогового режима (самозанятый / ИП УСН), загрузки и желаемого дохода.
 
-First, run the development server:
+## Что умеет
+
+- Рассчитывает минимальную ставку исходя из желаемого чистого дохода
+- Учитывает НПД (4%/6%), УСН 6%, ИП с фиксированными взносами
+- Показывает медианные ставки по 45 специальностям и 24 городам России
+- Сравнивает ставки разработчиков, дизайнеров, маркетологов, аналитиков
+- Бенчмарк рыночных ставок Q2 2026 (PDF, обновляется ежеквартально)
+
+## Примеры страниц
+
+- [Ставка frontend-разработчика 2026](https://freelancecalc.ru/stavka/frontend-razrabotchik)
+- [Ставка backend-разработчика 2026](https://freelancecalc.ru/stavka/backend-razrabotchik)
+- [Ставка UI/UX дизайнера 2026](https://freelancecalc.ru/stavka/dizajner-ui-ux)
+- [Ставка Python-разработчика 2026](https://freelancecalc.ru/stavka/python-razrabotchik)
+- [Ставки фрилансеров в Москве](https://freelancecalc.ru/goroda/moskva)
+- [Ставки фрилансеров в Санкт-Петербурге](https://freelancecalc.ru/goroda/sankt-peterburg)
+- [Калькулятор налога самозанятого](https://freelancecalc.ru/instrumenty/kalkulator-naloga-samozanyatogo)
+
+## Стек
+
+- **Next.js 15** + TypeScript
+- **Tailwind CSS**
+- Деплой: **Vercel**
+- SEO: Schema.org (FAQPage, HowTo, WebApp, Occupation), sitemap ~5000 URL, IndexNow
+
+## Запуск локально
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Откройте [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Лицензия
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
