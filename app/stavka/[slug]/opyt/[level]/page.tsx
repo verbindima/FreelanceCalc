@@ -9,6 +9,9 @@ import { BENCHMARK_PRICE, showUrgency } from "@/lib/price";
 
 const BASE_URL = "https://freelancecalc.ru";
 
+// ISR: revalidate every hour → public Cache-Control headers for Google crawl
+export const revalidate = 3600;
+
 type Props = { params: Promise<{ slug: string; level: string }> };
 
 export async function generateStaticParams() {

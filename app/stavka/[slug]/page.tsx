@@ -11,6 +11,10 @@ import { BENCHMARK_PRICE, showUrgency } from "@/lib/price";
 // TODO: switch to custom domain once purchased & configured in Vercel
 const BASE_URL = "https://freelancecalc.ru";
 
+// ISR: revalidate every hour → public Cache-Control headers for Google crawl
+// Also re-evaluates price.ts after April 7 deadline
+export const revalidate = 3600;
+
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
