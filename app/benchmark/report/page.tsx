@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PrintButton from "./PrintButton";
 import Q2SubscribeForm from "./Q2SubscribeForm";
+import { fetchAllHhData } from "./fetchHhData";
 
 // Simple token-based access — Dmitry sends buyers:
 // https://freelancecalc.ru/benchmark/report?key=2026q1
@@ -13,6 +14,22 @@ export const metadata: Metadata = {
   title: "Бенчмарк ставок фрилансеров Q2 2026 — FreelanceCalc",
   robots: { index: false, follow: false }, // don't index — paid product
 };
+
+// ─── HH.ru Live Data config ─────────────────────────────────────────────────
+
+/** Top specialties to show with real hh.ru data (slug must exist in fetchHhData.ts) */
+const HH_LIVE_SPECIALTIES = [
+  { slug: "frontend-razrabotchik",  name: "Frontend-разработчик",   staticMsk: 2250 },
+  { slug: "backend-razrabotchik",   name: "Backend-разработчик",    staticMsk: 2700 },
+  { slug: "python-razrabotchik",    name: "Python-разработчик",     staticMsk: 2800 },
+  { slug: "ml-inzhener",            name: "ML/AI-инженер",          staticMsk: 5000 },
+  { slug: "devops-inzhener",        name: "DevOps-инженер",         staticMsk: 4200 },
+  { slug: "fullstack-razrabotchik", name: "Fullstack-разработчик",  staticMsk: 3000 },
+  { slug: "mobilnyj-razrabotchik",  name: "Мобильный разработчик",  staticMsk: 3200 },
+  { slug: "dizajner-ui-ux",         name: "UI/UX-дизайнер",         staticMsk: 2000 },
+  { slug: "data-analyst",           name: "Аналитик данных",        staticMsk: 2700 },
+  { slug: "menedzher-proektov",     name: "Менеджер проектов",      staticMsk: 2200 },
+] as const;
 
 // ─── Data ───────────────────────────────────────────────────────────────────
 
@@ -129,6 +146,10 @@ export default async function ReportPage({
     redirect("/benchmark");
   }
 
+  // Fetch live hh.ru data in parallel (cached 24h via Next.js Data Cache)
+  const hhData = await fetchAllHhData(HH_LIVE_SPECIALTIES.map((s) => s.slug));
+  const hasHhData = hhData.some((d) => d !== null);
+
   const today = new Date().toLocaleDateString("ru-RU", {
     day: "numeric",
     month: "long",
@@ -208,6 +229,82 @@ export default async function ReportPage({
               </div>
             ))}
           </div>
+
+          {/* ── Live hh.ru block ─────────────────────────────────────────────── */}
+          {hasHhData && (
+            <section className="mb-8">
+              <div className="flex items-center gap-3 mb-3">
+                <h2 className="text-xl font-bold text-gray-900">📡 Актуальные данные hh.ru → фриланс-ставка</h2>
+                <span className="text-xs bg-green-100 text-green-700 border border-green-200 px-2 py-0.5 rounded-full font-medium whitespace-nowrap">
+                  обновляется каждые 24 ч
+                </span>
+              </div>
+              <p className="text-sm text-gray-500 mb-4">
+                Зарплаты сотрудников в <strong>Москве</strong> по данным hh.ru, пересчитанные в эквивалентную фриланс-ставку с учётом 30% простоев и налога НПД 4%.{" "}
+                <span className="text-gray-400">Колонка «Оценка отчёта» — медиана по данным этого отчёта для сравнения.</span>
+              </p>
+              <div className="overflow-x-auto rounded-xl border border-green-200 shadow-sm">
+                <table className="w-full text-sm border-collapse">
+                  <thead>
+                    <tr className="bg-green-50 border-b border-green-200">
+                      <th className="text-left px-4 py-3 font-semibold text-gray-700">Специальность</th>
+                      <th className="text-right px-4 py-3 font-semibold text-gray-400 whitespace-nowrap">Вакансий</th>
+                      <th className="text-right px-4 py-3 font-semibold text-gray-500 whitespace-nowrap">25% (₽/ч)</th>
+                      <th className="text-right px-4 py-3 font-semibold text-green-700 whitespace-nowrap">Медиана (₽/ч)</th>
+                      <th className="text-right px-4 py-3 font-semibold text-green-800 whitespace-nowrap">75% (₽/ч)</th>
+                      <th className="text-right px-4 py-3 font-semibold text-indigo-600 whitespace-nowrap">Оценка отчёта</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {HH_LIVE_SPECIALTIES.map((spec, i) => {
+                      const d = hhData[i];
+                      if (!d) {
+                        return (
+                          <tr key={spec.slug} className="border-t border-gray-100">
+                            <td className="px-4 py-2.5 text-gray-700">{spec.name}</td>
+                            <td colSpan={4} className="px-4 py-2.5 text-right text-gray-300 text-xs italic">данные недоступны</td>
+                            <td className="px-4 py-2.5 text-right text-indigo-500 font-semibold">
+                              {spec.staticMsk.toLocaleString("ru-RU")}
+                            </td>
+                          </tr>
+                        );
+                      }
+                      const delta = d.freelanceHourly.median - spec.staticMsk;
+                      const deltaSign = delta >= 0 ? "+" : "";
+                      return (
+                        <tr key={spec.slug} className="border-t border-gray-100 hover:bg-green-50/40">
+                          <td className="px-4 py-2.5 font-medium text-gray-800">{spec.name}</td>
+                          <td className="px-4 py-2.5 text-right text-gray-400 text-xs">{d.count}</td>
+                          <td className="px-4 py-2.5 text-right text-gray-500">
+                            {d.freelanceHourly.p25.toLocaleString("ru-RU")}
+                          </td>
+                          <td className="px-4 py-2.5 text-right font-bold text-green-700">
+                            {d.freelanceHourly.median.toLocaleString("ru-RU")}
+                          </td>
+                          <td className="px-4 py-2.5 text-right font-semibold text-green-800">
+                            {d.freelanceHourly.p75.toLocaleString("ru-RU")}
+                          </td>
+                          <td className="px-4 py-2.5 text-right">
+                            <span className="text-indigo-500 font-semibold">
+                              {spec.staticMsk.toLocaleString("ru-RU")}
+                            </span>
+                            {delta !== 0 && (
+                              <span className={`ml-1.5 text-xs font-normal ${delta > 0 ? "text-green-600" : "text-red-400"}`}>
+                                ({deltaSign}{delta.toLocaleString("ru-RU")})
+                              </span>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+                <div className="bg-gray-50 border-t border-green-100 px-4 py-2.5 text-xs text-gray-400">
+                  Формула: зарплата hh.ru (медиана) ÷ 160 ч ÷ 0.70 (загрузка) ÷ 0.96 (НПД 4%) = фриланс-ставка/ч · Источник: api.hh.ru · Только вакансии с указанной зарплатой в рублях, полная занятость, Москва
+                </div>
+              </div>
+            </section>
+          )}
 
           {/* Methodology note */}
           <div className="mb-6 bg-gray-50 border border-gray-200 rounded-xl p-4 text-sm text-gray-600">
