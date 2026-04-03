@@ -80,7 +80,7 @@ function getMarketContext(hourlyRate: number): {
     return {
       emoji: "🚀",
       label: "Выше медианы",
-      description: "Сопоставимо с mid/senior разработчиками. Посмотрите точные данные по 26 специальностям и 10 городам —",
+      description: "Сопоставимо с mid/senior разработчиками. Посмотрите точные данные по 32 специальностям и 10 городам —",
       color: "text-indigo-600 bg-indigo-50 border-indigo-200",
     };
   }
@@ -1050,7 +1050,7 @@ export default function FreelanceCalc() {
                           text:
                             `Добрый день!\n\n` +
                             `Мои услуги в области «${spec.title}»: ${fmtN(targetRound)} ₽/час.\n\n` +
-                            `Это медианная ставка по рынку на Q1 2026 — соответствует специалистам с опытом от 3 лет. Включает: разработку, коммуникацию, итерации по ТЗ.\n\n` +
+                            `Это медианная ставка по рынку на Q2 2026 — соответствует специалистам с опытом от 3 лет. Включает: разработку, коммуникацию, итерации по ТЗ.\n\n` +
                             `Для оценки проекта пришлите описание задачи — отвечу в течение дня.`,
                         },
                         {
@@ -1292,7 +1292,7 @@ export default function FreelanceCalc() {
                   : "Вы в топ-10% рынка. Посмотрите, с кем конкурируете по цене."}
               </h3>
               <p className="text-sm text-slate-600 mt-1">
-                Медианные ставки по 26 специальностям × 10 городам. Каждый день без этих данных — потенциально потерянные деньги.
+                Медианные ставки по 32 специальностям × 10 городам. Каждый день без этих данных — потенциально потерянные деньги.
               </p>
             </div>
             <button
@@ -1585,18 +1585,18 @@ export default function FreelanceCalc() {
             <h2 className="text-xl font-bold text-slate-900 mb-2">
               {specGapData
                 ? `Сколько платят ${specGapData.spec.title.toLowerCase()}ам в реальности`
-                : "Ваша ставка vs рынок Q1 2026"}
+                : "Ваша ставка vs рынок Q2 2026"}
             </h2>
             <p className="text-slate-600 text-sm mb-4">
               {specGapData
-                ? `Медианные ставки по вашей специальности по городам и уровню опыта — и конкретные шаги чтобы поднять свою. 26 специальностей × 10 городов × 3 уровня.`
-                : "Точные медианные ставки по 26 специальностям × 10 городам × 3 уровня опыта. Узнайте, занижаете ли вы цену — и на сколько."}
+                ? `Медианные ставки по вашей специальности по городам и уровню опыта — и конкретные шаги чтобы поднять свою. 32 специальности × 10 городов × 3 уровня.`
+                : "Точные медианные ставки по 32 специальностям × 10 городам × 3 уровня опыта. Узнайте, занижаете ли вы цену — и на сколько."}
             </p>
             {selectedSpecPreview ? (
               /* Personalized: show J/M/S for user's exact specialty × city */
               <div className="mb-4">
                 <div className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">
-                  {selectedSpecPreview.spec.title} · {selectedSpecPreview.cityData.name} · Q1 2026
+                  {selectedSpecPreview.spec.title} · {selectedSpecPreview.cityData.name} · Q2 2026
                 </div>
                 <div className="space-y-1.5">
                   {(
@@ -1623,13 +1623,13 @@ export default function FreelanceCalc() {
                 <li>✅ UI/UX дизайнер: <strong>1 300–2 800 ₽/час</strong></li>
                 <li>✅ Копирайтер: <strong>700–1 700 ₽/час</strong></li>
                 <li>✅ SEO-специалист: <strong>1 100–2 200 ₽/час</strong></li>
-                <li className="text-slate-400 text-xs pt-1">+ 22 других специальности и разбивка по 10 городам</li>
+                <li className="text-slate-400 text-xs pt-1">+ 28 других специальностей и разбивка по 10 городам</li>
               </ul>
             )}
 
             {/* Info block */}
             <div className="bg-slate-50 rounded-lg px-3 py-2 mb-4 text-xs text-slate-500">
-              🔄 Q1 2026 · Данные с FL.ru, Хабр Карьера, Kwork · Разбивка Junior / Mid / Senior
+              🔄 Q2 2026 · Данные с FL.ru, Хабр Карьера, Kwork · Разбивка Junior / Mid / Senior
             </div>
 
             <div className="flex items-baseline gap-3 mb-1">
