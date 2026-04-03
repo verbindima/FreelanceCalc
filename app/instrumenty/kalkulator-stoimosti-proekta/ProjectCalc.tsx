@@ -237,7 +237,7 @@ export default function ProjectCalc() {
         </div>
 
         <p className="text-xs text-indigo-300">
-          Расчёт основан на медианных рыночных ставках Q1 2026. Конкретная ставка зависит от опыта специалиста, технологий и объёма ТЗ.
+          Расчёт основан на медианных рыночных ставках Q2 2026. Конкретная ставка зависит от опыта специалиста, технологий и объёма ТЗ.
         </p>
       </section>
 
@@ -275,10 +275,10 @@ export default function ProjectCalc() {
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div className="flex-1">
             <p className="text-xs font-semibold text-amber-600 uppercase tracking-wide mb-1">
-              PDF-бенчмарк · Q1 2026
+              PDF-бенчмарк · Q2 2026
             </p>
             <h3 className="font-bold text-slate-800 text-base">
-              Точные медианы по 22 специальностям и 10 городам
+              Точные медианы по 32 специальностям и 25 городам
             </h3>
             <p className="text-sm text-slate-600 mt-1">
               Обоснуйте бюджет перед командой или проверьте, не завышает ли фрилансер ставку.

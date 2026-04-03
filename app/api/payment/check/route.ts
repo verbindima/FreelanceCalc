@@ -95,7 +95,7 @@ export async function GET() {
             customer: { email: "diagnostic@freelancecalc.ru" },
             items: [
               {
-                description: "PDF «Рыночные ставки фрилансеров» Q1 2026",
+                description: "PDF «Рыночные ставки фрилансеров» Q2 2026",
                 quantity: "1.00",
                 amount: { value: "1.00", currency: "RUB" },
                 vat_code: 1,

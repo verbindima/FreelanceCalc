@@ -50,7 +50,7 @@ export async function POST(request: Request) {
         customer: { email: customerEmail },
         items: [
           {
-            description: `PDF «Рыночные ставки фрилансеров» Q1 2026`,
+            description: `PDF «Рыночные ставки фрилансеров» Q2 2026`,
             quantity: "1.00",
             amount: { value: `${price}.00`, currency: "RUB" },
             vat_code: 1, // 1 = без НДС (НДС не облагается)
@@ -78,7 +78,7 @@ export async function POST(request: Request) {
           type: "redirect",
           return_url: `${RETURN_URL}/payment/success`,
         },
-        description: `PDF «Рыночные ставки фрилансеров» Q1 2026 — ${price} ₽`,
+        description: `PDF «Рыночные ставки фрилансеров» Q2 2026 — ${price} ₽`,
         metadata: { product: "market_rates_pdf", price_rub: price },
         ...(receipt && { receipt }),
       }),
