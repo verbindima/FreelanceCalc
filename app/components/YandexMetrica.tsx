@@ -21,7 +21,7 @@ export default function YandexMetrica() {
             clickmap:true,
             trackLinks:true,
             accurateTrackBounce:true,
-            webvisor:true,
+            webvisor:false,
             ecommerce:"dataLayer"
           });
         `}
