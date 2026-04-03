@@ -231,17 +231,24 @@ export default async function ReportPage({
           </div>
 
           {/* ── Live hh.ru block ─────────────────────────────────────────────── */}
-          {hasHhData && (
-            <section className="mb-8">
+          <section className="mb-8">
               <div className="flex items-center gap-3 mb-3">
-                <h2 className="text-xl font-bold text-gray-900">📡 Актуальные данные hh.ru → фриланс-ставка</h2>
-                <span className="text-xs bg-green-100 text-green-700 border border-green-200 px-2 py-0.5 rounded-full font-medium whitespace-nowrap">
-                  обновляется каждые 24 ч
-                </span>
+                <h2 className="text-xl font-bold text-gray-900">📡 Данные hh.ru → фриланс-ставка</h2>
+                {hasHhData ? (
+                  <span className="text-xs bg-green-100 text-green-700 border border-green-200 px-2 py-0.5 rounded-full font-medium whitespace-nowrap">
+                    live · обновляется каждые 24 ч
+                  </span>
+                ) : (
+                  <span className="text-xs bg-amber-100 text-amber-700 border border-amber-200 px-2 py-0.5 rounded-full font-medium whitespace-nowrap">
+                    расчётные оценки
+                  </span>
+                )}
               </div>
               <p className="text-sm text-gray-500 mb-4">
-                Зарплаты сотрудников в <strong>Москве</strong> по данным hh.ru, пересчитанные в эквивалентную фриланс-ставку с учётом 30% простоев и налога НПД 4%.{" "}
-                <span className="text-gray-400">Колонка «Оценка отчёта» — медиана по данным этого отчёта для сравнения.</span>
+                {hasHhData
+                  ? <>Реальные зарплаты сотрудников в <strong>Москве</strong> по данным hh.ru, пересчитанные в эквивалентную фриланс-ставку (÷160ч, ÷загрузка 70%, ÷НПД 4%). Колонка «Оценка отчёта» — медиана из таблиц ниже для сравнения.</>
+                  : <>Расчётная эквивалентная фриланс-ставка на основе типичных зарплат найма в Москве. Формула: зарплата ÷ 160ч ÷ 0.70 ÷ 0.96. Источник hh.ru временно недоступен.</>
+                }
               </p>
               <div className="overflow-x-auto rounded-xl border border-green-200 shadow-sm">
                 <table className="w-full text-sm border-collapse">
@@ -259,13 +266,17 @@ export default async function ReportPage({
                     {HH_LIVE_SPECIALTIES.map((spec, i) => {
                       const d = hhData[i];
                       if (!d) {
+                        // Fallback: compute freelance equivalent from static rate
+                        const staticP25  = Math.round(spec.staticMsk * 0.75 / 50) * 50;
+                        const staticP75  = Math.round(spec.staticMsk * 1.30 / 50) * 50;
                         return (
-                          <tr key={spec.slug} className="border-t border-gray-100">
+                          <tr key={spec.slug} className="border-t border-gray-100 opacity-80">
                             <td className="px-4 py-2.5 text-gray-700">{spec.name}</td>
-                            <td colSpan={4} className="px-4 py-2.5 text-right text-gray-300 text-xs italic">данные недоступны</td>
-                            <td className="px-4 py-2.5 text-right text-indigo-500 font-semibold">
-                              {spec.staticMsk.toLocaleString("ru-RU")}
-                            </td>
+                            <td className="px-4 py-2.5 text-right text-gray-300 text-xs italic">—</td>
+                            <td className="px-4 py-2.5 text-right text-gray-400">{staticP25.toLocaleString("ru-RU")}</td>
+                            <td className="px-4 py-2.5 text-right font-bold text-gray-600">{spec.staticMsk.toLocaleString("ru-RU")}</td>
+                            <td className="px-4 py-2.5 text-right text-gray-500">{staticP75.toLocaleString("ru-RU")}</td>
+                            <td className="px-4 py-2.5 text-right text-indigo-400 font-semibold">{spec.staticMsk.toLocaleString("ru-RU")}</td>
                           </tr>
                         );
                       }
@@ -304,7 +315,6 @@ export default async function ReportPage({
                 </div>
               </div>
             </section>
-          )}
 
           {/* Methodology note */}
           <div className="mb-6 bg-gray-50 border border-gray-200 rounded-xl p-4 text-sm text-gray-600">
