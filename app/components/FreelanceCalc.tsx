@@ -620,6 +620,33 @@ export default function FreelanceCalc() {
           </div>
         </header>
 
+        {/* Quick rates anchor — shown before calculator to reduce bounce: user sees realistic ranges before entering numbers */}
+        <div className="mb-6 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2.5">
+            Медианные ставки (Q2 2026)
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {QUICK_SPECIALTIES.slice(0, 6).map((s) => (
+              <Link
+                key={s.slug}
+                href={`/stavka/${s.slug}`}
+                onClick={() => ymGoal("quick_rate_anchor_click", { slug: s.slug })}
+                className="inline-flex items-center gap-1.5 bg-white border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-medium px-3 py-1.5 rounded-full transition-colors"
+              >
+                <span>{s.title}</span>
+                <span className="text-slate-400 font-normal">{s.median} ₽/ч</span>
+              </Link>
+            ))}
+            <Link
+              href="/stavka"
+              onClick={() => ymGoal("quick_rate_anchor_all_click")}
+              className="inline-flex items-center text-xs text-indigo-500 hover:text-indigo-700 font-medium px-2 py-1.5 transition-colors"
+            >
+              Все 44 →
+            </Link>
+          </div>
+        </div>
+
         {/* Colleague comparison banner — shown when page opened via a shared link */}
         {sharedColleagueRate && (
           <div className="bg-indigo-50 border border-indigo-200 rounded-2xl px-5 py-4 flex items-start gap-3">
