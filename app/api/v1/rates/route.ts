@@ -43,7 +43,7 @@ export async function GET() {
   const response = {
     meta: {
       version: "v1",
-      updated_quarter: "2026-Q1",
+      updated_quarter: "2026-Q2",
       total_specialties: specialties.length,
       total_cities: cities.length,
       currency: "RUB",

@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Для разработчиков — API ставок фрилансеров и виджет | FreelanceCalc",
   description:
-    "Бесплатный JSON API со ставками фрилансеров в России: 26 специальностей, 24 города, уровни опыта. Также встраиваемый виджет калькулятора для вашего сайта. Лицензия CC BY 4.0.",
+    "Бесплатный JSON API со ставками фрилансеров в России: 32 специальности, 24 города, уровни опыта. Также встраиваемый виджет калькулятора для вашего сайта. Лицензия CC BY 4.0.",
 };
 
 const API_URL = "https://freelancecalc.ru/api/v1/rates";
@@ -13,8 +13,8 @@ const CALC_URL = "https://freelancecalc.ru";
 const exampleResponse = `{
   "meta": {
     "version": "v1",
-    "updated_quarter": "2026-Q1",
-    "total_specialties": 26,
+    "updated_quarter": "2026-Q2",
+    "total_specialties": 32,
     "total_cities": 24,
     "currency": "RUB",
     "source": "https://freelancecalc.ru",
@@ -88,7 +88,7 @@ export default function ForDevelopersPage() {
           JSON API — ставки фрилансеров
         </h2>
         <p className="text-gray-600 mb-4">
-          Один GET-запрос возвращает медианные ставки по 26 специальностям, 24
+          Один GET-запрос возвращает медианные ставки по 32 специальностям, 24
           городам и 3 уровням опыта. Обновляется ежеквартально.
         </p>
 
@@ -100,7 +100,7 @@ export default function ForDevelopersPage() {
 
         <div className="grid grid-cols-3 gap-3 mb-6">
           {[
-            { label: "Специальностей", value: "26" },
+            { label: "Специальностей", value: "32" },
             { label: "Городов", value: "24" },
             { label: "Уровней опыта", value: "3" },
           ].map(({ label, value }) => (
