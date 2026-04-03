@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 
+// Force SSR — never cache at CDN edge (Russian Vercel PoPs had stale 404 issues)
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Подключение РСЯ — FreelanceCalc Setup",
   robots: { index: false, follow: false },
