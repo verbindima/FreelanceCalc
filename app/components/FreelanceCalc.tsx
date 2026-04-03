@@ -560,8 +560,8 @@ export default function FreelanceCalc() {
         </div>
       )}
 
-      {/* Price urgency announcement bar — visible above the fold, disappears after April 7 */}
-      {countdown && (
+      {/* Announcement bar — always visible above the fold. Urgency before April 7, value-prop after. */}
+      {countdown ? (
         <div className="w-full bg-red-600 text-white">
           <div className="max-w-2xl mx-auto px-4 py-2 flex items-center justify-between gap-3">
             <span className="text-sm flex items-center gap-1.5 min-w-0">
@@ -575,6 +575,23 @@ export default function FreelanceCalc() {
               className="shrink-0 bg-white text-red-700 font-semibold text-xs px-3 py-1.5 rounded-lg hover:bg-red-50 transition-colors whitespace-nowrap"
             >
               Успеть →
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="w-full bg-indigo-700 text-white">
+          <div className="max-w-2xl mx-auto px-4 py-2 flex items-center justify-between gap-3">
+            <span className="text-sm flex items-center gap-1.5 min-w-0">
+              <span>📊</span>
+              <span className="truncate">
+                Бенчмарк Q2 2026 — <strong>349 ₽</strong> · Обновление Q3 (июль) — <strong>бесплатно</strong> покупателям
+              </span>
+            </span>
+            <button
+              onClick={() => { handleOpenUpsell(); ymGoal("announcement_bar_click_post"); }}
+              className="shrink-0 bg-white text-indigo-700 font-semibold text-xs px-3 py-1.5 rounded-lg hover:bg-indigo-50 transition-colors whitespace-nowrap"
+            >
+              Купить →
             </button>
           </div>
         </div>
@@ -1667,7 +1684,7 @@ export default function FreelanceCalc() {
                 </span>
               ) : (
                 <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded-full">
-                  🎁 Q1 + Q2 в июле бесплатно
+                  🎁 Q3 (июль 2026) — бесплатно
                 </span>
               )}
             </div>
@@ -1801,7 +1818,7 @@ function ResultCard({
   );
 }
 
-/** City benchmark multipliers relative to Moscow — from Q1 2026 research data */
+/** City benchmark multipliers relative to Moscow — from Q2 2026 research data */
 const CITY_BENCHMARK_DATA: Array<{ name: string; slug: string; mskMult: number }> = [
   { name: "Москва",           slug: "moskva",           mskMult: 1.00 },
   { name: "Санкт-Петербург",  slug: "sankt-peterburg",  mskMult: 0.83 },
