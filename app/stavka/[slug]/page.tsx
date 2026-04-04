@@ -7,6 +7,7 @@ import { LEVELS } from "./opyt/[level]/levels";
 import SpecialtyCalc from "./SpecialtyCalc";
 import { SPECIALTY_ARTICLES } from "./related-articles";
 import { BENCHMARK_PRICE, showUrgency } from "@/lib/price";
+import { fetchHhMarket } from "@/lib/hh-market";
 
 // TODO: switch to custom domain once purchased & configured in Vercel
 const BASE_URL = "https://freelancecalc.ru";
@@ -82,6 +83,9 @@ export default async function SpecialtyPage({ params }: Props) {
 
   const faqItems = buildSpecialtyFaq(spec);
 
+  // Fetch real hh.ru market data server-side (cached 24h by Next.js fetch cache)
+  const hhData = await fetchHhMarket(slug);
+
   const webPageJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -109,7 +113,8 @@ export default async function SpecialtyPage({ params }: Props) {
   };
 
   const rateRange = parseRateRange(spec.medianHourly);
-  const occupationJsonLd = rateRange
+  // Use real hh.ru data in schema if available, otherwise fall back to static range
+  const occupationJsonLd = (hhData || rateRange)
     ? {
         "@context": "https://schema.org",
         "@type": "Occupation",
@@ -119,17 +124,31 @@ export default async function SpecialtyPage({ params }: Props) {
           "@type": "Country",
           name: "Russia",
         },
-        estimatedSalary: [
-          {
-            "@type": "MonetaryAmountDistribution",
-            name: "hourly rate",
-            currency: "RUB",
-            duration: "PT1H",
-            percentile10: Math.round(rateRange.low * 0.7 / 100) * 100,
-            median: Math.round((rateRange.low + rateRange.high) / 2 / 100) * 100,
-            percentile90: Math.round(rateRange.high * 1.2 / 100) * 100,
-          },
-        ],
+        estimatedSalary: hhData
+          ? [
+              {
+                "@type": "MonetaryAmountDistribution",
+                name: "freelance hourly rate equivalent",
+                currency: "RUB",
+                duration: "PT1H",
+                percentile25: hhData.freelance_hourly_equiv.p25,
+                median: hhData.freelance_hourly_equiv.median,
+                percentile75: hhData.freelance_hourly_equiv.p75,
+              },
+            ]
+          : rateRange
+          ? [
+              {
+                "@type": "MonetaryAmountDistribution",
+                name: "hourly rate",
+                currency: "RUB",
+                duration: "PT1H",
+                percentile10: Math.round(rateRange.low * 0.7 / 100) * 100,
+                median: Math.round((rateRange.low + rateRange.high) / 2 / 100) * 100,
+                percentile90: Math.round(rateRange.high * 1.2 / 100) * 100,
+              },
+            ]
+          : [],
       }
     : null;
 
@@ -181,6 +200,50 @@ export default async function SpecialtyPage({ params }: Props) {
           defaultLoad={spec.defaultLoad}
           specialty={spec.shortTitle}
         />
+
+        {/* HH.ru Market Benchmark — real salary data, unique moat */}
+        {hhData && (
+          <section className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
+                📈 Рынок найма hh.ru · {hhData.city}
+              </h3>
+              <span className="text-xs text-slate-400">{hhData.total_found.toLocaleString("ru-RU")} вакансий</span>
+            </div>
+            <p className="text-xs text-slate-500 mb-3 leading-relaxed">
+              Чтобы на фрилансе зарабатывать{" "}
+              <strong className="text-slate-700">
+                столько же, сколько в найме
+              </strong>
+              , с учётом простоев 30% и НПД 4%:
+            </p>
+            <div className="grid grid-cols-3 gap-2 text-center">
+              <div className="rounded-lg border border-slate-200 bg-white py-2 px-1">
+                <div className="text-sm font-bold text-slate-700">
+                  {hhData.freelance_hourly_equiv.p25.toLocaleString("ru-RU")} ₽
+                </div>
+                <div className="text-xs text-slate-400 mt-0.5">junior / ч</div>
+              </div>
+              <div className="rounded-lg border border-indigo-200 bg-white py-2 px-1">
+                <div className="text-sm font-bold text-indigo-700">
+                  {hhData.freelance_hourly_equiv.median.toLocaleString("ru-RU")} ₽
+                </div>
+                <div className="text-xs text-indigo-400 mt-0.5">middle / ч</div>
+              </div>
+              <div className="rounded-lg border border-slate-200 bg-white py-2 px-1">
+                <div className="text-sm font-bold text-slate-700">
+                  {hhData.freelance_hourly_equiv.p75.toLocaleString("ru-RU")} ₽
+                </div>
+                <div className="text-xs text-slate-400 mt-0.5">senior / ч</div>
+              </div>
+            </div>
+            <p className="text-xs text-slate-400 mt-2 text-center">
+              Зарплата в найме (медиана):{" "}
+              {Math.round(hhData.monthly_gross.median / 1000).toLocaleString("ru-RU")} тыс. ₽/мес
+              {" · "}данные hh.ru, обновляются ежедневно
+            </p>
+          </section>
+        )}
 
         {/* Benchmark upsell — hot zone right after user sees their rate */}
         <section className="mt-6 bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-100 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
