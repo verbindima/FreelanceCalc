@@ -637,17 +637,24 @@ export default function FreelanceCalc() {
           </div>
         </header>
 
-        {/* Quick rates anchor — shown before calculator to reduce bounce: user sees realistic ranges before entering numbers */}
+        {/* Quick rates anchor — entry point: clicking a specialty selects it inline and scrolls to comparison (no navigation = no bounce) */}
         <div className="mb-6 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
           <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2.5">
-            Медианные ставки (Q2 2026)
+            Выберите специальность — сравним вашу ставку с рынком:
           </p>
           <div className="flex flex-wrap gap-2">
             {QUICK_SPECIALTIES.slice(0, 6).map((s) => (
               <Link
                 key={s.slug}
                 href={`/stavka/${s.slug}`}
-                onClick={() => ymGoal("quick_rate_anchor_click", { slug: s.slug })}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedSpecialty(s.slug);
+                  ymGoal("quick_rate_anchor_click", { slug: s.slug });
+                  setTimeout(() => {
+                    document.getElementById("specialty-comparison")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }, 50);
+                }}
                 className="inline-flex items-center gap-1.5 bg-white border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-medium px-3 py-1.5 rounded-full transition-colors"
               >
                 <span>{s.title}</span>
@@ -934,7 +941,7 @@ export default function FreelanceCalc() {
         </div>
 
         {/* Specialty Gap — personalized market comparison to drive upsell + viral sharing */}
-        <div className="mt-3 bg-white border border-slate-200 rounded-xl p-4">
+        <div id="specialty-comparison" className="mt-3 bg-white border border-slate-200 rounded-xl p-4">
           <p className="text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wide">
             Выберите специальность — сравним с рынком:
           </p>
