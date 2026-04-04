@@ -739,5 +739,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...experienceLevelPages,
     ...levelCityPages,
     ...frilancVsNajmPages,
+    // /naim/ cluster — employer-facing "сколько платить фрилансеру" pages (44 specialties)
+    {
+      url: `${BASE_URL}/naim`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    },
+    ...SPECIALTY_DATA.map(({ slug }) => ({
+      url: `${BASE_URL}/naim/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
   ];
 }
