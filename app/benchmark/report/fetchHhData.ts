@@ -8,8 +8,9 @@
 const HH_API = "https://api.hh.ru/vacancies";
 const UA = "FreelanceCalc/1.0 (https://freelancecalc.ru)";
 
-/** HH.ru free-text queries for top specialties */
-const HH_QUERIES: Record<string, string> = {
+/** HH.ru free-text queries for all 32 specialties */
+export const HH_QUERIES: Record<string, string> = {
+  // Existing 10
   "frontend-razrabotchik":  "frontend разработчик",
   "backend-razrabotchik":   "backend разработчик",
   "python-razrabotchik":    "python разработчик",
@@ -20,6 +21,40 @@ const HH_QUERIES: Record<string, string> = {
   "dizajner-ui-ux":         "UX UI дизайнер",
   "data-analyst":           "аналитик данных",
   "menedzher-proektov":     "менеджер проектов",
+
+  // AI/ИИ — новая категория Q2 2026
+  "ai-agent":               "AI агент разработчик LLM",
+  "llm-finetuning":         "LLM machine learning инженер fine-tuning",
+  "prompt-engineer":        "prompt engineer ChatGPT AI",
+  "ai-integrator":          "AI автоматизация разработчик интеграция",
+
+  // Разработка — дополнительные специальности
+  "golang":                 "golang разработчик",
+  "java":                   "java разработчик",
+  "data-engineer":          "data engineer инженер данных ETL",
+  "dotnet":                 ".NET C# разработчик",
+  "unity":                  "Unity разработчик игры",
+  "php":                    "PHP разработчик Laravel",
+  "1c":                     "1С разработчик",
+  "qa":                     "QA тестировщик автоматизация",
+
+  // Аналитика
+  "business-analyst":       "бизнес аналитик",
+
+  // Дизайн
+  "motion-designer":        "motion дизайнер анимация",
+  "graphic-designer":       "графический дизайнер",
+  "web-designer":           "веб дизайнер",
+
+  // Маркетинг
+  "marketer":               "маркетолог digital",
+  "targetologist":          "таргетолог",
+  "seo":                    "SEO специалист оптимизация",
+  "smm":                    "SMM специалист контент",
+
+  // Тексты
+  "copywriter":             "копирайтер",
+  "translator":             "переводчик английский",
 };
 
 export interface HhSpecialtyResult {
@@ -105,10 +140,25 @@ async function fetchOneSpecialty(slug: string): Promise<HhSpecialtyResult | null
 }
 
 /**
- * Fetch all top specialties in parallel with graceful fallback.
- * Returns array in same order as HH_LIVE_SPECIALTIES; null = data unavailable.
+ * Fetch specialties in parallel with graceful fallback.
+ * Returns array in same order as input slugs; null = data unavailable.
+ * Batches requests to avoid rate-limiting from hh.ru.
  */
 export async function fetchAllHhData(slugs: readonly string[]): Promise<Array<HhSpecialtyResult | null>> {
-  const results = await Promise.allSettled(slugs.map(fetchOneSpecialty));
-  return results.map((r) => (r.status === "fulfilled" ? r.value : null));
+  const BATCH_SIZE = 10;
+  const results: Array<HhSpecialtyResult | null> = [];
+
+  for (let i = 0; i < slugs.length; i += BATCH_SIZE) {
+    const batch = slugs.slice(i, i + BATCH_SIZE);
+    const settled = await Promise.allSettled(batch.map(fetchOneSpecialty));
+    for (const r of settled) {
+      results.push(r.status === "fulfilled" ? r.value : null);
+    }
+    // Small delay between batches to be polite to hh.ru API
+    if (i + BATCH_SIZE < slugs.length) {
+      await new Promise((resolve) => setTimeout(resolve, 300));
+    }
+  }
+
+  return results;
 }
