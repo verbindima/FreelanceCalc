@@ -90,6 +90,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: `${BASE_URL}/salary-index`,
+      lastModified: new Date(),
+      changeFrequency: "daily" as const,
+      priority: 0.95,
+    },
+    {
       url: `${BASE_URL}/otchet-2026`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
