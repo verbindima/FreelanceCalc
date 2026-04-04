@@ -11,6 +11,20 @@ export const metadata: Metadata = {
 const API_URL = "https://freelancecalc.ru/api/v1/rates";
 const WIDGET_URL = "https://freelancecalc.ru/widget";
 const CALC_URL = "https://freelancecalc.ru";
+const BADGE_BASE = "https://freelancecalc.ru/api/badge";
+
+const BADGE_SLUGS = [
+  { slug: "python-razrabotchik",    label: "Python Dev" },
+  { slug: "frontend-razrabotchik",  label: "Frontend" },
+  { slug: "backend-razrabotchik",   label: "Backend" },
+  { slug: "fullstack-razrabotchik", label: "Fullstack" },
+  { slug: "ml-inzhener",            label: "ML Engineer" },
+  { slug: "devops-inzhener",        label: "DevOps" },
+  { slug: "mobilnyj-razrabotchik",  label: "Mobile Dev" },
+  { slug: "dizajner-ui-ux",         label: "UX/UI" },
+  { slug: "testirovshchik-qa",      label: "QA" },
+  { slug: "menedzher-proektov",     label: "PM" },
+];
 
 const exampleResponse = `{
   "meta": {
@@ -175,6 +189,80 @@ export default function ForDevelopersPage() {
           Виджет грузится с{" "}
           <code className="bg-slate-100 px-1 rounded font-mono">freelancecalc.ru/widget</code>{" "}
           — отдельная страница без навигации. Высоту можно менять: 420–500px.
+        </p>
+      </section>
+
+      {/* Dynamic Rate Badge section */}
+      <section className="mb-14">
+        <h2 className="text-xl font-semibold text-gray-900 mb-2">
+          Динамический бейдж ставки
+        </h2>
+        <p className="text-gray-600 mb-4">
+          Вставьте в GitHub README или блог — бейдж автоматически показывает{" "}
+          <strong>актуальную медианную ставку</strong> по данным hh.ru.
+          Обновляется раз в сутки.
+        </p>
+
+        {/* Live badge previews */}
+        <div className="flex flex-wrap gap-3 mb-5 p-4 bg-gray-900 rounded-xl">
+          {BADGE_SLUGS.slice(0, 6).map(({ slug }) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={slug}
+              src={`${BADGE_BASE}/${slug}`}
+              alt={slug}
+              height={20}
+              className="h-5"
+            />
+          ))}
+        </div>
+
+        {/* GitHub Markdown */}
+        <h3 className="font-medium text-gray-800 mb-2">
+          Вставить в GitHub README (Markdown):
+        </h3>
+        <CopyBlock
+          code={`![Python Dev Rate](${BADGE_BASE}/python-razrabotchik)\n![Frontend Rate](${BADGE_BASE}/frontend-razrabotchik)\n![ML Engineer Rate](${BADGE_BASE}/ml-inzhener)`}
+          label="Копировать Markdown"
+        />
+
+        {/* HTML */}
+        <h3 className="font-medium text-gray-800 mb-2 mt-5">
+          Вставить в HTML (со ссылкой на калькулятор):
+        </h3>
+        <CopyBlock
+          code={`<a href="${CALC_URL}/stavka/python-razrabotchik" target="_blank" rel="noopener">\n  <img src="${BADGE_BASE}/python-razrabotchik" alt="Python Dev Rate" height="20"/>\n</a>`}
+          label="Копировать HTML"
+        />
+
+        {/* Available slugs */}
+        <details className="mt-4 border border-slate-200 rounded-lg">
+          <summary className="px-4 py-3 text-sm font-medium text-slate-700 cursor-pointer hover:bg-slate-50">
+            Все доступные специальности ({BADGE_SLUGS.length}+)
+          </summary>
+          <div className="px-4 pb-4 pt-2 flex flex-wrap gap-2">
+            {BADGE_SLUGS.map(({ slug, label }) => (
+              <a
+                key={slug}
+                href={`${BADGE_BASE}/${slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-1 rounded font-mono transition-colors"
+              >
+                {slug}
+              </a>
+            ))}
+            <span className="text-xs text-slate-400 self-center ml-1">
+              + 33 специальности на{" "}
+              <a href={`${CALC_URL}/stavka`} className="text-blue-600 hover:underline">
+                /stavka
+              </a>
+            </span>
+          </div>
+        </details>
+
+        <p className="mt-3 text-xs text-slate-500">
+          Данные: реальные вакансии hh.ru · Москва · медианная ставка · обновление каждые 24ч
         </p>
       </section>
 
