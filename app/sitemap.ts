@@ -108,6 +108,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${BASE_URL}/guide/kalkulyator-frilansera`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    {
       url: `${BASE_URL}/stavka`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
