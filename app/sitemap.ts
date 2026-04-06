@@ -336,6 +336,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${BASE_URL}/stati/kak-vystavit-schet-samozanyatomu`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    },
+    {
       url: `${BASE_URL}/stati/kak-vystavit-schet-samozanyatomu-2026`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
@@ -738,6 +744,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/nalog/dogovor-gph`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    // /komissiya/ cluster — platform fee calculators (FL.ru, Kwork)
+    {
+      url: `${BASE_URL}/komissiya/fl-ru`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
     },
     ...specialtyPages,
     ...cityPages,
