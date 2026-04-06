@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import InlineCalc from "./InlineCalc";
 
 const BASE_URL = "https://freelancecalc.ru";
 
@@ -119,19 +120,10 @@ export default function KalkulyatorFrilanceraPage() {
           </div>
         </header>
 
-        {/* CTA — prominent, above the fold */}
-        <section className="mb-8 bg-indigo-600 text-white rounded-2xl p-6 text-center">
-          <p className="text-indigo-200 text-sm mb-2">Не хотите считать вручную?</p>
-          <h2 className="text-lg font-bold mb-3">
-            Рассчитайте свою ставку за 30 секунд
-          </h2>
-          <Link
-            href="/"
-            className="inline-block bg-white text-indigo-700 font-semibold px-6 py-2.5 rounded-xl text-sm hover:bg-indigo-50 transition-colors"
-          >
-            Открыть калькулятор фрилансера →
-          </Link>
-        </section>
+        {/* Inline Calculator — above the fold */}
+        <div className="mb-8">
+          <InlineCalc />
+        </div>
 
         <div className="space-y-8">
 
@@ -351,18 +343,26 @@ export default function KalkulyatorFrilanceraPage() {
             </div>
           </section>
 
-          {/* CTA mid-article */}
-          <section className="bg-indigo-600 text-white rounded-2xl p-6 text-center">
-            <h2 className="text-lg font-bold mb-2">Рассчитать свою ставку</h2>
-            <p className="text-indigo-200 text-sm mb-4">
-              Введите желаемый доход, налоговый режим и рабочий график — калькулятор покажет точную минимальную ставку.
+          {/* Mid-article CTA — market data */}
+          <section className="bg-slate-800 text-white rounded-2xl p-6 text-center">
+            <h2 className="text-lg font-bold mb-2">Сравните со своей специальностью</h2>
+            <p className="text-slate-300 text-sm mb-4">
+              Данные hh.ru по 26 специальностям, 3 уровням опыта и 24 городам России — обновляются ежедневно.
             </p>
-            <Link
-              href="/"
-              className="inline-block bg-white text-indigo-700 font-semibold px-6 py-2.5 rounded-xl text-sm hover:bg-indigo-50 transition-colors"
-            >
-              Открыть онлайн-калькулятор фрилансера →
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-2 justify-center">
+              <Link
+                href="/stavka"
+                className="inline-block bg-indigo-500 text-white font-semibold px-5 py-2.5 rounded-xl text-sm hover:bg-indigo-400 transition-colors"
+              >
+                Ставки по специальностям →
+              </Link>
+              <Link
+                href="/salary-index"
+                className="inline-block bg-slate-700 text-slate-200 font-semibold px-5 py-2.5 rounded-xl text-sm hover:bg-slate-600 transition-colors"
+              >
+                Индекс рынка 2026
+              </Link>
+            </div>
           </section>
 
           {/* Section 6 — FAQ */}
