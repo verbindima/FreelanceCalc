@@ -2,6 +2,30 @@ import { NextResponse } from "next/server";
 
 const BASE_URL = "https://freelancecalc.ru";
 
+// Tag-specific body text for Yandex Turbo content
+const TAG_TURBO_BODY: Record<string, string> = {
+  Рынок:
+    "Данные основаны на анализе рынка фриланса в России 2026 года. Актуальные ставки помогают фрилансерам не занижать цену, а работодателям — платить рыночную.",
+  Налоги:
+    "Все расчёты актуальны для 2026 года. Самозанятый платит 4–6% НПД, ИП УСН — 6% плюс страховые взносы ~50 800 ₽/год. Правильный режим может сэкономить десятки тысяч рублей.",
+  Руководство:
+    "Переход на фриланс требует планирования. Первый шаг — правильно рассчитать ставку, чтобы не оказаться в минусе с учётом налогов, простоев и скрытых расходов.",
+  Самозанятость:
+    "Самозанятость — самый простой способ работать легально в 2026 году. Регистрация через «Мой налог» занимает 10 минут, налоговый бонус 10 000 ₽ снижает первые платежи.",
+  Карьера:
+    "Правильная ставка — основа устойчивого фриланса. Многие фрилансеры занижают цену на 30–40%, теряя до 500 000 ₽ в год. Калькулятор помогает найти рыночный уровень.",
+  Финансы:
+    "Финансовая стабильность фрилансера начинается с правильного расчёта ставки и разделения дохода на налоги, подушку и жизнь.",
+  Биржи:
+    "Комиссии бирж — скрытый расход, который влияет на реальную ставку. Учитывайте их при расчёте минимально приемлемой цены проекта.",
+  Международное:
+    "Работа с иностранными клиентами позволяет получать в 2–4 раза больше. Самозанятый может принимать оплату от нерезидентов легально по ставке НПД 6%.",
+  Аналитика:
+    "Аналитика помогает принимать обоснованные решения о ставке и выборе формата работы — фриланс или найм.",
+  Заказчикам:
+    "Компании и работодатели используют данные рынка для бюджетирования проектов и переговоров с фрилансерами.",
+};
+
 const ARTICLES = [
   {
     slug: "kak-vystavit-schet-samozanyatomu",
@@ -289,9 +313,16 @@ function escapeXml(str: string): string {
     .replace(/'/g, "&apos;");
 }
 
+function buildTurboContent(article: (typeof ARTICLES)[0]): string {
+  const body =
+    TAG_TURBO_BODY[article.tag] ||
+    "Используйте бесплатный калькулятор FreelanceCalc для точного расчёта своей ставки с учётом налогов, простоев и загрузки.";
+  return `<header><h1>${article.title}</h1></header><p>${article.description}</p><p>${body}</p><p><a href="${BASE_URL}/stati/${article.slug}">Читать полную статью →</a></p><p><a href="${BASE_URL}">Рассчитать свою ставку бесплатно →</a></p>`;
+}
+
 export async function GET() {
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:turbo="http://turbo.yandex.ru">
   <channel>
     <title>FreelanceCalc — статьи о ставках фрилансеров</title>
     <link>${BASE_URL}</link>
@@ -309,6 +340,7 @@ ${ARTICLES.map(
       <description>${escapeXml(article.description)}</description>
       <category>${escapeXml(article.tag)}</category>
       <pubDate>${article.pubDate}</pubDate>
+      <turbo:content><![CDATA[${buildTurboContent(article)}]]></turbo:content>
     </item>`
   ).join("\n")}
   </channel>
