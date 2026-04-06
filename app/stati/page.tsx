@@ -331,6 +331,15 @@ const ARTICLES = [
     readTime: "9 мин",
     tag: "Самозанятость",
   },
+  {
+    slug: "nalog-samozanyatyj",
+    href: "/guide/nalog-samozanyatyj",
+    title: "Налог для самозанятых 2026: ставки 4% и 6%, лимит 2,4 млн ₽",
+    description:
+      "Как работает НПД: ставки 4% и 6%, лимит дохода, налоговый вычет 10 000 ₽, как выдавать чеки через «Мой налог», и когда выгоднее перейти на ИП УСН.",
+    readTime: "7 мин",
+    tag: "Налоги",
+  },
 ];
 
 const TAG_COLORS: Record<string, string> = {
@@ -401,7 +410,7 @@ export default function StatiIndexPage() {
           {ARTICLES.map((article) => (
             <Link
               key={article.slug}
-              href={`/stati/${article.slug}`}
+              href={"href" in article && article.href ? article.href : `/stati/${article.slug}`}
               className="block group bg-white rounded-xl border border-slate-200 hover:border-indigo-200 hover:shadow-sm transition-all p-5"
             >
               <div className="flex items-center gap-2 mb-2">
