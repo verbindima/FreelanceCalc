@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import Link from "next/link";
+import { TrendingDown, BarChart2, CheckCircle, TrendingUp, Star } from "lucide-react";
 import { ymGoal } from "./YandexMetrica";
 import YandexAd from "./YandexAd";
 
@@ -48,6 +49,7 @@ function fmt(n: number): string {
 /** Market position based on real Q1-2026 benchmark data (freelancecalc.ru/benchmark) */
 function getMarketContext(hourlyRate: number): {
   emoji: string;
+  iconName: "trending-down" | "bar-chart" | "check-circle" | "trending-up" | "star";
   label: string;
   description: string;
   color: string;
@@ -55,6 +57,7 @@ function getMarketContext(hourlyRate: number): {
   if (hourlyRate < 700) {
     return {
       emoji: "📉",
+      iconName: "trending-down",
       label: "Ниже рынка",
       description: "Даже начинающий копирайтер берёт 700–800 ₽/час. Посмотрите, сколько реально платят за вашу специальность —",
       color: "text-red-600 bg-red-50 border-red-200",
@@ -63,6 +66,7 @@ function getMarketContext(hourlyRate: number): {
   if (hourlyRate < 1200) {
     return {
       emoji: "📊",
+      iconName: "bar-chart",
       label: "Нижний квартиль рынка",
       description: "Медиана по большинству специальностей — 1 200–2 500 ₽/час. Проверьте, не занижаете ли вы ставку —",
       color: "text-orange-600 bg-orange-50 border-orange-200",
@@ -71,6 +75,7 @@ function getMarketContext(hourlyRate: number): {
   if (hourlyRate < 2000) {
     return {
       emoji: "✅",
+      iconName: "check-circle",
       label: "Рыночный уровень",
       description: "Соответствует медиане для дизайнеров и junior-разработчиков. Сравните с точными данными по вашей специальности —",
       color: "text-emerald-600 bg-emerald-50 border-emerald-200",
@@ -79,6 +84,7 @@ function getMarketContext(hourlyRate: number): {
   if (hourlyRate < 3500) {
     return {
       emoji: "🚀",
+      iconName: "trending-up",
       label: "Выше медианы",
       description: "Сопоставимо с mid/senior разработчиками. Посмотрите точные данные по 32 специальностям и 10 городам —",
       color: "text-indigo-600 bg-indigo-50 border-indigo-200",
@@ -86,10 +92,21 @@ function getMarketContext(hourlyRate: number): {
   }
   return {
     emoji: "⭐",
+    iconName: "star",
     label: "Топ рынка",
     description: "Топ-10% фрилансеров. Сопоставимо с ML/AI и Senior DevOps Москвы. Убедитесь сами —",
     color: "text-violet-600 bg-violet-50 border-violet-200",
   };
+}
+
+function MarketIcon({ iconName, className }: { iconName: string; className?: string }) {
+  const props = { className: className ?? "w-5 h-5" };
+  if (iconName === "trending-down") return <TrendingDown {...props} />;
+  if (iconName === "bar-chart") return <BarChart2 {...props} />;
+  if (iconName === "check-circle") return <CheckCircle {...props} />;
+  if (iconName === "trending-up") return <TrendingUp {...props} />;
+  if (iconName === "star") return <Star {...props} />;
+  return null;
 }
 
 export default function FreelanceCalc() {
@@ -527,7 +544,7 @@ export default function FreelanceCalc() {
         <div className="fixed top-0 left-0 right-0 z-50 bg-indigo-700 text-white shadow-lg border-b border-indigo-800 animate-in slide-in-from-top duration-200">
           <div className="max-w-2xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3">
             <div className="flex items-center gap-2 min-w-0">
-              <span className="text-base leading-none">{marketCtx.emoji}</span>
+              <span className="leading-none"><MarketIcon iconName={marketCtx.iconName} className="w-5 h-5" /></span>
               <div className="min-w-0">
                 <p className="font-bold text-sm leading-tight whitespace-nowrap">
                   Мне нужно {fmt(Math.round(results.hourlyRate))}/час
@@ -935,7 +952,7 @@ export default function FreelanceCalc() {
 
         {/* Market context badge — drives curiosity and upsell clicks */}
         <div className={`mt-3 flex items-start gap-3 border rounded-xl px-4 py-3 ${marketCtx.color}`}>
-          <span className="text-xl leading-none mt-0.5">{marketCtx.emoji}</span>
+          <span className="mt-0.5"><MarketIcon iconName={marketCtx.iconName} className="w-5 h-5" /></span>
           <div>
             <p className="text-sm font-semibold">{marketCtx.label}</p>
             <p className="text-xs mt-0.5 opacity-80">{marketCtx.description}{" "}

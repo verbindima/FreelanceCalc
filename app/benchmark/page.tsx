@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Map, Briefcase, BarChart3, RefreshCw } from "lucide-react";
 import BuyButton from "./BuyButton";
 import PriceCountdown from "./PriceCountdown";
 import ShareButtons from "./ShareButtons";
@@ -282,28 +283,32 @@ export default function BenchmarkPage() {
             <div className="grid md:grid-cols-2 gap-4">
               {[
                 {
-                  icon: "🗺",
+                  icon: <Map className="w-5 h-5" />,
+                  iconBg: "bg-blue-100 text-blue-600",
                   title: "10 городов России",
                   text: "Москва, Санкт-Петербург, Новосибирск, Екатеринбург, Казань, Краснодар, Нижний Новгород, Ростов-на-Дону, Самара, Уфа.",
                 },
                 {
-                  icon: "💼",
+                  icon: <Briefcase className="w-5 h-5" />,
+                  iconBg: "bg-indigo-100 text-indigo-600",
                   title: "32 специальности",
                   text: "AI/ИИ (Prompt-инженер, AI-агент разработчик — новое!), разработка (Frontend, Backend, ML, Mobile, DevOps, 1С), дизайн, маркетинг, тексты, аналитика, управление.",
                 },
                 {
-                  icon: "📈",
+                  icon: <BarChart3 className="w-5 h-5" />,
+                  iconBg: "bg-emerald-100 text-emerald-600",
                   title: "3 уровня опыта",
                   text: "Джун (до 1 года), мид (1–3 года), сеньор (3+ года). Разрыв в ставках — от 2 до 4 раз.",
                 },
                 {
-                  icon: "🔄",
+                  icon: <RefreshCw className="w-5 h-5" />,
+                  iconBg: "bg-orange-100 text-orange-600",
                   title: "Обновляется ежеквартально",
                   text: "Текущая версия — Q2 2026 (апрель 2026). Q3 2026 — в сентябре. Данные из FL.ru, Хабр Карьера, Kwork, Telegram-сообществ фрилансеров.",
                 },
               ].map((item) => (
                 <div key={item.title} className="bg-white rounded-xl border border-gray-200 p-5 flex gap-3">
-                  <div className="text-2xl">{item.icon}</div>
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${item.iconBg}`}>{item.icon}</div>
                   <div>
                     <div className="font-semibold text-gray-800 mb-1">{item.title}</div>
                     <div className="text-sm text-gray-600 leading-relaxed">{item.text}</div>

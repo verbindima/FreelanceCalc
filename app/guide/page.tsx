@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Calculator, Map, FileImage, TrendingUp, Shield, Crosshair, RefreshCw } from "lucide-react";
 import { BENCHMARK_PRICE } from "@/lib/price";
 
 const BASE_URL = "https://freelancecalc.ru";
@@ -17,6 +18,8 @@ export const metadata: Metadata = {
     type: "article",
   },
 };
+
+const STEP_ICONS = [Calculator, Map, FileImage, TrendingUp, Shield, Crosshair, RefreshCw];
 
 const STEPS = [
   {
@@ -140,7 +143,9 @@ export default function GuidePage() {
 
         {/* Steps */}
         <div className="space-y-6">
-          {STEPS.map((step) => (
+          {STEPS.map((step) => {
+          const StepIcon = STEP_ICONS[step.num - 1];
+          return (
             <article
               key={step.num}
               className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm"
@@ -150,7 +155,8 @@ export default function GuidePage() {
                   {step.num}
                 </span>
                 <div className="flex-1">
-                  <h2 className="text-base font-bold text-slate-800 leading-snug">
+                  <h2 className="text-base font-bold text-slate-800 leading-snug flex items-center gap-2">
+                    {StepIcon && <StepIcon className="w-4 h-4 text-indigo-400 shrink-0" />}
                     {step.title}
                   </h2>
                   <div className="mt-3 text-sm text-slate-600 leading-relaxed space-y-3">
@@ -169,7 +175,8 @@ export default function GuidePage() {
                 </div>
               </div>
             </article>
-          ))}
+          );
+        })}
         </div>
 
         {/* Summary CTA */}
@@ -193,10 +200,10 @@ export default function GuidePage() {
               Шаг 2 — данные по рынку
             </p>
             <p className="text-sm font-bold text-slate-800">
-              Посмотри медианные ставки по 22 специальностям и 10 городам — Бенчмарк PDF
+              Посмотри медианные ставки по 32 специальностям и 10 городам — Бенчмарк PDF
             </p>
             <p className="text-xs text-slate-500 mt-1">
-              Junior / Mid / Senior · Q1 2026 · обновляется ежеквартально
+              Junior / Mid / Senior · Q2 2026 · обновляется ежеквартально
             </p>
           </div>
           <Link

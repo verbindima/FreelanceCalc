@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PiggyBank, Receipt, Percent, DollarSign, Users, Calculator, Building2, Scale, FileText, BarChart2 } from "lucide-react";
 
 const BASE_URL = "https://freelancecalc.ru";
 
@@ -110,7 +111,8 @@ const jsonLd = {
 const tools = [
   {
     href: "/instrumenty/kalkulator-pensii-samozanyatogo",
-    emoji: "🏦",
+    icon: <PiggyBank className="w-5 h-5" />,
+    iconBg: "bg-red-100 text-red-600",
     title: "Калькулятор пенсии самозанятого",
     description:
       "Каждый год без взносов — минус 171 ₽/мес к пенсии навсегда. Узнайте, сколько теряете и стоит ли платить в СФР",
@@ -119,7 +121,8 @@ const tools = [
   },
   {
     href: "/instrumenty/kalkulator-naloga-samozanyatogo",
-    emoji: "🧾",
+    icon: <Receipt className="w-5 h-5" />,
+    iconBg: "bg-orange-100 text-orange-600",
     title: "Калькулятор налога самозанятого",
     description:
       "НПД 4% или 6% с учётом бонуса первого года и лимита 2 400 000 ₽",
@@ -128,7 +131,8 @@ const tools = [
   },
   {
     href: "/instrumenty/kalkulator-komissii-birzhi",
-    emoji: "📉",
+    icon: <Percent className="w-5 h-5" />,
+    iconBg: "bg-blue-100 text-blue-600",
     title: "Калькулятор комиссии биржи",
     description:
       "Сколько Kwork, FL.ru и Хабр Фриланс забирают с каждого заказа — и сколько вы теряете за год",
@@ -137,7 +141,8 @@ const tools = [
   },
   {
     href: "/?utm_source=instrumenty&utm_medium=hub",
-    emoji: "💰",
+    icon: <DollarSign className="w-5 h-5" />,
+    iconBg: "bg-blue-100 text-blue-600",
     title: "Калькулятор ставки фрилансера",
     description:
       "Посчитайте минимальную почасовую ставку по желаемому доходу, режиму налогов и загрузке",
@@ -146,7 +151,8 @@ const tools = [
   },
   {
     href: "/instrumenty/kalkulator-stoimosti-sotrudnika",
-    emoji: "👔",
+    icon: <Users className="w-5 h-5" />,
+    iconBg: "bg-red-100 text-red-600",
     title: "Калькулятор реальной стоимости сотрудника",
     description:
       "Штатный сотрудник за 100 000 ₽ gross стоит работодателю ≈150 000 ₽/мес. Сравните с фрилансером — пошлите заказчику, когда говорит «дорого»",
@@ -155,7 +161,8 @@ const tools = [
   },
   {
     href: "/instrumenty/kalkulator-stoimosti-proekta",
-    emoji: "🏗",
+    icon: <Calculator className="w-5 h-5" />,
+    iconBg: "bg-green-100 text-green-600",
     title: "Калькулятор стоимости найма фрилансера",
     description:
       "Для работодателей: рассчитайте бюджет проекта по специальности, городу и объёму работы",
@@ -164,7 +171,8 @@ const tools = [
   },
   {
     href: "/nalog/ip-usn",
-    emoji: "🏢",
+    icon: <Building2 className="w-5 h-5" />,
+    iconBg: "bg-purple-100 text-purple-600",
     title: "Калькулятор налога ИП УСН 6%",
     description:
       "Налог УСН 6%, страховые взносы 2026, вычет взносов из налога — полный расчёт для ИП",
@@ -173,7 +181,8 @@ const tools = [
   },
   {
     href: "/nalog/sravnenie",
-    emoji: "⚖️",
+    icon: <Scale className="w-5 h-5" />,
+    iconBg: "bg-purple-100 text-purple-600",
     title: "Самозанятый vs ИП: сравнение",
     description:
       "Интерактивное сравнение налогов: НПД против ИП УСН 6%. Найдите точку перехода для вашего дохода",
@@ -182,7 +191,8 @@ const tools = [
   },
   {
     href: "/instrumenty/kalkulator-dogovora-gph",
-    emoji: "📋",
+    icon: <FileText className="w-5 h-5" />,
+    iconBg: "bg-red-100 text-red-600",
     title: "Калькулятор договора ГПХ",
     description:
       "Сколько НДФЛ удержат по договору ГПХ? Сравнение с самозанятым — кто выгоднее для вас и заказчика",
@@ -191,7 +201,8 @@ const tools = [
   },
   {
     href: "/stavka",
-    emoji: "📊",
+    icon: <BarChart2 className="w-5 h-5" />,
+    iconBg: "bg-blue-100 text-blue-600",
     title: "Ставки по специальностям",
     description:
       "Медианные ставки разработчиков, дизайнеров, маркетологов — 22 специальности",
@@ -237,7 +248,7 @@ export default function InstrumentyPage() {
               className="block bg-white rounded-2xl border border-gray-100 p-5 hover:border-blue-200 hover:shadow-sm transition-all group"
             >
               <div className="flex items-start gap-4">
-                <div className="text-3xl mt-0.5">{tool.emoji}</div>
+                <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 ${tool.iconBg}`}>{tool.icon}</div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <h2 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
