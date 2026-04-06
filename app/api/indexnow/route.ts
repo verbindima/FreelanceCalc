@@ -110,6 +110,8 @@ function getAllUrls(): string[] {
     `${BASE_URL}/stati/stavki-1c-razrabotchikov-frilanserov-2026`,
     `${BASE_URL}/stati/stavki-proekt-menedzherov-frilanserov-2026`,
     `${BASE_URL}/stati/kak-vystavit-schet-samozanyatomu-2026`,
+    // Guide articles cluster
+    `${BASE_URL}/guide/nalog-ip-usn-6`,
   ];
 
   // Specialty pages
