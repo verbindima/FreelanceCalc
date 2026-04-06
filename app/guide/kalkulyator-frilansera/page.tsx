@@ -79,7 +79,7 @@ const articleJsonLd = {
   description:
     "Как правильно рассчитать ставку фрилансера: формула, учёт налогов, примеры для разных специальностей.",
   url: `${BASE_URL}/guide/kalkulyator-frilansera`,
-  datePublished: "2026-04-06",
+  datePublished: "2026-03-20",
   dateModified: "2026-04-06",
   author: { "@type": "Organization", name: "FreelanceCalc", url: BASE_URL },
   publisher: { "@type": "Organization", name: "FreelanceCalc", url: BASE_URL },
@@ -343,6 +343,40 @@ export default function KalkulyatorFrilanceraPage() {
             </div>
           </section>
 
+          {/* Section 5.5 — Project Cost */}
+          <section className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+            <h2 className="text-xl font-bold text-slate-800 mb-4">
+              Как назвать цену клиенту: считаем стоимость проекта
+            </h2>
+            <div className="text-sm text-slate-600 leading-relaxed space-y-3">
+              <p>
+                Знать свою часовую ставку — это полдела. Когда клиент приходит с задачей, ему нужна итоговая цена проекта, а не ставка за час. Как перейти от ставки к смете?
+              </p>
+              <p>
+                Базовая формула стоимости проекта:
+              </p>
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 font-mono text-xs text-slate-700 leading-relaxed">
+                <p className="font-semibold text-slate-800 mb-1">Стоимость проекта =</p>
+                <p>Часовая ставка × Оценка часов × Коэффициент правок</p>
+              </div>
+              <p>
+                Коэффициент правок — страховочный буфер. Большинство проектов выходят за первоначальную оценку на 20–40%. Стандартная практика: умножать оценку на <strong>1,2–1,4</strong> (закладывать 20–40% на доработки и уточнение требований).
+              </p>
+              <p>
+                Пример: дизайнер с ставкой 1 800 ₽/час оценил лендинг в 20 часов работы. С коэффициентом правок 1,3: стоимость = 1 800 × 20 × 1,3 = <strong>46 800 ₽</strong>. Округлив до 47 000 ₽ — это честная цена с защитой от размытия объёма.
+              </p>
+              <p>
+                Для быстрого расчёта бюджета по специальности и объёму работы используйте{" "}
+                <Link
+                  href="/instrumenty/kalkulator-stoimosti-proekta"
+                  className="text-indigo-600 hover:underline font-medium"
+                >
+                  калькулятор стоимости проекта →
+                </Link>
+              </p>
+            </div>
+          </section>
+
           {/* Mid-article CTA — market data */}
           <section className="bg-slate-800 text-white rounded-2xl p-6 text-center">
             <h2 className="text-lg font-bold mb-2">Сравните со своей специальностью</h2>
@@ -404,24 +438,30 @@ export default function KalkulyatorFrilanceraPage() {
             <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">
               Полезные материалы
             </p>
-            <div className="flex flex-col sm:flex-row gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               <Link
                 href="/guide"
-                className="flex-1 bg-white border border-slate-200 rounded-xl p-3 text-sm font-medium text-slate-700 hover:border-indigo-300 hover:text-indigo-700 transition-colors text-center"
+                className="bg-white border border-slate-200 rounded-xl p-3 text-sm font-medium text-slate-700 hover:border-indigo-300 hover:text-indigo-700 transition-colors text-center"
               >
-                Как поднять ставку на 30% за 3 месяца
+                Как поднять ставку на 30%
               </Link>
               <Link
                 href="/stavka"
-                className="flex-1 bg-white border border-slate-200 rounded-xl p-3 text-sm font-medium text-slate-700 hover:border-indigo-300 hover:text-indigo-700 transition-colors text-center"
+                className="bg-white border border-slate-200 rounded-xl p-3 text-sm font-medium text-slate-700 hover:border-indigo-300 hover:text-indigo-700 transition-colors text-center"
               >
                 Ставки по специальностям
               </Link>
               <Link
                 href="/nalog/sravnenie"
-                className="flex-1 bg-white border border-slate-200 rounded-xl p-3 text-sm font-medium text-slate-700 hover:border-indigo-300 hover:text-indigo-700 transition-colors text-center"
+                className="bg-white border border-slate-200 rounded-xl p-3 text-sm font-medium text-slate-700 hover:border-indigo-300 hover:text-indigo-700 transition-colors text-center"
               >
                 Сравнение налоговых режимов
+              </Link>
+              <Link
+                href="/instrumenty/kalkulator-stoimosti-proekta"
+                className="bg-white border border-slate-200 rounded-xl p-3 text-sm font-medium text-slate-700 hover:border-indigo-300 hover:text-indigo-700 transition-colors text-center"
+              >
+                Стоимость проекта →
               </Link>
             </div>
           </section>
