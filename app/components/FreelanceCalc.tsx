@@ -1581,6 +1581,30 @@ export default function FreelanceCalc() {
           </Link>
         </section>
 
+        {/* Related tools — internal linking to new calculators */}
+        <section className="mt-6">
+          <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">🔧 Другие калькуляторы</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {[
+              { href: "/nalog/dogovor-gph", title: "Налоги по договору ГПХ", desc: "НДФЛ, взносы, сравнение с самозанятым" },
+              { href: "/komissiya/fl-ru", title: "Комиссия FL.ru", desc: "Безопасная сделка: 7–20% в зависимости от клиента" },
+              { href: "/nalog/sravnenie", title: "Сравнение налоговых режимов", desc: "Самозанятый, ИП УСН, патент — по годовому доходу" },
+              { href: "/nalog/ip-usn", title: "Налог ИП УСН 6%", desc: "Взносы, вычеты, итоговая сумма к уплате" },
+            ].map((tool) => (
+              <Link
+                key={tool.href}
+                href={tool.href}
+                className="flex flex-col bg-white border border-slate-200 rounded-xl px-4 py-3 hover:border-indigo-300 hover:bg-indigo-50/40 transition-colors group"
+              >
+                <p className="text-sm font-semibold text-slate-800 group-hover:text-indigo-700 transition-colors leading-snug">
+                  {tool.title}
+                </p>
+                <p className="text-xs text-slate-500 mt-0.5">{tool.desc}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+
         {/* FAQ Section — rich snippets для Яндекса */}
         <section className="mt-8">
           <h2 className="text-lg font-bold text-slate-800 mb-4">Частые вопросы</h2>
