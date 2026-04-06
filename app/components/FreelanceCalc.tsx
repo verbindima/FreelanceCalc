@@ -528,12 +528,14 @@ export default function FreelanceCalc() {
           <div className="max-w-2xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3">
             <div className="flex items-center gap-2 min-w-0">
               <span className="text-base leading-none">{marketCtx.emoji}</span>
-              <span className="font-bold text-sm whitespace-nowrap">
-                {fmt(Math.round(results.hourlyRate))}/час
-              </span>
-              <span className="text-indigo-300 text-xs truncate hidden sm:inline">
-                · {marketCtx.label}
-              </span>
+              <div className="min-w-0">
+                <p className="font-bold text-sm leading-tight whitespace-nowrap">
+                  Мне нужно {fmt(Math.round(results.hourlyRate))}/час
+                </p>
+                <p className="text-indigo-300 text-xs leading-tight truncate hidden sm:block">
+                  {marketCtx.label} · {fmt(netMonthly)} ₽/мес на руки
+                </p>
+              </div>
             </div>
             <div className="flex items-center gap-2 shrink-0">
               <button
@@ -838,7 +840,14 @@ export default function FreelanceCalc() {
         {/* Results */}
         <section ref={resultsRef} className="mt-6 bg-indigo-600 text-white rounded-2xl shadow-md p-6">
           <div className="flex items-center justify-between mb-4 gap-2">
-            <h2 className="text-lg font-bold text-indigo-100">Ваша ставка</h2>
+            <div>
+              <h2 className="text-lg font-bold text-indigo-100 leading-tight">
+                Мне нужно {fmt(Math.round(results.hourlyRate))} ₽/час
+              </h2>
+              <p className="text-xs text-indigo-300 mt-0.5">
+                чтобы получать {fmt(netMonthly)} ₽/мес после налогов
+              </p>
+            </div>
             <div className="flex items-center gap-2">
               <button
                 onClick={handleShare}
@@ -943,7 +952,7 @@ export default function FreelanceCalc() {
         {/* Specialty Gap — personalized market comparison to drive upsell + viral sharing */}
         <div id="specialty-comparison" className="mt-3 bg-white border border-slate-200 rounded-xl p-4">
           <p className="text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wide">
-            Выберите специальность — сравним с рынком:
+            Ваша специальность — проверим, не занижаете ли ставку:
           </p>
           <div className="flex flex-wrap gap-1.5 mb-0">
             {(showAllSpecialties ? QUICK_SPECIALTIES : QUICK_SPECIALTIES.slice(0, QUICK_SPECIALTIES_VISIBLE_DEFAULT)).map((s) => (
