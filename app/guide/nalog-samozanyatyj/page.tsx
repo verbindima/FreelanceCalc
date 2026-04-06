@@ -479,10 +479,10 @@ export default function NalogSamozanyatyjPage() {
                 Налог по договору ГПХ
               </Link>
               <Link
-                href="/nalog/ip-usn"
+                href="/guide/ip-vs-samozanyatyj"
                 className="bg-white border border-slate-200 rounded-xl p-3 text-sm font-medium text-slate-700 hover:border-indigo-300 hover:text-indigo-700 transition-colors text-center"
               >
-                ИП УСН 6% — расчёт
+                ИП vs самозанятый
               </Link>
             </div>
           </section>
