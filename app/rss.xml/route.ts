@@ -307,6 +307,14 @@ const ARTICLES = [
 // Guide articles (long-form, under /guide/)
 const GUIDE_ARTICLES = [
   {
+    slug: "strahovye-vznosy-ip-2026",
+    title: "Страховые взносы ИП в 2026 году: сколько платить фрилансеру",
+    description:
+      "Фиксированные взносы ИП 2026: 53 658 ₽ + 1% с дохода свыше 300 000 ₽. Как уменьшить налог УСН до нуля, сроки уплаты, пример расчёта для фрилансера.",
+    tag: "Налоги",
+    pubDate: "Tue, 07 Apr 2026 11:00:00 +0300",
+  },
+  {
     slug: "ndfl-frilanser-13-protsent",
     title: "НДФЛ 13% для фрилансера 2026: как считать и платить",
     description:

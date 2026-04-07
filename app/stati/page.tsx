@@ -29,6 +29,15 @@ export const metadata: Metadata = {
 
 const ARTICLES = [
   {
+    slug: "strahovye-vznosy-ip-2026",
+    href: "/guide/strahovye-vznosy-ip-2026",
+    title: "Страховые взносы ИП в 2026 году: сколько платить фрилансеру",
+    description:
+      "Фиксированные взносы 53 658 ₽/год + 1% с дохода свыше 300 000 ₽. Как уменьшить налог УСН до нуля, сроки уплаты и расчёт для фрилансера на ИП.",
+    readTime: "7 мин",
+    tag: "Налоги",
+  },
+  {
     slug: "samozanyatyj-i-oficialnaya-rabota-2026",
     title: "Самозанятый и официальная работа 2026: можно ли совмещать?",
     description:
