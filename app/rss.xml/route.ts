@@ -307,6 +307,14 @@ const ARTICLES = [
 // Guide articles (long-form, under /guide/)
 const GUIDE_ARTICLES = [
   {
+    slug: "kak-stat-samozanyatym-frilanser",
+    title: "Как стать самозанятым фрилансеру в 2026 году: пошаговая инструкция",
+    description:
+      "Регистрация за 10 минут через «Мой налог», налоги 4%/6%, первый чек, работа с компаниями. Полная инструкция для фрилансера: от скачивания приложения до первого договора.",
+    tag: "Самозанятость",
+    pubDate: "Mon, 07 Apr 2026 12:00:00 +0300",
+  },
+  {
     slug: "strahovye-vznosy-ip-2026",
     title: "Страховые взносы ИП в 2026 году: сколько платить фрилансеру",
     description:
