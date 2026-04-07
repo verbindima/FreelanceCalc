@@ -304,6 +304,50 @@ const ARTICLES = [
   },
 ];
 
+// Guide articles (long-form, under /guide/)
+const GUIDE_ARTICLES = [
+  {
+    slug: "ndfl-frilanser-13-protsent",
+    title: "НДФЛ 13% для фрилансера 2026: как считать и платить",
+    description:
+      "Когда фрилансер платит НДФЛ 13%: договор ГПХ, работа с иностранным заказчиком, 3-НДФЛ. Профессиональный вычет 20%. Сравнение с самозанятым — разница 84 000 ₽ в год.",
+    tag: "Налоги",
+    pubDate: "Mon, 07 Apr 2026 10:00:00 +0300",
+  },
+  {
+    slug: "nalog-programmist-frilanser",
+    title: "Налог программиста-фрилансера 2026: самозанятый vs ИП",
+    description:
+      "Junior 80k/мес → самозанятый. Senior 250k/мес → ИП выгоднее. Полный расчёт налогов для IT-фрилансеров с конкретными суммами.",
+    tag: "Налоги",
+    pubDate: "Sun, 06 Apr 2026 10:00:00 +0300",
+  },
+  {
+    slug: "nalog-ip-usn-6",
+    title: "ИП на УСН 6% для фрилансера 2026: расчёт налога и взносов",
+    description:
+      "Как считается налог ИП УСН 6%: страховые взносы 53 658 ₽/год, уменьшение налога на взносы, точка выгодности против самозанятого.",
+    tag: "Налоги",
+    pubDate: "Sat, 05 Apr 2026 10:00:00 +0300",
+  },
+  {
+    slug: "ip-vs-samozanyatyj",
+    title: "ИП или самозанятый для фрилансера: что выбрать в 2026 году",
+    description:
+      "Подробное сравнение ИП УСН 6% и самозанятости: налоги, взносы, бухгалтерия, лимиты. Точка безубыточности — 68 750 ₽/мес.",
+    tag: "Самозанятость",
+    pubDate: "Fri, 04 Apr 2026 10:00:00 +0300",
+  },
+  {
+    slug: "nalog-samozanyatyj",
+    title: "Налог самозанятого 2026: сколько платить и как считать",
+    description:
+      "НПД 4% с физлицами, 6% с юрлицами. Бонус 10 000 ₽, лимит 2,4 млн ₽/год. Реальный расчёт на примере дохода 100 000 ₽/мес.",
+    tag: "Самозанятость",
+    pubDate: "Thu, 03 Apr 2026 10:00:00 +0300",
+  },
+];
+
 function escapeXml(str: string): string {
   return str
     .replace(/&/g, "&amp;")
@@ -320,6 +364,13 @@ function buildTurboContent(article: (typeof ARTICLES)[0]): string {
   return `<header><h1>${article.title}</h1></header><p>${article.description}</p><p>${body}</p><p><a href="${BASE_URL}/stati/${article.slug}">Читать полную статью →</a></p><p><a href="${BASE_URL}">Рассчитать свою ставку бесплатно →</a></p>`;
 }
 
+function buildGuideTurboContent(article: (typeof GUIDE_ARTICLES)[0]): string {
+  const body =
+    TAG_TURBO_BODY[article.tag] ||
+    "Используйте бесплатный калькулятор FreelanceCalc для точного расчёта своей ставки с учётом налогов, простоев и загрузки.";
+  return `<header><h1>${article.title}</h1></header><p>${article.description}</p><p>${body}</p><p><a href="${BASE_URL}/guide/${article.slug}">Читать полный гайд →</a></p><p><a href="${BASE_URL}">Рассчитать свою ставку бесплатно →</a></p>`;
+}
+
 export async function GET() {
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:turbo="http://turbo.yandex.ru">
@@ -330,8 +381,19 @@ export async function GET() {
     <language>ru</language>
     <managingEditor>hello@freelancecalc.ru (FreelanceCalc)</managingEditor>
     <webMaster>hello@freelancecalc.ru (FreelanceCalc)</webMaster>
-    <lastBuildDate>Sat, 21 Mar 2026 09:00:00 +0300</lastBuildDate>
+    <lastBuildDate>Mon, 07 Apr 2026 10:00:00 +0300</lastBuildDate>
     <atom:link href="${BASE_URL}/rss.xml" rel="self" type="application/rss+xml"/>
+${GUIDE_ARTICLES.map(
+    (article) => `    <item>
+      <title>${escapeXml(article.title)}</title>
+      <link>${BASE_URL}/guide/${article.slug}</link>
+      <guid isPermaLink="true">${BASE_URL}/guide/${article.slug}</guid>
+      <description>${escapeXml(article.description)}</description>
+      <category>${escapeXml(article.tag)}</category>
+      <pubDate>${article.pubDate}</pubDate>
+      <turbo:content><![CDATA[${buildGuideTurboContent(article)}]]></turbo:content>
+    </item>`
+  ).join("\n")}
 ${ARTICLES.map(
     (article) => `    <item>
       <title>${escapeXml(article.title)}</title>
