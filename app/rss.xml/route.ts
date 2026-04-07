@@ -307,6 +307,14 @@ const ARTICLES = [
 // Guide articles (long-form, under /guide/)
 const GUIDE_ARTICLES = [
   {
+    slug: "samozanyatyj-prevysil-limit",
+    title: "Самозанятый превысил лимит 2,4 млн ₽ в 2026 году: что делать пошагово",
+    description:
+      "Превысили лимит НПД 2,4 млн ₽? Пошаговый план: сроки перехода на ИП (20 дней!), расчёт налогов после превышения, как не попасть на ОСНО. Онлайн-калькулятор.",
+    tag: "Налоги",
+    pubDate: "Tue, 07 Apr 2026 13:00:00 +0300",
+  },
+  {
     slug: "kak-stat-samozanyatym-frilanser",
     title: "Как стать самозанятым фрилансеру в 2026 году: пошаговая инструкция",
     description:
@@ -362,6 +370,22 @@ const GUIDE_ARTICLES = [
     tag: "Самозанятость",
     pubDate: "Thu, 03 Apr 2026 10:00:00 +0300",
   },
+  {
+    slug: "nalog-dogovor-gph",
+    title: "Налог по договору ГПХ в 2026 году: НДФЛ и страховые взносы",
+    description:
+      "Сколько налогов удержат по договору ГПХ в 2026 году? НДФЛ 13%, страховые взносы 30%, расчёт суммы на руки. Сравнение с самозанятым и ИП. Онлайн-калькулятор.",
+    tag: "Налоги",
+    pubDate: "Wed, 02 Apr 2026 10:00:00 +0300",
+  },
+  {
+    slug: "kalkulyator-frilansera",
+    title: "Калькулятор фрилансера 2026 — как рассчитать ставку",
+    description:
+      "Как правильно рассчитать ставку фрилансера в 2026 году: формула расчёта, учёт налогов самозанятого и ИП, примеры для разных специальностей. Онлайн-калькулятор.",
+    tag: "Руководство",
+    pubDate: "Tue, 01 Apr 2026 10:00:00 +0300",
+  },
 ];
 
 function escapeXml(str: string): string {
@@ -397,7 +421,7 @@ export async function GET() {
     <language>ru</language>
     <managingEditor>hello@freelancecalc.ru (FreelanceCalc)</managingEditor>
     <webMaster>hello@freelancecalc.ru (FreelanceCalc)</webMaster>
-    <lastBuildDate>Mon, 07 Apr 2026 10:00:00 +0300</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 13:00:00 +0300</lastBuildDate>
     <atom:link href="${BASE_URL}/rss.xml" rel="self" type="application/rss+xml"/>
 ${GUIDE_ARTICLES.map(
     (article) => `    <item>
