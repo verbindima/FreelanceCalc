@@ -307,6 +307,14 @@ const ARTICLES = [
 // Guide articles (long-form, under /guide/)
 const GUIDE_ARTICLES = [
   {
+    slug: "samozanyatyj-i-trudovoj-dogovor",
+    title: "Самозанятый и работа по трудовому договору одновременно 2026",
+    description:
+      "Можно ли совмещать самозанятость с официальной работой? Да. Разбираем запрет на услуги работодателю, лимит 2,4 млн ₽, пенсионный стаж и расчёт ставки для подработки.",
+    tag: "Самозанятость",
+    pubDate: "Thu, 10 Apr 2026 12:00:00 +0300",
+  },
+  {
     slug: "samozanyatyj-prevysil-limit",
     title: "Самозанятый превысил лимит 2,4 млн ₽ в 2026 году: что делать пошагово",
     description:
