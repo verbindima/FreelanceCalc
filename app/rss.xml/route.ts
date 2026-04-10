@@ -35,13 +35,6 @@ const ARTICLES = [
     pubDate: "Sat, 21 Mar 2026 23:00:00 +0300",
   },
   {
-    slug: "samozanyatyj-pensiya-2026",
-    title: "Самозанятый и пенсия 2026: как не остаться без пенсии",
-    description: "Самозанятые по умолчанию не накапливают пенсионный стаж. Добровольные взносы в СФР, расчёт стоимости пенсионного года, сравнение стратегий накопления.",
-    tag: "Самозанятость",
-    pubDate: "Sat, 21 Mar 2026 22:00:00 +0300",
-  },
-  {
     slug: "samozanyatyj-ipoteka-2026",
     title: "Ипотека для самозанятых 2026: какие банки дают и как подтвердить доход",
     description: "Сбер, ВТБ, Т-Банк дают ипотеку самозанятым. Как подтвердить доход через Мой налог, справка КНД 1122036, чек-лист требований.",
@@ -307,6 +300,14 @@ const ARTICLES = [
 // Guide articles (long-form, under /guide/)
 const GUIDE_ARTICLES = [
   {
+    slug: "samozanyatyj-pensiya-2026",
+    title: "Пенсия самозанятого 2026: идёт ли стаж и стоит ли платить взносы",
+    description:
+      "По умолчанию НПД не даёт пенсионного стажа. Добровольные взносы в СФР: 57 390 ₽ за полный год. Честная математика окупаемости и как подключить через «Мой налог».",
+    tag: "Самозанятость",
+    pubDate: "Thu, 10 Apr 2026 14:00:00 +0300",
+  },
+  {
     slug: "samozanyatyj-i-trudovoj-dogovor",
     title: "Самозанятый и работа по трудовому договору одновременно 2026",
     description:
@@ -429,7 +430,7 @@ export async function GET() {
     <language>ru</language>
     <managingEditor>hello@freelancecalc.ru (FreelanceCalc)</managingEditor>
     <webMaster>hello@freelancecalc.ru (FreelanceCalc)</webMaster>
-    <lastBuildDate>Tue, 07 Apr 2026 13:00:00 +0300</lastBuildDate>
+    <lastBuildDate>Thu, 10 Apr 2026 14:00:00 +0300</lastBuildDate>
     <atom:link href="${BASE_URL}/rss.xml" rel="self" type="application/rss+xml"/>
 ${GUIDE_ARTICLES.map(
     (article) => `    <item>
