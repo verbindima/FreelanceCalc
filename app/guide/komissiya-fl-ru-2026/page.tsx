@@ -3,6 +3,8 @@ import Link from "next/link";
 
 const BASE_URL = "https://freelancecalc.ru";
 
+type CalcRow = { label: string; value: string; negative?: boolean; bold?: boolean; green?: boolean; red?: boolean };
+
 export const metadata: Metadata = {
   title: "Комиссия FL.ru в 2026 году: сколько берёт биржа и как считать ставку | FreelanceCalc",
   description:
@@ -420,7 +422,7 @@ export default function KomissiyaFlRuPage() {
                       { label: "Комиссия FL.ru 10%", value: "−1 000 ₽", negative: true },
                       { label: "Налог НПД 6% от 10 000 ₽", value: "−600 ₽", negative: true },
                       { label: "Итого на руки", value: "8 400 ₽", bold: true, green: true },
-                    ],
+                    ] as CalcRow[],
                   },
                   {
                     title: "Физлицо ГПХ + FL.ru Free (20% комиссия)",
@@ -430,7 +432,7 @@ export default function KomissiyaFlRuPage() {
                       { label: "Комиссия FL.ru 20%", value: "−2 000 ₽", negative: true },
                       { label: "НДФЛ 13% от 10 000 ₽", value: "−1 300 ₽", negative: true },
                       { label: "Итого на руки", value: "6 700 ₽", bold: true, red: true },
-                    ],
+                    ] as CalcRow[],
                   },
                 ].map(({ title, rows }) => (
                   <div key={title} className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-2 text-xs">

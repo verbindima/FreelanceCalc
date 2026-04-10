@@ -195,7 +195,7 @@ export default async function CityPage({ params }: Props) {
               Ставки всех специальностей {city.nameIn} — таблица PDF
             </p>
             <p className="text-xs text-slate-500 leading-relaxed">
-              26 специальностей × 10 городов, включая {city.name}. Джун / мид / сеньор.{showUrgency && <>{" "}<span className="text-red-600 font-medium">С 7 апреля — 349 ₽.</span></>}
+              32 специальности × 10 городов, включая {city.name}. Джун / мид / сеньор.{showUrgency && <>{" "}<span className="text-red-600 font-medium">С 7 апреля — 349 ₽.</span></>}
             </p>
           </div>
           <Link
