@@ -112,6 +112,7 @@ function getAllUrls(): string[] {
     `${BASE_URL}/stati/kak-vystavit-schet-samozanyatomu-2026`,
     // Guide articles cluster
     `${BASE_URL}/guide/nalog-ip-usn-6`,
+    `${BASE_URL}/guide/samozanyatyj-rabota-po-najmu-2026`,
   ];
 
   // Specialty pages
