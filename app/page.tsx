@@ -1,41 +1,10 @@
-import type { Metadata } from "next";
 import FreelanceCalc from "./components/FreelanceCalc";
 
+// Force static rendering → public CDN cache → fast load for Google/Yandex crawlers
+// OG image is served statically from app/opengraph-image.tsx
+export const dynamic = "force-static";
+
 const BASE_URL = "https://freelancecalc.ru";
-
-/**
- * Dynamic OG image based on URL search params.
- * When a user shares their result (e.g. ?income=250000&tax=ip_usn6&load=80),
- * social networks (Telegram, VK, WhatsApp) crawl the page server-side and
- * receive a personalised rate card via /api/og — not the generic default.
- * Falls back to default calculation when no params are present.
- */
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}): Promise<Metadata> {
-  const params = await searchParams;
-
-  const income = (params.income as string) || "150000";
-  const tax    = (params.tax    as string) || "self_employed_fl";
-  const hpd    = (params.hpd    as string) || "8";
-  const dpw    = (params.dpw    as string) || "5";
-  const vac    = (params.vac    as string) || "28";
-  const load   = (params.load   as string) || "70";
-
-  const ogImageUrl = `${BASE_URL}/api/og?income=${income}&tax=${tax}&hpd=${hpd}&dpw=${dpw}&vac=${vac}&load=${load}`;
-
-  return {
-    openGraph: {
-      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: "Калькулятор ставки фрилансера — FreelanceCalc" }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      images: [ogImageUrl],
-    },
-  };
-}
 
 // WebApplication schema — даёт приложению карточку в поиске
 const appJsonLd = {
