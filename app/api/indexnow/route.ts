@@ -113,6 +113,7 @@ function getAllUrls(): string[] {
     // Guide articles cluster
     `${BASE_URL}/guide/nalog-ip-usn-6`,
     `${BASE_URL}/guide/samozanyatyj-rabota-po-najmu-2026`,
+    `${BASE_URL}/guide/samozanyatyj-raschetnyj-schet-2026`,
   ];
 
   // Specialty pages
