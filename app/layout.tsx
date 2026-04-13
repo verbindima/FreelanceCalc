@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import YandexMetrica from "./components/YandexMetrica";
@@ -24,13 +24,20 @@ export const metadata: Metadata = {
   ],
   metadataBase: new URL(BASE_URL),
   icons: {
+    // app/icon.svg + app/apple-icon.svg are auto-served by Next.js as
+    // primary vector icons. PNG sizes below are explicit fallbacks for
+    // older browsers and platform-specific surfaces.
     icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
     ],
+    shortcut: ["/favicon.ico"],
     apple: [
-      { url: "/apple-icon.svg", type: "image/svg+xml" },
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
     ],
   },
+  manifest: "/site.webmanifest",
   alternates: { canonical: "/", types: { "application/rss+xml": `${BASE_URL}/rss.xml` } },
   verification: {
     google: process.env.GSC_VERIFICATION ?? undefined,
@@ -58,6 +65,14 @@ export const metadata: Metadata = {
     description: "Рассчитайте точную ставку за 30 секунд: налоги НПД/УСН, отпуск, реальная загрузка. Бесплатно, без регистрации.",
     images: [`${BASE_URL}/opengraph-image`],
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#302858" },
+    { media: "(prefers-color-scheme: dark)",  color: "#302858" },
+  ],
+  colorScheme: "light",
 };
 
 const jsonLd = {

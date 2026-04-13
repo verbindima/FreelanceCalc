@@ -1,128 +1,146 @@
 import { ImageResponse } from "next/og";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 
-export const runtime = "edge";
 export const alt = "FreelanceCalc — калькулятор ставки фрилансера";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// Brand palette (2026-04-13, extracted from the authored PNG)
+const INDIGO = "#302858";
+const MINT   = "#88D8B0";
+const BG     = "#F8F0E8";
+const SLATE  = "#0F172A";
+
+// Inline the master mark as a base64 data URL so next/og doesn't need
+// to fetch over the network at edge runtime (keeps node runtime too).
+function logoDataUrl(): string {
+  const file = path.join(process.cwd(), "public", "logo-master.png");
+  const buf = readFileSync(file);
+  return `data:image/png;base64,${buf.toString("base64")}`;
+}
+
 export default async function Image() {
+  const logoSrc = logoDataUrl();
+
   return new ImageResponse(
     (
       <div
         style={{
           width: "1200px",
           height: "630px",
-          background: "linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%)",
+          background: BG,
           display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          justifyContent: "center",
-          padding: "72px 80px",
+          padding: "72px 60px",
           fontFamily: "sans-serif",
           position: "relative",
         }}
       >
-        {/* Background accent */}
-        <div
-          style={{
-            position: "absolute",
-            top: "-100px",
-            right: "-100px",
-            width: "500px",
-            height: "500px",
-            background: "radial-gradient(circle, rgba(99,102,241,0.3) 0%, transparent 70%)",
-            borderRadius: "50%",
-          }}
+        {/* Original brand mark (authored PNG) */}
+        <img
+          src={logoSrc}
+          width={440}
+          height={440}
+          alt=""
+          style={{ marginTop: 55 }}
         />
 
-        {/* Tag */}
-        <div
-          style={{
-            background: "rgba(99,102,241,0.3)",
-            border: "1px solid rgba(165,180,252,0.4)",
-            color: "#a5b4fc",
-            borderRadius: "999px",
-            padding: "6px 18px",
-            fontSize: "18px",
-            fontWeight: 600,
-            marginBottom: "24px",
-            display: "flex",
-          }}
-        >
-          🧮 Бесплатный инструмент
-        </div>
-
-        {/* Title */}
-        <div
-          style={{
-            fontSize: "68px",
-            fontWeight: 800,
-            color: "#ffffff",
-            lineHeight: 1.1,
-            marginBottom: "20px",
-            maxWidth: "900px",
-            display: "flex",
-          }}
-        >
-          Рассчитай ставку фрилансера
-        </div>
-
-        {/* Sub */}
-        <div
-          style={{
-            fontSize: "30px",
-            color: "#c7d2fe",
-            lineHeight: 1.4,
-            marginBottom: "48px",
-            maxWidth: "800px",
-            display: "flex",
-          }}
-        >
-          С учётом налогов (самозанятый / ИП), отпуска и реальной загрузки. 30 секунд.
-        </div>
-
-        {/* Stats row */}
+        {/* Text column */}
         <div
           style={{
             display: "flex",
-            gap: "20px",
+            flexDirection: "column",
+            justifyContent: "center",
+            marginLeft: 40,
+            flex: 1,
           }}
         >
-          {[
-            { icon: "🎯", label: "36 специальностей" },
-            { icon: "🏙️", label: "26 городов" },
-            { icon: "🧾", label: "Самозанятый и ИП" },
-            { icon: "✅", label: "Бесплатно" },
-          ].map(({ icon, label }) => (
-            <div
-              key={label}
-              style={{
-                background: "rgba(255,255,255,0.1)",
-                border: "1px solid rgba(255,255,255,0.15)",
-                borderRadius: "12px",
-                padding: "10px 20px",
-                color: "#e0e7ff",
-                fontSize: "20px",
-                fontWeight: 500,
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-              }}
-            >
-              {icon} {label}
-            </div>
-          ))}
+          <div
+            style={{
+              background: "rgba(136, 216, 176, 0.28)",
+              border: `2px solid ${MINT}`,
+              color: INDIGO,
+              borderRadius: 999,
+              padding: "6px 20px",
+              fontSize: 20,
+              fontWeight: 700,
+              marginBottom: 24,
+              display: "flex",
+              alignSelf: "flex-start",
+            }}
+          >
+            Бесплатный калькулятор
+          </div>
+
+          <div
+            style={{
+              fontSize: 62,
+              fontWeight: 800,
+              color: INDIGO,
+              lineHeight: 1.08,
+              marginBottom: 20,
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <span>Рассчитай справедливую</span>
+            <span>ставку фрилансера</span>
+          </div>
+
+          <div
+            style={{
+              fontSize: 28,
+              color: SLATE,
+              lineHeight: 1.35,
+              marginBottom: 30,
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <span>За 30 секунд — с налогами НПД/УСН,</span>
+            <span>отпуском и реальной загрузкой.</span>
+          </div>
+
+          <div style={{ display: "flex", gap: 12 }}>
+            {["36 специальностей", "26 городов", "Самозанятый и ИП"].map((label) => (
+              <div
+                key={label}
+                style={{
+                  background: "rgba(48, 40, 88, 0.06)",
+                  border: `1px solid rgba(48, 40, 88, 0.18)`,
+                  borderRadius: 10,
+                  padding: "8px 14px",
+                  color: INDIGO,
+                  fontSize: 18,
+                  fontWeight: 600,
+                  display: "flex",
+                }}
+              >
+                {label}
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* URL */}
         <div
           style={{
             position: "absolute",
-            bottom: "48px",
-            right: "80px",
-            color: "rgba(165,180,252,0.7)",
-            fontSize: "22px",
-            fontWeight: 600,
+            left: 60,
+            right: 60,
+            bottom: 48,
+            height: 4,
+            background: MINT,
+            display: "flex",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            right: 60,
+            bottom: 62,
+            color: INDIGO,
+            fontSize: 22,
+            fontWeight: 700,
             display: "flex",
           }}
         >
