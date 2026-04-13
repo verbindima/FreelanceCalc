@@ -300,6 +300,14 @@ const ARTICLES = [
 // Guide articles (long-form, under /guide/)
 const GUIDE_ARTICLES = [
   {
+    slug: "stavka-mobilnogo-razrabotchika-2026",
+    title: "Ставка мобильного разработчика-фрилансера в 2026 году: iOS, Android, Flutter",
+    description:
+      "Медианные ставки iOS (2 500–5 500 ₽/час) и Android (2 000–4 500 ₽/час) разработчиков на фрилансе. Таблицы по уровням Junior/Middle/Senior, расчёт с НПД и ИП УСН, калькулятор онлайн.",
+    tag: "Рынок",
+    pubDate: "Mon, 14 Apr 2026 10:00:00 +0300",
+  },
+  {
     slug: "samozanyatyj-pensiya-2026",
     title: "Пенсия самозанятого 2026: идёт ли стаж и стоит ли платить взносы",
     description:
