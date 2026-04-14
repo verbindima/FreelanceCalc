@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 // Dmitry should subscribe to this topic in the ntfy.sh app:
 //   https://ntfy.sh/freelancecalc-leads-xk9m2p
 // Or open in browser: https://ntfy.sh/freelancecalc-leads-xk9m2p
-const NTFY_TOPIC = process.env.NTFY_TOPIC || "freelancecalc-leads-xk9m2p";
+const NTFY_TOPIC = process.env.NTFY_TOPIC;
 
 // Sync with payment/route.ts: 249 ₽ before April 7, 349 ₽ after (loss aversion countdown)
 const PRICE_DEADLINE = new Date("2026-04-07T00:00:00+03:00");
@@ -34,6 +34,11 @@ export async function POST(req: NextRequest) {
   console.log(`[${tag}] email=${email} price=${lockedPrice} ts=${new Date().toISOString()}`);
 
   // Non-blocking push to ntfy.sh
+  if (!NTFY_TOPIC) {
+    console.warn("[LEAD] NTFY_TOPIC is not configured; skipping ntfy.sh notification");
+    return NextResponse.json({ ok: true });
+  }
+
   try {
     let title: string;
     let tags: string;

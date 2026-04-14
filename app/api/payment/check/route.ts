@@ -7,7 +7,20 @@ import { NextResponse } from "next/server";
  * Now also tests actual payment *creation* to catch receipt/fiscalization errors
  * that don't surface in the /v3/me credentials check.
  */
-export async function GET() {
+export async function GET(request: Request) {
+  const diagKey = process.env.PAYMENT_CHECK_KEY;
+  if (!diagKey) {
+    return NextResponse.json(
+      { error: "Diagnostic endpoint is disabled" },
+      { status: 503 },
+    );
+  }
+
+  const requestKey = request.headers.get("x-payment-check-key");
+  if (!requestKey || requestKey !== diagKey) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const shopId = process.env.YOOKASSA_SHOP_ID;
   const secretKey = process.env.YOOKASSA_SECRET_KEY;
   const fallbackUrl = process.env.FALLBACK_PAYMENT_URL;

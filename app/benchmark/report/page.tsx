@@ -5,10 +5,8 @@ import PrintButton from "./PrintButton";
 import Q2SubscribeForm from "./Q2SubscribeForm";
 import { fetchAllHhData } from "./fetchHhData";
 
-// Simple token-based access — Dmitry sends buyers:
-// https://freelancecalc.ru/benchmark/report?key=2026q1
-// Key can be overridden via env: REPORT_ACCESS_KEY
-const ACCESS_KEY = process.env.REPORT_ACCESS_KEY ?? "2026q1";
+// Access key must be set in env; no hardcoded fallback to avoid predictable access.
+const ACCESS_KEY = process.env.REPORT_ACCESS_KEY;
 
 export const metadata: Metadata = {
   title: "Бенчмарк ставок фрилансеров Q2 2026 — FreelanceCalc",
@@ -152,7 +150,7 @@ export default async function ReportPage({
   searchParams: Promise<{ key?: string }>;
 }) {
   const sp = await searchParams;
-  if (sp.key !== ACCESS_KEY) {
+  if (!ACCESS_KEY || sp.key !== ACCESS_KEY) {
     redirect("/benchmark");
   }
 
