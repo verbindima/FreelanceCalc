@@ -4,10 +4,12 @@ import { NextRequest, NextResponse } from "next/server";
 // Configure in ЮKassa dashboard: https://yookassa.ru/my/merchant/integration/http-notifications
 // Webhook URL: https://freelancecalc.ru/api/payment/webhook
 
-const NTFY_TOPIC = process.env.NTFY_TOPIC || "freelancecalc-leads-xk9m2p";
-const REPORT_ACCESS_KEY = process.env.REPORT_ACCESS_KEY || "2026q1";
+const NTFY_TOPIC = process.env.NTFY_TOPIC;
+const REPORT_ACCESS_KEY = process.env.REPORT_ACCESS_KEY;
 const BASE_URL = (process.env.NEXT_PUBLIC_BASE_URL || "https://freelancecalc.ru").replace(/\/$/, "");
-const REPORT_URL = `${BASE_URL}/benchmark/report?key=${REPORT_ACCESS_KEY}`;
+const REPORT_URL = REPORT_ACCESS_KEY
+  ? `${BASE_URL}/benchmark/report?key=${REPORT_ACCESS_KEY}`
+  : `${BASE_URL}/benchmark`;
 
 interface YookassaWebhook {
   type: string;
@@ -51,6 +53,11 @@ export async function POST(req: NextRequest) {
   const moscowTime = new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow" });
 
   // Non-blocking push to ntfy.sh
+  if (!NTFY_TOPIC) {
+    console.warn("[YUKASSA_WEBHOOK] NTFY_TOPIC is not configured; skipping ntfy.sh notification");
+    return NextResponse.json({ ok: true });
+  }
+
   try {
     await fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
       method: "POST",
